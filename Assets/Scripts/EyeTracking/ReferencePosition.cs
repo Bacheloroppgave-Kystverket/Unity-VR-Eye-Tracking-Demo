@@ -16,6 +16,10 @@ public class ReferencePosition : MonoBehaviour
     [SerializeField]
     private float positionDuration;
 
+    private void Start() {
+        gameObject.tag = "ReferencePosition";
+    }
+
 
     /// <summary>
     /// Gets the location ID.

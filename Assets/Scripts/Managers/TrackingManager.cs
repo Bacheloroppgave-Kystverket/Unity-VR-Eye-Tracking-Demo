@@ -11,6 +11,9 @@ public class TrackingManager : MonoBehaviour
     [SerializeField]
     private float time;
 
+    [SerializeField]
+    private Session session;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +30,6 @@ public class TrackingManager : MonoBehaviour
     /// Calculates the average fixation time per object.
     /// </summary>
     public void CalculateAverageFixationTimePerObject() {
-        trackableObjects.ForEach(trackableObject => trackableObject.CalculateCurrentAverageFixationDuration());
+        trackableObjects.ForEach(trackableObject => trackableObject.CalculateCurrentAverageFixationDuration(session.GetCurrentReferencePosition().GetLocationId()));
     }
 }

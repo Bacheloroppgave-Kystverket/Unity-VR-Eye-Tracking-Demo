@@ -18,8 +18,8 @@ public class RayCasterObject : MonoBehaviour
     [SerializeField, Min(0.01f)]
     private float sphereSize = 0.03f;
 
-    private 
-    
+    [SerializeField]
+    private Session session;
 
 
     // Start is called before the first frame update
@@ -68,7 +68,7 @@ public class RayCasterObject : MonoBehaviour
                         lastObject.ToggleIsWatched();
                         lastObject = null;
                     }
-                    trackObject.ToggleIsWatched();
+                    trackObject.ToggleIsWatched(session.GetCurrentReferencePosition().GetLocationId());
                     lastObject = trackObject;
                 }
                 Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * raycastHit.distance);

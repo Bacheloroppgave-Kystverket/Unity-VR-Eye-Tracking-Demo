@@ -13,7 +13,7 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
     private bool changeColor = true;
 
     [SerializeField]
-    private GazeData currentGaze;
+    private GazeData currentGaze = null;
 
     private Dictionary<string, GazeData> gazeMap = new Dictionary<string, GazeData>();
 
@@ -23,7 +23,9 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
     // Start is called before the first frame update
     void Start()
     {
+        currentGaze = null;
         gameObject.tag = "TrackableObject";
+        gazeMap = new Dictionary<string, GazeData>();
     }
 
     // Update is called once per frame
@@ -43,7 +45,7 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
     }
 
 
-    public void ToggleIsWatched(string locationID = "") {
+    public void ToggleIsWatched(string locationID = null) {
         UpdateCurrentGazeData(locationID);
     }
 
@@ -52,7 +54,12 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
     /// </summary>
     /// <param name="currentLocationId">the current locations id</param>
     private void UpdateCurrentGazeData(string currentLocationId) {
-        if (currentLocationId != null && currentGaze.GetLocationID() != currentLocationId && !gazeMap.TryGetValue(currentLocationId, out currentGaze)) {
+        if (currentLocationId != null && currentLocationId != "" && gazeMap.ContainsKey(currentLocationId)) {
+            currentGaze = gazeMap[currentLocationId];
+            currentGaze.IncrementFixation();
+            UpdateObserversFixations();
+           
+        }else if (currentLocationId != null && currentLocationId != "") {
             currentGaze = new GazeData(currentLocationId);
             gazeMap.Add(currentLocationId, currentGaze);
             currentGaze.IncrementFixation();
@@ -89,7 +96,7 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
     /// Calculates the average fixation duration of the current gaze location.
     /// </summary>
     /// <returns>the avereage fixation duration</returns>
-    public float CalculateCurrentAverageFixationDuration() {
+    public float CalculateCurrentAverageFixationDuration(string locationID) {
         float averageFixationDuration = currentGaze.GetFixationDuration() / currentGaze.GetFixations();
         UpdateObserversAverageFixationDuration(averageFixationDuration);
         return averageFixationDuration;
