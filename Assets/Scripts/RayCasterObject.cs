@@ -1,15 +1,24 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Represents a object that can cast rays. 
+/// </summary>
 public class RayCasterObject : MonoBehaviour
 {
     [SerializeField]
     private bool casting = false;
 
-    public GameObject gameObject;
+    [SerializeField]
+    private GameObject castingObject;
 
-    public TrackableObject lastObject;
+    [SerializeField]
+    private TrackableObject lastObject;
 
+    [SerializeField, Min(0.01f)]
+    private float sphereSize = 0.03f;
+
+    private 
     
 
 
@@ -48,8 +57,7 @@ public class RayCasterObject : MonoBehaviour
         if (casting){
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit raycastHit;
-            // Physics.Raycast(ray, out raycastHit);
-            Physics.SphereCast(transform.position, 0.03f, transform.forward, out raycastHit);
+            Physics.SphereCast(transform.position, sphereSize, transform.forward, out raycastHit);
             if (raycastHit.collider != null)
             {
                 TrackableObject trackObject = raycastHit.collider.gameObject.GetComponent<TrackableObject>();
@@ -73,7 +81,7 @@ public class RayCasterObject : MonoBehaviour
             }
         }
         else {
-            gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 0);
+            castingObject.GetComponent<Renderer>().material.color = new Color(0, 0, 0);
             if (lastObject != null) {
                 lastObject.ToggleIsWatched();
                 lastObject = null;

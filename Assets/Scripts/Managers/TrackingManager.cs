@@ -23,7 +23,10 @@ public class TrackingManager : MonoBehaviour
         time += Time.deltaTime;
     }
 
+    /// <summary>
+    /// Calculates the average fixation time per object.
+    /// </summary>
     public void CalculateAverageFixationTimePerObject() {
-        trackableObjects.ForEach(trackableObject => trackableObject.CalculateAverageFixationTime());
+        trackableObjects.ForEach(trackableObject => trackableObject.CalculateCurrentAverageFixationDuration());
     }
 }
