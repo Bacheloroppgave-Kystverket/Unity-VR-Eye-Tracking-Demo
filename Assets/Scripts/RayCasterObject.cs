@@ -4,13 +4,10 @@ using UnityEngine.UI;
 /// <summary>
 /// Represents a object that can cast rays. 
 /// </summary>
-public class RayCasterObject : MonoBehaviour
+public abstract class RayCasterObject : MonoBehaviour
 {
     [SerializeField]
     private bool casting = false;
-
-    [SerializeField]
-    private GameObject castingObject;
 
     [SerializeField]
     private TrackableObject lastObject;
@@ -21,18 +18,9 @@ public class RayCasterObject : MonoBehaviour
     [SerializeField]
     private Session session;
 
+    [SerializeField]
+    private GameObject hitSpot;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void ToggleIsCasting() {
         casting = !casting;
@@ -51,13 +39,23 @@ public class RayCasterObject : MonoBehaviour
         return casting;
     }
 
+    /// <summary>
+    /// Gets the position to shoot the ray from.
+    /// </summary>
+    /// <returns>the position</returns>
+    protected abstract Vector3 FindPosition();
+
+    protected abstract Vector3 FindDirection();
 
     private void FixedUpdate()
     {
         if (casting){
-            Ray ray = new Ray(transform.position, transform.forward);
+            //Makes ray
             RaycastHit raycastHit;
-            Physics.SphereCast(transform.position, sphereSize, transform.forward, out raycastHit);
+            //Shoots ray
+            Vector3 postion = FindPosition();
+            //Physics.SphereCast(postion, sphereSize, FindDirection(), out raycastHit);
+            Physics.Raycast(postion, FindDirection(), out raycastHit);
             if (raycastHit.collider != null)
             {
                 TrackableObject trackObject = raycastHit.collider.gameObject.GetComponent<TrackableObject>();
@@ -71,7 +69,8 @@ public class RayCasterObject : MonoBehaviour
                     trackObject.ToggleIsWatched(session.GetCurrentReferencePosition().GetLocationId());
                     lastObject = trackObject;
                 }
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * raycastHit.distance);
+                hitSpot.transform.position = raycastHit.point;
+                Debug.DrawRay(postion, FindDirection() * raycastHit.distance);
             }
             else {
                 if (lastObject != null) {
@@ -81,7 +80,6 @@ public class RayCasterObject : MonoBehaviour
             }
         }
         else {
-            castingObject.GetComponent<Renderer>().material.color = new Color(0, 0, 0);
             if (lastObject != null) {
                 lastObject.ToggleIsWatched();
                 lastObject = null;
