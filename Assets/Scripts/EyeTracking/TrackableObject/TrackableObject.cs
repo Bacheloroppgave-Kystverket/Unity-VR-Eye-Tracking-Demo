@@ -45,10 +45,15 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
     }
 
 
-    public void ToggleIsWatched(string locationID = null) {
+    public void SetBeingWatched(string locationID) {
         UpdateCurrentGazeData(locationID);
     }
 
+    public void SetNotWatched() {
+        currentGaze = null;
+    }
+
+    
     /// <summary>
     /// Updates the current gaze data to whats being watched.
     /// </summary>
