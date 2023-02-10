@@ -20,12 +20,21 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
     [SerializeField]
     private List<TrackableObserver> observers = new List<TrackableObserver>();
 
+    [SerializeField]
+    private TrackableTypes typeOfObject = TrackableTypes.UNDEFINED;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        nameOfObject = gameObject.name;
         currentGaze = null;
         gameObject.tag = "TrackableObject";
         gazeMap = new Dictionary<string, GazeData>();
+        if (typeOfObject == TrackableTypes.UNDEFINED) {
+            Debug.Log("<color=red>Error:</color>" + "Type of object must be defined for " + gameObject.name, gameObject);
+        }
+        
     }
 
     // Update is called once per frame
@@ -36,6 +45,8 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
         }
     }
 
+    
+
     /// <summary>
     /// Gets the current gaze data.
     /// </summary>
@@ -45,6 +56,10 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
     }
 
 
+    /// <summary>
+    /// Sets the new location of the object.
+    /// </summary>
+    /// <param name="locationID">the id of the location</param>
     public void SetBeingWatched(string locationID) {
         UpdateCurrentGazeData(locationID);
     }

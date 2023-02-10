@@ -19,7 +19,7 @@ public abstract class RayCasterObject : MonoBehaviour
     private float sphereSize = 0.03f;
 
     [SerializeField, Tooltip("The session object")]
-    private Session session;
+    private SessionManager session;
 
     [SerializeField, Tooltip("The object to visualize where the user looks")]
     private GameObject hitSpot;
@@ -35,6 +35,19 @@ public abstract class RayCasterObject : MonoBehaviour
 
     private void Start() {
         currentObjectsWatched = new List<TrackableObject>();
+        CheckField("Hitspot",hitSpot);
+        CheckField("Session", session);
+    }
+
+    /// <summary>
+    /// Checks if the defined field is set in the editor.
+    /// </summary>
+    /// <param name="error">the type of error like "type of object"</param>
+    /// <param name="fieldToCheck">The field to check</param>
+    private void CheckField(string error, object fieldToCheck) {
+        if (fieldToCheck == null) {
+            Debug.Log("<color=red>Error:</color>" + error + " must be set.", gameObject);
+        }
     }
 
     public void ToggleIsCasting() {
@@ -166,7 +179,6 @@ public abstract class RayCasterObject : MonoBehaviour
     /// <param name="direction">the direction</param>
     private void VisualizeHitpoint(RaycastHit raycastHit, Vector3 position, Vector3 direction) {
         hitSpot.transform.position = raycastHit.point;
-        MonoBehaviour.print(raycastHit.distance);
         Debug.DrawRay(position, direction * raycastHit.distance);
     }
 }
