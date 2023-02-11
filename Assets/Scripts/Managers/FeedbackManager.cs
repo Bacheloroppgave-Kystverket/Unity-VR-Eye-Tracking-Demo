@@ -19,7 +19,7 @@ public class FeedbackManager : MonoBehaviour
     void Start()
     {
         /*
-        GameObject[] objects = GameObject.FindGameObjectsWithTag("TrackableObject");
+        GameObject[] objects = GameObject.FindGameObjectsWithTag(typeof(TrackableObject).Name);
         foreach (GameObject gameObject in objects) {
             TrackableObject trackableObject = gameObject.GetComponent<TrackableObject>();
             if (trackableObject != null && !feedbacks.Exists(feedback => feedback.GetTrackableObject().GetInstanceID() == trackableObject.GetInstanceID())) {
@@ -40,6 +40,10 @@ public class FeedbackManager : MonoBehaviour
         if (!hasAny) {
             Debug.Log("<color=red>Error:</color>" + error + " cannot be emtpy", gameObject);
         }
+    }
+
+    public void CalculateAndDisplayFeedback() { 
+
     }
 
     // Update is called once per frame

@@ -19,7 +19,7 @@ public abstract class RayCasterObject : MonoBehaviour
     private float sphereSize = 0.03f;
 
     [SerializeField, Tooltip("The session object")]
-    private SessionManager session;
+    private ReferencePositionManager referencePositionManager;
 
     [SerializeField, Tooltip("The object to visualize where the user looks")]
     private GameObject hitSpot;
@@ -36,7 +36,7 @@ public abstract class RayCasterObject : MonoBehaviour
     private void Start() {
         currentObjectsWatched = new List<TrackableObject>();
         CheckField("Hitspot",hitSpot);
-        CheckField("Session", session);
+        CheckField("Reference position manager", referencePositionManager);
     }
 
     /// <summary>
@@ -165,7 +165,7 @@ public abstract class RayCasterObject : MonoBehaviour
     private void ObserveObject(TrackableObject trackObject) {
         
         if (!CheckIfObjectIsWatched(trackObject)) {
-            trackObject.SetBeingWatched(session.GetCurrentReferencePosition().GetLocationId());
+            trackObject.SetBeingWatched(referencePositionManager.GetCurrentReferencePosition().GetLocationId());
             lastObjects.Add(trackObject);
         }
         currentObjectsWatched.Add(trackObject);

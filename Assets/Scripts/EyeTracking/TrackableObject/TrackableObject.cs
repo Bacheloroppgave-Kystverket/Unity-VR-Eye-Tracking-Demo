@@ -25,15 +25,16 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         nameOfObject = gameObject.name;
         currentGaze = null;
-        gameObject.tag = "TrackableObject";
+        gameObject.tag = typeof(TrackableObject).Name;
         gazeMap = new Dictionary<string, GazeData>();
         if (typeOfObject == TrackableTypes.UNDEFINED) {
             Debug.Log("<color=red>Error:</color>" + "Type of object must be defined for " + gameObject.name, gameObject);
         }
+        gameObject.layer = 7;
         
     }
 

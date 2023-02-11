@@ -16,8 +16,8 @@ public class ReferencePosition : MonoBehaviour
     [SerializeField]
     private float positionDuration;
 
-    private void Start() {
-        gameObject.tag = "ReferencePosition";
+    private void Awake() {
+        gameObject.tag = typeof(ReferencePosition).Name;
     }
 
 

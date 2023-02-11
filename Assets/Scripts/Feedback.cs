@@ -6,8 +6,8 @@ using UnityEngine;
 /// Represents feedback that a user is given per object.
 /// </summary>
 [System.Serializable]
-public class Feedback
-{
+public class Feedback{
+
     [SerializeField]
     private string feedbackName;
 
