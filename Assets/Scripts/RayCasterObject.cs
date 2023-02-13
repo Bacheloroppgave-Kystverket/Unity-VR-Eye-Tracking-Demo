@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,34 +10,41 @@ using UnityEngine.UIElements;
 /// </summary>
 public abstract class RayCasterObject : MonoBehaviour
 {
+    [Header("Configure raycaster")]
     [SerializeField, Tooltip("True if the object should be 'casting' rays")]
     private bool casting = false;
-
-    [SerializeField, Tooltip("The last objects that was looked at.")]
-    private List<TrackableObject> lastObjects;
-
-    [SerializeField, Min(0.01f), Tooltip("The size of the sphere that we shoot to determine what you look at.")]
-    private float sphereSize = 0.03f;
-
-    [SerializeField, Tooltip("The session object")]
-    private ReferencePositionManager referencePositionManager;
-
-    [SerializeField, Tooltip("The object to visualize where the user looks")]
-    private GameObject hitSpot;
-
-    [SerializeField]
-    private List<TrackableObject> currentObjectsWatched;
-
-    [SerializeField, Range(0, 100), Tooltip("The range of the ray")]
-    private int range = 50;
 
     [SerializeField, Tooltip("True if you are going to observe mutliple objects")]
     private bool shootMutliple = false;
 
+    [SerializeField, Tooltip("The frequency to gather data for the raycaster. Quest pro has a rate of 30 hz in the forums.")]
+    private int frequency = 30;
+
+    [SerializeField, Min(0.01f), Tooltip("The size of the sphere that we shoot to determine what you look at.")]
+    private float sphereSize = 0.03f;
+
+    [SerializeField, Range(1,100), Tooltip("The range that the ray should be shot")]
+    private int range = 50;
+
+    [SerializeField, Tooltip("The object to visualize where the user looks")]
+    private GameObject hitSpot;
+
+    [Space(5),Header("Managers")]
+    [SerializeField, Tooltip("The session object")]
+    private ReferencePositionManager referencePositionManager;
+
+    [Space(5),Header("Debugging lists")]
+    [SerializeField]
+    private List<TrackableObject> currentObjectsWatched;
+
+    [SerializeField, Tooltip("The last objects that was looked at.")]
+    private List<TrackableObject> lastObjects;
+
     private void Start() {
         currentObjectsWatched = new List<TrackableObject>();
-        CheckField("Hitspot",hitSpot);
+        CheckField("Hitspot", hitSpot);
         CheckField("Reference position manager", referencePositionManager);
+        StartCoroutine(StartEyeTracking());
     }
 
     /// <summary>
@@ -75,8 +83,9 @@ public abstract class RayCasterObject : MonoBehaviour
 
     protected abstract Vector3 FindDirection();
 
-    private void FixedUpdate(){
-        if (casting){
+    private IEnumerator StartEyeTracking() {
+        while(casting)
+        {
             //Makes ray
             RaycastHit[] raycastHits;
             Vector3 direction = FindDirection();
@@ -85,21 +94,21 @@ public abstract class RayCasterObject : MonoBehaviour
 
             if (raycastHits.Any())
             {
-                foreach (RaycastHit raycastHit in raycastHits) {
+                foreach (RaycastHit raycastHit in raycastHits)
+                {
                     WatchObject(raycastHit);
-                    
                 }
                 UnwatchObjects(currentObjectsWatched);
                 VisualizeHitpoint(raycastHits.First(), position, direction);
             }
-            else {
+            else
+            {
                 UnwatchObjects();
             }
+            currentObjectsWatched.Clear();
+            yield return new WaitForSeconds(1 / frequency);
         }
-        else {
-            UnwatchObjects();
-        }
-        currentObjectsWatched.Clear();
+        MonoBehaviour.print("Eyetracking has stopped.");
     }
 
     private void WatchObject(RaycastHit raycastHit) {
@@ -119,7 +128,7 @@ public abstract class RayCasterObject : MonoBehaviour
     private RaycastHit[] ShootSingleObject(Vector3 position, Vector3 direction) {
         //Shoots ray
         RaycastHit raycastHit;
-        Physics.SphereCast(position, sphereSize, direction, out raycastHit, range);
+        Physics.Raycast(position, direction, out raycastHit, range);
         RaycastHit[] hits = { raycastHit };
         return hits;
     }
