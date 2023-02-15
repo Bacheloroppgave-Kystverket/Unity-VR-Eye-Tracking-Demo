@@ -1,0 +1,161 @@
+{
+    "name": "XRInputActions",
+    "maps": [
+        {
+            "name": "XRUser",
+            "id": "297096dd-adef-4e70-9a53-07ffbbf2f24f",
+            "actions": [
+                {
+                    "name": "LControllerPosition",
+                    "type": "Value",
+                    "id": "561255c4-520c-4bb1-9a85-603acdbcd8b7",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LControllerRotation",
+                    "type": "Value",
+                    "id": "120b69ba-7450-4c2c-b613-e9a71a720741",
+                    "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RControllerPosition",
+                    "type": "Value",
+                    "id": "51b9b8d4-befa-4d6d-acc0-bb13102a0f65",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RControllerRotation",
+                    "type": "Value",
+                    "id": "892bc023-02a1-41b8-8f3d-88fb7eaf3a6b",
+                    "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LControllerIsTracking",
+                    "type": "Value",
+                    "id": "f92f0d2c-27ce-43b8-bec2-452bf802b0be",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RControllerIsTracking",
+                    "type": "Value",
+                    "id": "a7373e01-bbb3-4798-90bb-51a2452d8224",
+                    "expectedControlType": "Integer",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f287a2e3-5bb1-4924-8ab3-55018952f3fd",
+                    "path": "<XRController>{LeftHand}/devicePosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XRPlayer",
+                    "action": "LControllerPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "68c01e23-7f82-466f-9057-90b439304210",
+                    "path": "<XRController>{LeftHand}/deviceRotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XRPlayer",
+                    "action": "LControllerRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb24ad43-ab94-4c52-b683-a27077dd7595",
+                    "path": "<XRController>{RightHand}/deviceRotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XRPlayer",
+                    "action": "RControllerRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b000c4f9-46d3-49d1-864e-9151ffefe4d5",
+                    "path": "<XRController>{RightHand}/devicePosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XRPlayer",
+                    "action": "RControllerPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b23cb3f7-ba5d-4820-8a05-f7aba0af1785",
+                    "path": "<XRController>{LeftHand}/trackingState",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XRPlayer",
+                    "action": "LControllerIsTracking",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dabb5624-b0c4-417f-973c-c4e23b0eac7e",
+                    "path": "<XRController>{RightHand}/trackingState",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "XRPlayer",
+                    "action": "RControllerIsTracking",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "XRPlayer",
+            "bindingGroup": "XRPlayer",
+            "devices": [
+                {
+                    "devicePath": "<XRController>{LeftHand}",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<XRController>{RightHand}",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<XRHMD>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<EyeGaze>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}
