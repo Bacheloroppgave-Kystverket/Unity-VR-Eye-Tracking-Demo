@@ -16,17 +16,22 @@ public class ReferencePositionManager : MonoBehaviour
     [SerializeField]
     private GameObject playerObject;
 
+    [SerializeField, Tooltip("The trackable objects manager.")]
+    private TrackableObjectsManager trackableObjectsManager;
+
     // Start is called before the first frame update
     void Start()
     {
         GameObject[] referenceObjects = GameObject.FindGameObjectsWithTag(typeof(ReferencePosition).Name);
-        foreach (GameObject rfObject in referenceObjects)
+        foreach (GameObject rfObject in referenceObjects.Reverse())
         {
             ReferencePosition referencePosition = rfObject.GetComponent<ReferencePosition>();
             referencePositions.Add(referencePosition);
         }
         CheckField("Player", playerObject);
         CheckIfListIsValid("Reference positions", referencePositions.Any());
+        CheckField("Trackable Object Manager", trackableObjectsManager);
+        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(referencePositions[position].GetLocationId());
     }
 
     /// <summary>
@@ -77,6 +82,8 @@ public class ReferencePositionManager : MonoBehaviour
     public void NextPosition()
     {
         position = (position + 1) % referencePositions.Count;
+        MonoBehaviour.print("Position: " + position);
         playerObject.gameObject.transform.position = GetCurrentReferencePosition().gameObject.transform.position;
+        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetLocationId());
     }
 }

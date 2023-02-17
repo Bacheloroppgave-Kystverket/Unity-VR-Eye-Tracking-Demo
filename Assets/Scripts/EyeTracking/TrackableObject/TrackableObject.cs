@@ -6,22 +6,28 @@ using UnityEngine;
 /// </summary>
 public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
 {
-    [SerializeField]
+    [Header("Configure object")]
+    [SerializeField, Tooltip("The name of the object")]
     private string nameOfObject;
 
-    [SerializeField]
+    [SerializeField, Tooltip("Set to true if the object is supposed to change color")]
     private bool changeColor = true;
 
-    [SerializeField]
+    [SerializeField, Tooltip("Defines the type of object that we are looking at.")]
+    private TrackableTypes typeOfObject = TrackableTypes.UNDEFINED;
+
+    [Space(10), Header("Debug fields")]
+    [SerializeField, Tooltip("The current object that is being watched.")]
     private GazeData currentGaze = null;
 
-    private Dictionary<string, GazeData> gazeMap = new Dictionary<string, GazeData>();
+    [SerializeField, Tooltip("Is set to true when its being watched")]
+    private bool beingWatched;
 
-    [SerializeField]
+    [SerializeField, Tooltip("The list with all the gaze data that this object has.")]
+    private List<GazeData> gazeList;
+
+    [SerializeField, Tooltip("The observers")]
     private List<TrackableObserver> observers = new List<TrackableObserver>();
-
-    [SerializeField]
-    private TrackableTypes typeOfObject = TrackableTypes.UNDEFINED;
 
 
     // Start is called before the first frame update
@@ -30,7 +36,7 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
         nameOfObject = gameObject.name;
         currentGaze = null;
         gameObject.tag = typeof(TrackableObject).Name;
-        gazeMap = new Dictionary<string, GazeData>();
+        gazeList = new List<GazeData>();
         if (typeOfObject == TrackableTypes.UNDEFINED) {
             Debug.Log("<color=red>Error:</color>" + "Type of object must be defined for " + gameObject.name, gameObject);
         }
@@ -40,7 +46,7 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
 
     // Update is called once per frame
     void Update(){
-        if (currentGaze != null) {
+        if (beingWatched) {
             currentGaze.AddTime();
             UpdateObserversFixationDuration();
         }
@@ -56,39 +62,51 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
         return currentGaze;
     }
 
+    public void SetPosition(string locationID) {
+
+        if (locationID != null && locationID != "")
+        {
+            currentGaze = gazeList.Find(gazeData => gazeData.GetLocationID() == locationID);
+            if (currentGaze == null)
+            {
+                currentGaze = new GazeData(locationID);
+                gazeList.Add(currentGaze);
+            }
+            if (beingWatched) {
+                currentGaze.IncrementFixation();
+            }
+            UpdateObserversFixationDuration();
+            UpdateObserversFixations();
+        }
+        else {
+            beingWatched = false;
+            currentGaze = null;
+        }
+    }
 
     /// <summary>
     /// Sets the new location of the object.
     /// </summary>
-    /// <param name="locationID">the id of the location</param>
-    public void SetBeingWatched(string locationID) {
-        UpdateCurrentGazeData(locationID);
-    }
-
-    public void SetNotWatched() {
-        currentGaze = null;
-    }
-
-    
-    /// <summary>
-    /// Updates the current gaze data to whats being watched.
-    /// </summary>
-    /// <param name="currentLocationId">the current locations id</param>
-    private void UpdateCurrentGazeData(string currentLocationId) {
-        if (currentLocationId != null && currentLocationId != "" && gazeMap.ContainsKey(currentLocationId)) {
-            currentGaze = gazeMap[currentLocationId];
+    public void SetBeingWatched() {
+        if (!beingWatched) {
+            beingWatched = true;
             currentGaze.IncrementFixation();
             UpdateObserversFixations();
-           
-        }else if (currentLocationId != null && currentLocationId != "") {
-            currentGaze = new GazeData(currentLocationId);
-            gazeMap.Add(currentLocationId, currentGaze);
-            currentGaze.IncrementFixation();
-            UpdateObserversFixations();
-        } else {
-            currentGaze = null;
+            if (changeColor)
+            {
+                gameObject.GetComponent<Renderer>().material.color = new Color(0, 255, 0);
+            }
         }
+    }
 
+    /// <summary>
+    /// Sets the object to not be watched.
+    /// </summary>
+    public void SetNotWatched() {
+        beingWatched = false;
+        if (changeColor) { 
+            gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 0);
+        }
     }
 
     /// <summary>
@@ -96,21 +114,7 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
     /// </summary>
     /// <returns>true if the object is being watched</returns>
     public bool IsWatched() {
-        return currentGaze != null;
-    }
-
-    public void FixedUpdate()
-    {
-        if (changeColor) {
-            if (currentGaze != null)
-            {
-                gameObject.GetComponent<Renderer>().material.color = new Color(0, 255, 0);
-            }
-            else
-            {
-                gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 0);
-            }
-        }
+        return beingWatched;
     }
 
     /// <summary>

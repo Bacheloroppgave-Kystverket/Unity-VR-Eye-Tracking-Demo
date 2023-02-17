@@ -84,6 +84,7 @@ public abstract class RayCasterObject : MonoBehaviour
     protected abstract Vector3 FindDirection();
 
     private IEnumerator StartEyeTracking() {
+        yield return new WaitForSeconds(0.5f);
         while(casting)
         {
             //Makes ray
@@ -174,7 +175,7 @@ public abstract class RayCasterObject : MonoBehaviour
     private void ObserveObject(TrackableObject trackObject) {
         
         if (!CheckIfObjectIsWatched(trackObject)) {
-            trackObject.SetBeingWatched(referencePositionManager.GetCurrentReferencePosition().GetLocationId());
+            trackObject.SetBeingWatched();
             lastObjects.Add(trackObject);
         }
         currentObjectsWatched.Add(trackObject);
