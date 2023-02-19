@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using TMPro;
 using UnityEngine;
 
 public class OverlayManager : MonoBehaviour
 {
 
-    //[SerializeField]
-    //private OverlayController overlayController;
+    [SerializeField]
+    private TextMeshProUGUI feedbackText;
 
 
 
@@ -19,6 +21,11 @@ public class OverlayManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    public void DisplayFeedback(Feedback feedback) {
+        feedbackText.text = feedback.GetFeedbackAsString();
         
     }
 }

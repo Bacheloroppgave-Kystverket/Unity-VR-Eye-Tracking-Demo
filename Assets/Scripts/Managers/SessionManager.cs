@@ -21,6 +21,9 @@ public class SessionManager : MonoBehaviour
     [SerializeField]
     private string locationId;
 
+    [SerializeField]
+    private RayCasterObject rayCasterObject;
+
     [Space(10), Header("Managers")]
     [SerializeField]
     private ReferencePositionManager referencePositionManager;
@@ -29,10 +32,17 @@ public class SessionManager : MonoBehaviour
     private TrackableObjectsManager trackableObjectsManager;
 
     // Start is called before the first frame update
-    void Start(){
-        
+    void Start() {
+
         CheckStringField("User ID", userID);
-        
+        CheckField("Reference position manager", referencePositionManager);
+        CheckField("Trackable Objects Manager", trackableObjectsManager);
+        CheckField("Raycaster object", rayCasterObject);
+    }
+
+    public void StartEyeTracking() {
+        referencePositionManager.StartEyeTracking();
+        rayCasterObject.StartTracking();
     }
 
     /// <summary>

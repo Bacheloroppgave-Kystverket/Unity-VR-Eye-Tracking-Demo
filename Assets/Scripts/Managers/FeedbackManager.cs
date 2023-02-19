@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,11 +8,17 @@ using UnityEngine;
 public class FeedbackManager : MonoBehaviour
 {
 
-    [SerializeField]
-    private SessionManager sessionManager;
+    [SerializeField, Tooltip("The trackable objects manager")]
+    private TrackableObjectsManager trackableObjectsManager;
 
-    [SerializeField]
-    private List<Feedback> feedbacks = new List<Feedback>();
+    [SerializeField, Tooltip("The overlay manager")]
+    private OverlayManager overlayManager;
+
+    [SerializeField, Tooltip("The configuration for the objects")]
+    private List<FeedbackConfiguration> feedbackConfigurations = new List<FeedbackConfiguration>();
+
+    [SerializeField, Tooltip("The feedback story")]
+    private List<Feedback> feedbackStory = new List<Feedback>();
 
     // Start is called before the first frame update
     void Start()
@@ -22,13 +27,30 @@ public class FeedbackManager : MonoBehaviour
         GameObject[] objects = GameObject.FindGameObjectsWithTag(typeof(TrackableObject).Name);
         foreach (GameObject gameObject in objects) {
             TrackableObject trackableObject = gameObject.GetComponent<TrackableObject>();
-            if (trackableObject != null && !feedbacks.Exists(feedback => feedback.GetTrackableObject().GetInstanceID() == trackableObject.GetInstanceID())) {
-                feedbacks.Add(new Feedback(trackableObject));
+            if (trackableObject != null && !feedbackConfigurations.Exists(feedback => feedback.GetTrackableObject().GetInstanceID() == trackableObject.GetInstanceID())) {
+                feedbackConfigurations.Add(new FeedbackConfiguration(trackableObject));
             }
         }
         */
-        float prosentage = feedbacks.Sum(feedback => feedback.GetThreshold());
-        CheckIfListIsValid("Feedbacks", feedbacks.Any());
+        float prosentage = feedbackConfigurations.Sum(feedback => feedback.GetThreshold());
+        CheckIfListIsValid("Feedbacks", feedbackConfigurations.Any());
+        CheckField("Trackable objects manager", trackableObjectsManager);
+        CheckField("Overlay manager", overlayManager);
+    }
+
+    /// <summary>
+    /// Checks if the defined field is set in the editor.
+    /// </summary>
+    /// <param name="error">the type of error like "type of object"</param>
+    /// <param name="fieldToCheck">The field to check</param>
+    private bool CheckField(string error, object fieldToCheck)
+    {
+        bool valid = fieldToCheck == null;
+        if (valid)
+        {
+            Debug.Log("<color=red>Error:</color>" + error + " must be set.", gameObject);
+        }
+        return valid;
     }
 
     /// <summary>
@@ -42,8 +64,11 @@ public class FeedbackManager : MonoBehaviour
         }
     }
 
-    public void CalculateAndDisplayFeedback() { 
-
+    public void CalculateAndDisplayFeedback() {
+        Dictionary<TrackableObject, float> prosentageMap = trackableObjectsManager.CalculateProsentageWatchedForSeat();
+        Feedback feedback = new Feedback(prosentageMap);
+        feedbackStory.Add(feedback);
+        overlayManager.DisplayFeedback(feedback);
     }
 
     // Update is called once per frame

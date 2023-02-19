@@ -34,6 +34,10 @@ public class ReferencePositionManager : MonoBehaviour
         trackableObjectsManager.UpdatePositionOnAllTrackableObjects(referencePositions[position].GetLocationId());
     }
 
+    public void StartEyeTracking(){
+        GetCurrentReferencePosition().StartEyeTracking();
+    }
+
     /// <summary>
     /// Checks if the defined field is set in the editor.
     /// </summary>

@@ -111,11 +111,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a066e192e73bb0547ac3d4ddce7a37ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  watched: 0
+  nameOfObject: 
   changeColor: 1
-  fixations: 0
-  fixationDuration: 0
-  averageFixationTime: 0
+  typeOfObject: 4
+  currentGaze:
+    locationID: 
+    fixations: 0
+    fixationDuration: 0
+  beingWatched: 0
+  gazeList: []
 --- !u!114 &101497098139943960
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -40,10 +40,15 @@ public abstract class RayCasterObject : MonoBehaviour
     [SerializeField, Tooltip("The last objects that was looked at.")]
     private List<TrackableObject> lastObjects;
 
-    private void Start() {
+    protected void Start() {
         currentObjectsWatched = new List<TrackableObject>();
         CheckField("Hitspot", hitSpot);
         CheckField("Reference position manager", referencePositionManager);
+        
+    }
+
+
+    public void StartTracking() {
         StartCoroutine(StartEyeTracking());
     }
 
@@ -58,10 +63,6 @@ public abstract class RayCasterObject : MonoBehaviour
         }
     }
 
-    public void ToggleIsCasting() {
-        casting = !casting;
-    }
-
     /// <summary>
     /// Sets if the raygun shoud cast.
     /// </summary>
@@ -70,6 +71,10 @@ public abstract class RayCasterObject : MonoBehaviour
         this.casting = isCasting;
     }
 
+    /// <summary>
+    /// Checks if this object is casting.
+    /// </summary>
+    /// <returns>true if the object is casting. False otherwise.</returns>
     public bool IsCasting()
     {
         return casting;
@@ -83,49 +88,71 @@ public abstract class RayCasterObject : MonoBehaviour
 
     protected abstract Vector3 FindDirection();
 
+    /// <summary>
+    /// Starts the eye tracking in the application. 
+    /// </summary>
+    /// <returns>the time to wait</returns>
     private IEnumerator StartEyeTracking() {
-        yield return new WaitForSeconds(0.5f);
-        while(casting)
+        while(true)
         {
-            //Makes ray
-            RaycastHit[] raycastHits;
-            Vector3 direction = FindDirection();
-            Vector3 position = FindPosition();
-            raycastHits = shootMutliple ? ShootMultipleObjects(position, direction) : ShootSingleObject(position, direction);
+            if (casting) {
+                //Makes ray
+                RaycastHit[] raycastHits;
+                Vector3 direction = FindDirection();
+                Vector3 position = FindPosition();
+                raycastHits = shootMutliple ? ShootMultipleObjects(position, direction) : ShootSingleObject(position, direction);
 
-            if (raycastHits.Any())
-            {
-                foreach (RaycastHit raycastHit in raycastHits)
+                if (raycastHits.Any())
                 {
-                    WatchObject(raycastHit);
+                    foreach (RaycastHit raycastHit in raycastHits)
+                    {
+                        WatchObject(raycastHit);
+                    }
+                    UnwatchObjects(currentObjectsWatched);
+                    VisualizeHitpoint(raycastHits.First(), position, direction);
                 }
-                UnwatchObjects(currentObjectsWatched);
-                VisualizeHitpoint(raycastHits.First(), position, direction);
+                else
+                {
+                    UnwatchObjects();
+                }
+                currentObjectsWatched.Clear();
             }
-            else
-            {
-                UnwatchObjects();
-            }
-            currentObjectsWatched.Clear();
+            MonoBehaviour.print("Watching");
+            
             yield return new WaitForSeconds(1 / frequency);
         }
         MonoBehaviour.print("Eyetracking has stopped.");
     }
 
+    /// <summary>
+    /// Watches the object that was hit if its not null.
+    /// </summary>
+    /// <param name="raycastHit">the raycast hit</param>
     private void WatchObject(RaycastHit raycastHit) {
         TrackableObject trackObject = raycastHit.collider.gameObject.GetComponent<TrackableObject>();
         if (trackObject != null) {
             ObserveObject(trackObject);
-            
         }
     }
 
+    /// <summary>
+    /// Shoots multiple objects in a line.
+    /// </summary>
+    /// <param name="position">the starting position</param>
+    /// <param name="direction">the direction</param>
+    /// <returns></returns>
     private RaycastHit[] ShootMultipleObjects(Vector3 position, Vector3 direction) {
         //Shoots ray
         RaycastHit[] hits = Physics.SphereCastAll(position, sphereSize, direction, range);//Physics.RaycastAll(position, direction, range);
         return hits;
     }
 
+    /// <summary>
+    /// Shoots a single object with the raycast.
+    /// </summary>
+    /// <param name="position">the starting position</param>
+    /// <param name="direction">the direction</param>
+    /// <returns></returns>
     private RaycastHit[] ShootSingleObject(Vector3 position, Vector3 direction) {
         //Shoots ray
         RaycastHit raycastHit;

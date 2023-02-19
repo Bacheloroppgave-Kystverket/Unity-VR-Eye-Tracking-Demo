@@ -91,6 +91,7 @@ MonoBehaviour:
   referencePositions: []
   position: 0
   playerObject: {fileID: 0}
+  trackableObjectsManager: {fileID: 8436988269822594764}
 --- !u!1 &6445882638833038917
 GameObject:
   m_ObjectHideFlags: 0

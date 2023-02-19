@@ -111,11 +111,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a066e192e73bb0547ac3d4ddce7a37ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  watched: 0
+  nameOfObject: 
   changeColor: 1
-  fixations: 0
-  fixationDuration: 0
-  averageFixationTime: 0
+  typeOfObject: 2
+  currentGaze:
+    locationID: 
+    fixations: 0
+    fixationDuration: 0
+  beingWatched: 0
+  gazeList: []
 --- !u!114 &4407849995661954756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5050848482249049957, guid: 5e8fd5fa122a4874f89a352cdba740c7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.25
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 5050848482249049957, guid: 5e8fd5fa122a4874f89a352cdba740c7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

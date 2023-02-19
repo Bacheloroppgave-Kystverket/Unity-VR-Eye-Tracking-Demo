@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -30,6 +31,7 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
     private List<TrackableObserver> observers = new List<TrackableObserver>();
 
 
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -37,22 +39,22 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
         currentGaze = null;
         gameObject.tag = typeof(TrackableObject).Name;
         gazeList = new List<GazeData>();
+        gameObject.layer = (int)PrefixLayer.Eyetracking;
         if (typeOfObject == TrackableTypes.UNDEFINED) {
             Debug.Log("<color=red>Error:</color>" + "Type of object must be defined for " + gameObject.name, gameObject);
         }
-        gameObject.layer = 7;
         
     }
 
     // Update is called once per frame
-    void Update(){
+    void Update() {
         if (beingWatched) {
             currentGaze.AddTime();
             UpdateObserversFixationDuration();
         }
     }
 
-    
+
 
     /// <summary>
     /// Gets the current gaze data.
@@ -62,6 +64,27 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
         return currentGaze;
     }
 
+    /// <summary>
+    /// Gets the name of the object
+    /// </summary>
+    /// <returns>the name of the object</returns>
+    public string GetNameOfObject() { 
+        return nameOfObject;
+    }
+
+    /// <summary>
+    /// Gets the gaze data that has that location id.
+    /// </summary>
+    /// <param name="locationID">the location id</param>
+    /// <returns>the gaze data that matches that location id. Is null if location does not exsist</returns>
+    public GazeData GetGazeDataForPosition(string locationID) {
+        return gazeList.Find(gazeData => gazeData.GetLocationID() == locationID);
+    }
+
+    /// <summary>
+    /// Sets the new position that this trackable object should watch.
+    /// </summary>
+    /// <param name="locationID">the new location ID</param>
     public void SetPosition(string locationID) {
 
         if (locationID != null && locationID != "")

@@ -74,6 +74,24 @@ public class TrackableObjectsManager : MonoBehaviour
         trackableObjects.ForEach(trackableObject => trackableObject.CalculateCurrentAverageFixationDuration(referencePositionManager.GetCurrentReferencePosition().GetLocationId()));
     }
 
+
+    public Dictionary<TrackableObject, float> CalculateProsentageWatchedForSeat() {
+        Dictionary<TrackableObject, float> prosentageWatchedMap = new Dictionary<TrackableObject, float>();
+        ReferencePosition referencePosition = referencePositionManager.GetCurrentReferencePosition();
+        float timeForPosition = referencePosition.GetPositionDuration();
+        foreach (TrackableObject trackableObject in trackableObjects) {
+            GazeData gazeData = trackableObject.GetGazeDataForPosition(referencePosition.GetLocationId());
+            if (gazeData != null)
+            {
+                prosentageWatchedMap.Add(trackableObject, gazeData.GetFixationDuration()/timeForPosition);
+            }
+            else {
+                prosentageWatchedMap.Add(trackableObject, 0);
+            }
+        }
+        return prosentageWatchedMap;
+    }
+
     // Update is called once per frame
     void Update()
     {

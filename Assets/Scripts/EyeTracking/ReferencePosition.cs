@@ -20,6 +20,10 @@ public class ReferencePosition : MonoBehaviour
         gameObject.tag = typeof(ReferencePosition).Name;
     }
 
+    public void StartEyeTracking() {
+        positionDuration = 0;
+    }
+
 
     /// <summary>
     /// Gets the location ID.

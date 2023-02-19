@@ -1,54 +1,55 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
-/// <summary>
-/// Represents feedback that a user is given per object.
-/// </summary>
-[System.Serializable]
-public class Feedback{
-
-    [SerializeField]
-    private string feedbackName;
-
-    [SerializeField, Tooltip("The trackable object that should have feedback")]
-    private TrackableObject trackableObject;
-
-    [SerializeField, TextArea, Tooltip("The feedback that should be given to the user")]
-    private string feedbackText;
-
-    [SerializeField, Range(0.01f, 0.99f), Tooltip("The threshold that the object should be looked at")]
-    private float threshold = 0.5f;
+[Serializable]
+public class Feedback : MonoBehaviour
+{
+    [SerializeField, Tooltip("The hashmap itself")]
+    private HashmapVisualiser<TrackableObject, float> hashmapVisualiser;
 
     /// <summary>
     /// Makes an instance of the feedback object.
     /// </summary>
-    /// <param name="trackableObject"></param>
-    public Feedback(TrackableObject trackableObject) {
-        this.trackableObject = trackableObject;
+    /// <param name="dictionary">the dictionary with the values.</param>
+    public Feedback(Dictionary<TrackableObject, float> dictionary) {
+        hashmapVisualiser = new HashmapVisualiser<TrackableObject, float>(dictionary);
     }
 
     /// <summary>
-    /// Gets the threshold
+    /// Gets the feedback as a basic string.
     /// </summary>
-    /// <returns>the threshold</returns>
-    public float GetThreshold() {
-        return threshold;
+    /// <returns></returns>
+    public string GetFeedbackAsString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        IEnumerator<TrackableObject> it = GetTrackableObjectIterator();
+        while (it.MoveNext()) {
+            TrackableObject currentObject = it.Current;
+            stringBuilder.Append(currentObject.GetNameOfObject());
+            stringBuilder.Append(" : ");
+            stringBuilder.AppendLine(GetTrackableObjectValue(currentObject).ToString());
+        }
+
+        return stringBuilder.ToString();
     }
 
     /// <summary>
-    /// Gets the feedback text.
+    /// Gets the iterator for the keys.
     /// </summary>
-    /// <returns>the feedback text</returns>
-    public string GetFeedbackText() {
-        return feedbackText;
+    /// <returns>the iterator</returns>
+    private IEnumerator<TrackableObject> GetTrackableObjectIterator() {
+        return hashmapVisualiser.GetKeyIterator();
     }
 
     /// <summary>
-    /// Gets the trackable object.
+    /// Gets the value of the trackable object.
     /// </summary>
-    /// <returns>the trackable object</returns>
-    public TrackableObject GetTrackableObject() {
-        return trackableObject;
+    /// <param name="trackableObject">the trackable object</param>
+    /// <returns>the corrensponding value</returns>
+    private float GetTrackableObjectValue(TrackableObject trackableObject)
+    {
+        return hashmapVisualiser.GetValue(trackableObject);
     }
 }
