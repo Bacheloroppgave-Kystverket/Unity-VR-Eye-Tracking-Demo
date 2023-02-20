@@ -11,10 +11,21 @@ public class SeatTeleporter : MonoBehaviour {
     [Tooltip("The player that will be teleported on activation")]
     private GameObject player;
 
+    [SerializeField]
+    [Tooltip("The canvas that will be displayed while aimed at")]
+    private Canvas displayCanvas;
+
+    [SerializeField]
+    [Tooltip("The maximum amount of opacity the collider will have on selection")]
+    [Range(0f,1f)]
     private float maxAlpha = 0.6f;
+
+    private float timeToChange = 0.3f;
+
     // Start is called before the first frame update
     void Start()
     {
+        HideCollider();
     }
 
     // Update is called once per frame
@@ -26,15 +37,21 @@ public class SeatTeleporter : MonoBehaviour {
     public void ShowCollider() {
         StopAllCoroutines();
         GetComponent<MeshRenderer>().enabled = true;
-        StartCoroutine(GraduallyChangeColliderAlpha(maxAlpha, 0.3f));
+        displayCanvas.enabled = true;
+        StartCoroutine(GraduallyChangeColliderAlpha(maxAlpha, timeToChange));
     }
 
 
     public void HideCollider() {
         StopAllCoroutines();
         StartCoroutine(FadeToDisabledCollider());
+        displayCanvas.enabled = false;
     }
 
+
+    /*
+     * Sets the alpha (opacity) of a the current material. 
+     */
     private void SetMaterialAlpha(float alpha) {
         GetComponent<MeshRenderer>().enabled = true;
         Material seatMaterial = GetComponent<Renderer>().material;
@@ -44,7 +61,7 @@ public class SeatTeleporter : MonoBehaviour {
     }
 
     private IEnumerator FadeToDisabledCollider() {
-        yield return StartCoroutine(GraduallyChangeColliderAlpha(0, 0.3f));
+        yield return StartCoroutine(GraduallyChangeColliderAlpha(0, timeToChange));
         GetComponent<MeshRenderer>().enabled = false;
     }
 
