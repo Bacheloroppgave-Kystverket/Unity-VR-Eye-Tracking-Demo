@@ -8,11 +8,8 @@ using UnityEngine;
 [System.Serializable]
 public class FeedbackConfiguration{
 
-    [SerializeField]
-    private string feedbackName;
-
     [SerializeField, Tooltip("The trackable object that should have feedback")]
-    private TrackableObject trackableObject;
+    private TrackableType trackableObject;
 
     [SerializeField, Range(0.01f, 0.99f), Tooltip("The threshold that the object should be looked at")]
     private float threshold = 0.5f;
@@ -21,7 +18,7 @@ public class FeedbackConfiguration{
     /// Makes an instance of the feedback object.
     /// </summary>
     /// <param name="trackableObject"></param>
-    public FeedbackConfiguration(TrackableObject trackableObject) {
+    public FeedbackConfiguration(TrackableType trackableObject) {
         this.trackableObject = trackableObject;
     }
 
@@ -37,7 +34,7 @@ public class FeedbackConfiguration{
     /// Gets the trackable object.
     /// </summary>
     /// <returns>the trackable object</returns>
-    public TrackableObject GetTrackableObject() {
+    public TrackableType GetTrackableObject() {
         return trackableObject;
     }
 }

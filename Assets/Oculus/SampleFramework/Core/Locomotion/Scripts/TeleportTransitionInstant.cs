@@ -11,12 +11,12 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// This transition will move the player with no other side effects.
+/// This transition will move the rayCasterObject with no other side effects.
 /// </summary>
 public class TeleportTransitionInstant : TeleportTransition
 {
     /// <summary>
-    /// When the teleport state is entered, simply move the player to the new location
+    /// When the teleport state is entered, simply move the rayCasterObject to the new location
     /// without any delay or other side effects.
     /// </summary>
     protected override void LocomotionTeleportOnEnterStateTeleporting()

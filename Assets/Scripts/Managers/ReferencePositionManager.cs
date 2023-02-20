@@ -5,37 +5,27 @@ using UnityEngine;
 
 public class ReferencePositionManager : MonoBehaviour
 {
-    [Header("Reference position")]
-    [SerializeField, Tooltip("This list will populate itself with all the objects once the session starts")]
-    private List<ReferencePosition> referencePositions = new List<ReferencePosition>();
-
-    [SerializeField]
-    private int position = 0;
-
-    [Header("Player object")]
-    [SerializeField]
+    [SerializeField, Tooltip("The player object")]
     private GameObject playerObject;
+
+    [SerializeField, Tooltip("Set to true if eyetracking is active. False otherwise.")]
+    private bool currentlyTracking;
 
     [SerializeField, Tooltip("The trackable objects manager.")]
     private TrackableObjectsManager trackableObjectsManager;
 
+    [SerializeField, Tooltip("The session manager")]
+    private SessionManager sessionManager;
+
+    [SerializeField, Tooltip("Position")]
+    private int position;
+
     // Start is called before the first frame update
     void Start()
     {
-        GameObject[] referenceObjects = GameObject.FindGameObjectsWithTag(typeof(ReferencePosition).Name);
-        foreach (GameObject rfObject in referenceObjects.Reverse())
-        {
-            ReferencePosition referencePosition = rfObject.GetComponent<ReferencePosition>();
-            referencePositions.Add(referencePosition);
-        }
         CheckField("Player", playerObject);
-        CheckIfListIsValid("Reference positions", referencePositions.Any());
         CheckField("Trackable Object Manager", trackableObjectsManager);
-        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(referencePositions[position].GetLocationId());
-    }
-
-    public void StartEyeTracking(){
-        GetCurrentReferencePosition().StartEyeTracking();
+        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetLocationId());
     }
 
     /// <summary>
@@ -71,23 +61,34 @@ public class ReferencePositionManager : MonoBehaviour
     /// </summary>
     /// <returns>the current reference position</returns>
     public ReferencePosition GetCurrentReferencePosition() {
-        return referencePositions[position];
+        return sessionManager.GetSession().GetReferencePositions()[position];
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetCurrentReferencePosition().AddTime();
+        if (currentlyTracking) {
+            GetCurrentReferencePosition().AddTime();
+        }
     }
 
     /// <summary>
     /// Goes to the next reference position.
     /// </summary>
-    public void NextPosition()
-    {
-        position = (position + 1) % referencePositions.Count;
-        MonoBehaviour.print("Position: " + position);
+    public void NextPosition(){
+        position = (position + 1) % sessionManager.GetSession().GetReferencePositions().Count;
         playerObject.gameObject.transform.position = GetCurrentReferencePosition().gameObject.transform.position;
         trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetLocationId());
+    }
+
+    /// <inheritdoc/>
+    public void StartEyeTracking()
+    {
+        currentlyTracking = true;
+    }
+
+    /// <inheritdoc/>
+    public void StopEyeTracking(){
+        currentlyTracking = false;
     }
 }

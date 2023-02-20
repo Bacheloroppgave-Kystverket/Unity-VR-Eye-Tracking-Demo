@@ -14,7 +14,7 @@ using UnityEngine.EventSystems;
 
 /// <summary>
 /// This target handler simply returns any location that is detected by the aim collision tests.
-/// Essentially, any space the player will fit will be a valid teleport destination.
+/// Essentially, any space the rayCasterObject will fit will be a valid teleport destination.
 /// </summary>
 public class TeleportTargetHandlerPhysical : TeleportTargetHandler
 {

@@ -3,47 +3,63 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 /// <summary>
 /// Represents a session that a user is doing each time they put on the headset.
 /// </summary>
 public class SessionManager : MonoBehaviour
 {
-    [SerializeField]
-    private DateTime currentDate = DateTime.Now;
+    [SerializeField, Tooltip("The session that this is.")]
+    private Session session;
 
-    [SerializeField]
-    private string userID;
-
-    [SerializeField]
-    private float sessionTime;
-
-    [SerializeField]
-    private string locationId;
-
-    [SerializeField]
+    [SerializeField, Tooltip("The main raycaster object")]
     private RayCasterObject rayCasterObject;
 
-    [Space(10), Header("Managers")]
     [SerializeField]
     private ReferencePositionManager referencePositionManager;
 
-    [SerializeField]
-    private TrackableObjectsManager trackableObjectsManager;
-
     // Start is called before the first frame update
     void Start() {
-
-        CheckStringField("User ID", userID);
-        CheckField("Reference position manager", referencePositionManager);
-        CheckField("Trackable Objects Manager", trackableObjectsManager);
+        CheckField("Session", session);
         CheckField("Raycaster object", rayCasterObject);
     }
 
+    /// <summary>
+    /// Checks if the list has any elements.
+    /// </summary>
+    /// <param name="error">the error to display</param>
+    /// <param name="hasAny">true if the list has any. False otherwise</param>
+    private void CheckIfListIsValid(string error, bool hasAny)
+    {
+        if (!hasAny)
+        {
+            Debug.Log("<color=red>Error:</color>" + error + " cannot be emtpy.", gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Starts the eye tracking.
+    /// </summary>
     public void StartEyeTracking() {
         referencePositionManager.StartEyeTracking();
-        rayCasterObject.StartTracking();
+        session.GetRayCasterObject().StartTracking();
     }
+
+    /// <summary>
+    /// Stops the eye tracking.
+    /// </summary>
+    public void StopEyeTracking() {
+        referencePositionManager.StopEyeTracking();
+        session.GetRayCasterObject().StopEyeTracking();
+
+    }
+
+    /// <summary>
+    /// Gets the session.
+    /// </summary>
+    /// <returns>the current session</returns>
+    public Session GetSession() => session;
 
     /// <summary>
     /// Checks if a string field is valid.
@@ -51,7 +67,7 @@ public class SessionManager : MonoBehaviour
     /// <param name="error">the error</param>
     /// <param name="stringToCheck">the string to check</param>
     private void CheckStringField(string error,string stringToCheck) {
-        if (!CheckField(error, stringToCheck) && userID.Trim() == "") {
+        if (!CheckField(error, stringToCheck) && stringToCheck.Trim() == "") {
             Debug.Log("<color=red>Error:</color>" + error + " cannot be empty for " + gameObject.name, gameObject);
         }
     }
@@ -69,15 +85,5 @@ public class SessionManager : MonoBehaviour
         return valid;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        sessionTime += Time.deltaTime;
-    }
 
-    /// <summary>
-    /// Gets the date and time.
-    /// </summary>
-    /// <returns>the date time</returns>
-    public DateTime GetDateTime() => currentDate;
 }

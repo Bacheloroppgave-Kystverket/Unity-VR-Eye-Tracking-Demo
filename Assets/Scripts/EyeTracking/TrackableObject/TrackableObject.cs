@@ -15,7 +15,7 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
     private bool changeColor = true;
 
     [SerializeField, Tooltip("Defines the type of object that we are looking at.")]
-    private TrackableTypes typeOfObject = TrackableTypes.UNDEFINED;
+    private TrackableType trackableType = TrackableType.UNDEFINED;
 
     [Space(10), Header("Debug fields")]
     [SerializeField, Tooltip("The current object that is being watched.")]
@@ -40,7 +40,7 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
         gameObject.tag = typeof(TrackableObject).Name;
         gazeList = new List<GazeData>();
         gameObject.layer = (int)PrefixLayer.Eyetracking;
-        if (typeOfObject == TrackableTypes.UNDEFINED) {
+        if (trackableType == TrackableType.UNDEFINED) {
             Debug.Log("<color=red>Error:</color>" + "Type of object must be defined for " + gameObject.name, gameObject);
         }
         
@@ -52,6 +52,14 @@ public class TrackableObject : MonoBehaviour, Observable<TrackableObserver>
             currentGaze.AddTime();
             UpdateObserversFixationDuration();
         }
+    }
+
+    /// <summary>
+    /// Gets the trackable object type
+    /// </summary>
+    /// <returns>the trackable object type</returns>
+    public TrackableType GetTrackableType() {
+        return trackableType;
     }
 
 

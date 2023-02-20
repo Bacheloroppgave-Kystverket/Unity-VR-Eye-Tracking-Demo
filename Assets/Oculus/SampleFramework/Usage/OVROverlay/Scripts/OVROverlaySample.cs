@@ -312,7 +312,7 @@ namespace OculusSampleFramework
 
 
         /// <summary>
-        /// Usage: block main thread with an empty for loop and generate a bunch of cubes around the player.
+        /// Usage: block main thread with an empty for loop and generate a bunch of cubes around the rayCasterObject.
         /// </summary>
         void SimulateLevelLoad()
         {

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TrackableTypes{
+public enum TrackableType
+{
 
     /// <summary>
     /// Represents objects that are walls

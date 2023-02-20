@@ -33,12 +33,12 @@ ways, depending on bool m_useSpherecast:
 true: cast a sphere of radius m_spherecastRadius at distance m_maxGrabDistance. Select
 the first collision.
 false: from all objects within the grab volume, select the closest object that can be 
-hit by a ray from the player's hand.
+hit by a ray from the rayCasterObject's hand.
 
 IMPORTANT NOTE: if you change the radius of the trigger volume on the 
 OVRPlayerController, you must ensure the spherecast or the grab volume on the grabbers
 is big enough to reach all objects within that radius! Keep in mind the hand may be a
-little behind or two the side of the player, so you need to make it somewhat larger
+little behind or two the side of the rayCasterObject, so you need to make it somewhat larger
 than the radius. There is no major concern with making it too large (aside from minor
 performance questions), because if an object is not in range according to the
 OVRPlayerController's trigger volume, it will not be considered for grabbing.

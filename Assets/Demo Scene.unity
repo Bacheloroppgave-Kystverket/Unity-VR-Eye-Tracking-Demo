@@ -863,6 +863,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 466131154}
     m_Modifications:
+    - target: {fileID: 2468798953153506626, guid: 08acf2c205c134243879c92dd22db9c6, type: 3}
+      propertyPath: trackableType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2468798953908173341, guid: 08acf2c205c134243879c92dd22db9c6, type: 3}
       propertyPath: m_Name
       value: SphereObservable
@@ -1498,6 +1502,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CubeObservable
       objectReference: {fileID: 0}
+    - target: {fileID: 7480628301431080933, guid: 21d3e60b11629e54a9126e22fd6fc80b, type: 3}
+      propertyPath: trackableType
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 21d3e60b11629e54a9126e22fd6fc80b, type: 3}
 --- !u!1 &1278783048
@@ -1965,6 +1973,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 466131154}
     m_Modifications:
+    - target: {fileID: 9105947890162214380, guid: fb58ff7910f763142a54e22d9559161b, type: 3}
+      propertyPath: trackableType
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 9105947890819276356, guid: fb58ff7910f763142a54e22d9559161b, type: 3}
       propertyPath: m_Name
       value: LongCubeObservable (1)
@@ -2080,6 +2092,10 @@ PrefabInstance:
     - target: {fileID: 6990208808353139367, guid: 370f68a4e6848d44eb2f3fabae86d6f5, type: 3}
       propertyPath: m_Name
       value: Mirror
+      objectReference: {fileID: 0}
+    - target: {fileID: 6990208809916051416, guid: 370f68a4e6848d44eb2f3fabae86d6f5, type: 3}
+      propertyPath: trackableType
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 370f68a4e6848d44eb2f3fabae86d6f5, type: 3}
@@ -2392,6 +2408,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6990208808353139366, guid: 370f68a4e6848d44eb2f3fabae86d6f5, type: 3}
   m_PrefabInstance: {fileID: 1729442083}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1970258635 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4555964214083523803, guid: aacb84959268f724d9659ad633fee164, type: 3}
+  m_PrefabInstance: {fileID: 1177755607}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fa074891b288d049ae10d09aeb8ebfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2061801404
 GameObject:
   m_ObjectHideFlags: 0
@@ -2476,9 +2503,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6445882639102257287}
-        m_TargetAssemblyTypeName: ReferencePositionManager, Assembly-CSharp
-        m_MethodName: NextPosition
+      - m_Target: {fileID: 1879842500}
+        m_TargetAssemblyTypeName: SessionManager, Assembly-CSharp
+        m_MethodName: StartEyeTracking
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2595,6 +2622,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6445882638833038914, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: rayCasterObject
+      value: 
+      objectReference: {fileID: 1970258635}
     - target: {fileID: 6445882639794712666, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: m_Name
       value: Managers
@@ -2705,28 +2736,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6445882639864501231, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: feedbackConfigurations.Array.data[0].trackableObject
-      value: 
-      objectReference: {fileID: 329759473}
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6445882639864501231, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: feedbackConfigurations.Array.data[1].trackableObject
-      value: 
-      objectReference: {fileID: 406849387}
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6445882639864501231, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: feedbackConfigurations.Array.data[2].trackableObject
-      value: 
-      objectReference: {fileID: 630989413}
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6445882639864501231, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: feedbackConfigurations.Array.data[3].trackableObject
-      value: 
-      objectReference: {fileID: 1666170939}
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6445882639864501231, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: feedbackConfigurations.Array.data[4].trackableObject
-      value: 
-      objectReference: {fileID: 558712042}
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6445882639864501231, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: feedbackConfigurations.Array.data[5].trackableObject
-      value: 
-      objectReference: {fileID: 1521734059}
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6502238936827432791, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: playerObject
       value: 
@@ -2755,6 +2786,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 466131154}
     m_Modifications:
+    - target: {fileID: 1521734059, guid: 09b55f0ffb705b249b15d2efcb0749cf, type: 3}
+      propertyPath: trackableType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6641999938982181116, guid: 09b55f0ffb705b249b15d2efcb0749cf, type: 3}
       propertyPath: m_Name
       value: Wall
@@ -2859,6 +2894,10 @@ PrefabInstance:
     - target: {fileID: 4029262886347236247, guid: 3750faf45918e0e4ab2b4f146211af6c, type: 3}
       propertyPath: m_Name
       value: Window
+      objectReference: {fileID: 0}
+    - target: {fileID: 6296302850915285412, guid: 3750faf45918e0e4ab2b4f146211af6c, type: 3}
+      propertyPath: trackableType
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3750faf45918e0e4ab2b4f146211af6c, type: 3}

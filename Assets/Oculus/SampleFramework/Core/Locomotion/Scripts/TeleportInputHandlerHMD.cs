@@ -11,7 +11,7 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// When this component is enabled, the player will be able to aim and trigger teleport behavior using HMD aiming.
+/// When this component is enabled, the rayCasterObject will be able to aim and trigger teleport behavior using HMD aiming.
 /// </summary>
 public class TeleportInputHandlerHMD : TeleportInputHandler
 {

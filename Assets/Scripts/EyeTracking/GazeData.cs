@@ -9,13 +9,13 @@ using UnityEngine;
 [Serializable]
 public class GazeData{
 
-    [SerializeField]
+    [SerializeField, Tooltip("The location of the gaze data")]
     private string locationID;
 
-    [SerializeField]
+    [SerializeField, Tooltip("The amount of times this object has been looked at")]
     private int fixations;
 
-    [SerializeField]
+    [SerializeField, Tooltip("The amount of time all the fixations have been in total.")]
     private float fixationDuration;
 
     /// <summary>

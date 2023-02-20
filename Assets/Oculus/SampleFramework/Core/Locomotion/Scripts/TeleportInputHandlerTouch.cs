@@ -13,7 +13,7 @@ using System.Collections;
 using UnityEngine.Assertions;
 
 /// <summary>
-/// When this component is enabled, the player will be able to aim and trigger teleport behavior using Oculus Touch controllers.
+/// When this component is enabled, the rayCasterObject will be able to aim and trigger teleport behavior using Oculus Touch controllers.
 /// </summary>
 public class TeleportInputHandlerTouch : TeleportInputHandlerHMD
 {

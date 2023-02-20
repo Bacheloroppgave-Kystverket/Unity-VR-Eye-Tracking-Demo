@@ -20,14 +20,57 @@ public class HashmapVisualiser<K, V>
 
     private Dictionary<K, V> dictionary;
 
+    private bool visualizeKeysAndValues;
+
+    /// <summary>
+    /// Makes an instance of the hashmap visualizer
+    /// </summary>
+    /// <param name="visualizeKeysAndValues">true if the hashmap should show in editor. False otherwise</param>
+    public HashmapVisualiser(bool visualizeKeysAndValues) {
+        dictionary = new Dictionary<K, V>();
+        this.visualizeKeysAndValues = visualizeKeysAndValues;
+        if (visualizeKeysAndValues) {
+            keys = new List<K>();
+            values = new List<V>();
+        }
+    }
+
     /// <summary>
     /// Makes an instance of the hashmap visualizer
     /// </summary>
     /// <param name="dictionary">the dictionary</param>
-    public HashmapVisualiser(Dictionary<K, V> dictionary) {
+    /// <param name="visualizeKeysAndValues">true if the keys and values should appear in editor. False otherwise</param>
+    public HashmapVisualiser(Dictionary<K, V> dictionary, bool visualizeKeysAndValues) {
         this.dictionary = dictionary;
-        keys = dictionary.Keys.ToList();
-        values = dictionary.Values.ToList();
+        if (visualizeKeysAndValues) {
+            keys = dictionary.Keys.ToList();
+            values = dictionary.Values.ToList();
+        }
+        this.visualizeKeysAndValues = visualizeKeysAndValues;
+    }
+
+    /// <summary>
+    /// Adds a new key and value to the map.
+    /// </summary>
+    /// <param name="key">the new key</param>
+    /// <param name="value">the new value</param>
+    public void Add(K key, V value) {
+        if (!CheckForKey(key)) { 
+            dictionary.Add(key, value);
+            if (visualizeKeysAndValues) {
+                keys.Add(key);
+                values.Add(value);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Checks if the map contains the key.
+    /// </summary>
+    /// <param name="key">the key to check for</param>
+    /// <returns>true if the key is in the map. False otherwise.</returns>
+    public bool CheckForKey(K key) {
+        return dictionary.ContainsKey(key);
     }
 
     /// <summary>

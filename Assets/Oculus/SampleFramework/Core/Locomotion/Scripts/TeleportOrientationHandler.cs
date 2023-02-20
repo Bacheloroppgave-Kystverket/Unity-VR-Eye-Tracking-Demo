@@ -12,7 +12,7 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// The orientation handler is what determines the final rotation of the player after the teleport.
+/// The orientation handler is what determines the final rotation of the rayCasterObject after the teleport.
 /// </summary>
 public abstract class TeleportOrientationHandler : TeleportSupport
 {
@@ -70,15 +70,15 @@ public abstract class TeleportOrientationHandler : TeleportSupport
 	public enum OrientationModes
 	{
 		/// <summary>
-		/// When the player teleports, they will match the orientation of the destination indicator without adjusting their HMD's 
+		/// When the rayCasterObject teleports, they will match the orientation of the destination indicator without adjusting their HMD's 
 		/// orientation.  
 		/// </summary>
 		HeadRelative,
 
 		/// <summary>
-		/// When the player teleports, the player will be oriented so that when they turn the HMD to match the destination indicator,
+		/// When the rayCasterObject teleports, the rayCasterObject will be oriented so that when they turn the HMD to match the destination indicator,
 		/// they will be facing forward with respect to the Oculus sensor setup. They will not immediately face the direction of the 
-		/// indicator, and will need to rotated the HMD view to match the indicated direction. Once rotated, the player will be facing 
+		/// indicator, and will need to rotated the HMD view to match the indicated direction. Once rotated, the rayCasterObject will be facing 
 		/// forward to the Oculus sensors.
 		/// </summary>
 		ForwardFacing

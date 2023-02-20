@@ -87,9 +87,9 @@ namespace OculusSampleFramework
         {
             base.Start();
 
-            // Basic hack to guess at max grab distance based on player size.
+            // Basic hack to guess at max grab distance based on rayCasterObject size.
             // Note that there's no major downside to making this value too high, as objects
-            // outside the player's grabbable trigger volume will not be eligible targets regardless.
+            // outside the rayCasterObject's grabbable trigger volume will not be eligible targets regardless.
             Collider sc = m_player.GetComponentInChildren<Collider>();
             if(sc != null)
             {

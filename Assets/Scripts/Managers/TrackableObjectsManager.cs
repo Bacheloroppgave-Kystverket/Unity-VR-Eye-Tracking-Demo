@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,28 +7,29 @@ using UnityEngine;
 /// <summary>
 /// Manages all the trackable objects in the simulation.
 /// </summary>
-public class TrackableObjectsManager : MonoBehaviour
-{
+public class TrackableObjectsManager : MonoBehaviour{
+
     [SerializeField, Tooltip("This list will populate itself with all the objects once the session starts")]
     private List<TrackableObject> trackableObjects = new List<TrackableObject>();
 
     [Space(10), Header("Managers")]
-    [SerializeField]
+    [SerializeField, Tooltip("The session manager")]
+    private SessionManager sessionManager;
+
+    [SerializeField, Tooltip("The reference position manager")]
     private ReferencePositionManager referencePositionManager;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         trackableObjects = new List<TrackableObject>();
         GameObject[] trackableObjs = GameObject.FindGameObjectsWithTag(typeof(TrackableObject).Name);
-        MonoBehaviour.print(trackableObjs.Count());
-        MonoBehaviour.print(typeof(TrackableObject).Name);
         foreach (GameObject trackObject in trackableObjs)
         {
             trackableObjects.Add(trackObject.GetComponent<TrackableObject>());
         }
+        
         CheckIfListIsValid("Trackable objects", trackableObjects.Any());
-        CheckField("Reference position manager", referencePositionManager);
+        
     }
 
     /// <summary>
@@ -75,26 +77,7 @@ public class TrackableObjectsManager : MonoBehaviour
     }
 
 
-    public Dictionary<TrackableObject, float> CalculateProsentageWatchedForSeat() {
-        Dictionary<TrackableObject, float> prosentageWatchedMap = new Dictionary<TrackableObject, float>();
-        ReferencePosition referencePosition = referencePositionManager.GetCurrentReferencePosition();
-        float timeForPosition = referencePosition.GetPositionDuration();
-        foreach (TrackableObject trackableObject in trackableObjects) {
-            GazeData gazeData = trackableObject.GetGazeDataForPosition(referencePosition.GetLocationId());
-            if (gazeData != null)
-            {
-                prosentageWatchedMap.Add(trackableObject, gazeData.GetFixationDuration()/timeForPosition);
-            }
-            else {
-                prosentageWatchedMap.Add(trackableObject, 0);
-            }
-        }
-        return prosentageWatchedMap;
-    }
+    
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

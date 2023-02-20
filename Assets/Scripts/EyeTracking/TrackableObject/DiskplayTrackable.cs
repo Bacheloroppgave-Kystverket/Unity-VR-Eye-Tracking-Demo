@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// Displays a trackable object.
 /// </summary>
-[RequireComponent(typeof(TrackableObject))]
+[RequireComponent(typeof(TrackableType))]
 public class DiskplayTrackable : MonoBehaviour, TrackableObserver
 {
     [SerializeField]

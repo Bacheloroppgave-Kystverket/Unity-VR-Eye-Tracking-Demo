@@ -11,8 +11,8 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// This transition will move the player to the destination over the span of a fixed amount of time.
-/// It will not adjust the orientation of the player because this is very uncomfortable.
+/// This transition will move the rayCasterObject to the destination over the span of a fixed amount of time.
+/// It will not adjust the orientation of the rayCasterObject because this is very uncomfortable.
 /// Note there is custom editor for this behavior which is used to control the warp interpolation.
 /// </summary>
 public class TeleportTransitionWarp : TeleportTransition
@@ -33,7 +33,7 @@ public class TeleportTransitionWarp : TeleportTransition
 	public AnimationCurve PositionLerp = AnimationCurve.Linear(0, 0, 1, 1);
 
 	/// <summary>
-	/// When the teleport state is entered, quickly move the player to the new location
+	/// When the teleport state is entered, quickly move the rayCasterObject to the new location
 	/// over the duration of the teleport.
 	/// </summary>
 	protected override void LocomotionTeleportOnEnterStateTeleporting()

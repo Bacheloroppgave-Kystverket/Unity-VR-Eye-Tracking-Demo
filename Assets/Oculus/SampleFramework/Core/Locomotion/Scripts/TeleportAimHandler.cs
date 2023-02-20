@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 /// <summary>
 /// TeleportAimHandler will provide a series of points in the world that represent the series of line 
-/// segments (as few as one for a laser) which the player uses to determine where they are aiming for a teleport.
+/// segments (as few as one for a laser) which the rayCasterObject uses to determine where they are aiming for a teleport.
 /// This is not the visualization of the aiming, it is merely the set of points representing the line, arc, or whatever
 /// shape makes sense for the teleport aiming mechanism which is then used to perform collision detection with the world
 /// in order to determine the final teleport target location.

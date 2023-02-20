@@ -7,23 +7,18 @@ using UnityEngine;
 /// </summary>
 public class ReferencePosition : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Tooltip("The id of the location that this represents")]
     private string locationID;
 
-    [SerializeField]
+    [SerializeField, Tooltip("The name of the location")]
     private string locationName;
 
-    [SerializeField]
+    [SerializeField, Tooltip("The time that this position has been used")]
     private float positionDuration;
 
     private void Awake() {
         gameObject.tag = typeof(ReferencePosition).Name;
     }
-
-    public void StartEyeTracking() {
-        positionDuration = 0;
-    }
-
 
     /// <summary>
     /// Gets the location ID.

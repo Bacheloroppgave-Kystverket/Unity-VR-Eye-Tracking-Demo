@@ -10,7 +10,7 @@ language governing permissions and limitations under the license.
 using UnityEngine;
 
 /// <summary>
-/// This orientation handler will aim the player at the point they aim the HMD at after they choose the teleport location.
+/// This orientation handler will aim the rayCasterObject at the point they aim the HMD at after they choose the teleport location.
 /// </summary>
 public class TeleportOrientationHandlerHMD : TeleportOrientationHandler
 {

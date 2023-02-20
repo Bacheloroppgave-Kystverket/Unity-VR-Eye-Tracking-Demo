@@ -44,12 +44,6 @@ public abstract class RayCasterObject : MonoBehaviour
         currentObjectsWatched = new List<TrackableObject>();
         CheckField("Hitspot", hitSpot);
         CheckField("Reference position manager", referencePositionManager);
-        
-    }
-
-
-    public void StartTracking() {
-        StartCoroutine(StartEyeTracking());
     }
 
     /// <summary>
@@ -93,30 +87,26 @@ public abstract class RayCasterObject : MonoBehaviour
     /// </summary>
     /// <returns>the time to wait</returns>
     private IEnumerator StartEyeTracking() {
-        while(true)
-        {
-            if (casting) {
-                //Makes ray
-                RaycastHit[] raycastHits;
-                Vector3 direction = FindDirection();
-                Vector3 position = FindPosition();
-                raycastHits = shootMutliple ? ShootMultipleObjects(position, direction) : ShootSingleObject(position, direction);
+        while (casting) {
+            //Makes ray
+            RaycastHit[] raycastHits;
+            Vector3 direction = FindDirection();
+            Vector3 position = FindPosition();
+            raycastHits = shootMutliple ? ShootMultipleObjects(position, direction) : ShootSingleObject(position, direction);
 
-                if (raycastHits.Any())
+            if (raycastHits.Any()){
+                foreach (RaycastHit raycastHit in raycastHits)
                 {
-                    foreach (RaycastHit raycastHit in raycastHits)
-                    {
-                        WatchObject(raycastHit);
-                    }
-                    UnwatchObjects(currentObjectsWatched);
-                    VisualizeHitpoint(raycastHits.First(), position, direction);
+                    WatchObject(raycastHit);
                 }
-                else
-                {
-                    UnwatchObjects();
-                }
-                currentObjectsWatched.Clear();
+                UnwatchObjects(currentObjectsWatched);
+                VisualizeHitpoint(raycastHits.First(), position, direction);
             }
+            else
+            {
+                UnwatchObjects();
+            }
+            currentObjectsWatched.Clear(); 
             MonoBehaviour.print("Watching");
             
             yield return new WaitForSeconds(1 / frequency);
@@ -217,5 +207,20 @@ public abstract class RayCasterObject : MonoBehaviour
     private void VisualizeHitpoint(RaycastHit raycastHit, Vector3 position, Vector3 direction) {
         hitSpot.transform.position = raycastHit.point;
         Debug.DrawRay(position, direction * raycastHit.distance);
+    }
+
+    /// <inheritdoc/>
+    public void StartTracking(){
+        if (!casting) {
+            casting = true;
+            MonoBehaviour.print("Starting eye tracking");
+            StartCoroutine(StartEyeTracking());
+        }
+    }
+
+    /// <inheritdoc/>
+    public void StopEyeTracking()
+    {
+        casting = false;
     }
 }
