@@ -11,7 +11,7 @@ using UnityEngine.Scripting;
 public class SessionManager : MonoBehaviour
 {
     [SerializeField, Tooltip("The session that this is.")]
-    private Session session;
+    private SessionController session;
 
     [SerializeField, Tooltip("The main raycaster object")]
     private RayCasterObject rayCasterObject;
@@ -59,7 +59,7 @@ public class SessionManager : MonoBehaviour
     /// Gets the session.
     /// </summary>
     /// <returns>the current session</returns>
-    public Session GetSession() => session;
+    public SessionController GetSession() => session;
 
     /// <summary>
     /// Checks if a string field is valid.

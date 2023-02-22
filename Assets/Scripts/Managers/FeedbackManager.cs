@@ -51,7 +51,7 @@ public class FeedbackManager : MonoBehaviour{
 
 
     public void CalculateAndDisplayProsentageFeedback() {
-        Session session = sessionManager.GetSession();
+        SessionController session = sessionManager.GetSession();
         Dictionary<TrackableType, float> prosentageMap = CalculateProsentageWatchedForSeat();
         ProsentageTypeFeedback feedback = new ProsentageTypeFeedback(prosentageMap);
         session.AddFeedback(feedback);
@@ -65,7 +65,7 @@ public class FeedbackManager : MonoBehaviour{
     public Dictionary<TrackableType, float> CalculateProsentageWatchedForSeat()
     {
         Dictionary<TrackableType, float> prosentageWatchedMap = new Dictionary<TrackableType, float>();
-        ReferencePosition referencePosition = referencePositionManager.GetCurrentReferencePosition();
+        ReferencePositionController referencePosition = referencePositionManager.GetCurrentReferencePosition();
         float timeForPosition = referencePosition.GetPositionDuration();
         IEnumerator<TrackableType> it = sortedTrackableObjectsMap.GetEnumerator();
         float totalTime = 0;
@@ -74,8 +74,8 @@ public class FeedbackManager : MonoBehaviour{
         {
             float totalTypeTime = 0;
             TrackableType trackableType = it.Current;
-            List<TrackableObject> trackableObjects = sortedTrackableObjectsMap.GetListForTrackableType(trackableType);
-            foreach (TrackableObject trackableObject in trackableObjects)
+            List<TrackableObjectController> trackableObjects = sortedTrackableObjectsMap.GetListForTrackableType(trackableType);
+            foreach (TrackableObjectController trackableObject in trackableObjects)
             {
                 totalTypeTime += trackableObject.GetGazeDataForPosition(referencePosition.GetLocationId()).GetFixationDuration();
             }

@@ -10,7 +10,7 @@ using UnityEngine;
 public class TrackableObjectsManager : MonoBehaviour{
 
     [SerializeField, Tooltip("This list will populate itself with all the objects once the session starts")]
-    private List<TrackableObject> trackableObjects = new List<TrackableObject>();
+    private List<TrackableObjectController> trackableObjects = new List<TrackableObjectController>();
 
     [Space(10), Header("Managers")]
     [SerializeField, Tooltip("The session manager")]
@@ -21,11 +21,11 @@ public class TrackableObjectsManager : MonoBehaviour{
 
     // Start is called before the first frame update
     void Start(){
-        trackableObjects = new List<TrackableObject>();
-        GameObject[] trackableObjs = GameObject.FindGameObjectsWithTag(typeof(TrackableObject).Name);
+        trackableObjects = new List<TrackableObjectController>();
+        GameObject[] trackableObjs = GameObject.FindGameObjectsWithTag(typeof(TrackableObjectController).Name);
         foreach (GameObject trackObject in trackableObjs)
         {
-            trackableObjects.Add(trackObject.GetComponent<TrackableObject>());
+            trackableObjects.Add(trackObject.GetComponent<TrackableObjectController>());
         }
         
         CheckIfListIsValid("Trackable objects", trackableObjects.Any());

@@ -4,8 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - TrackableObject
-  - ReferencePosition
+  - ReferencePositionController
+  - TrackableObjectController
   layers:
   - Default
   - TransparentFX

@@ -7,8 +7,8 @@ using UnityEngine;
 /// <summary>
 /// Displays a trackable object.
 /// </summary>
-[RequireComponent(typeof(TrackableType))]
-public class DiskplayTrackable : MonoBehaviour, TrackableObserver
+[RequireComponent(typeof(TrackableObjectController))]
+public class DisplayTrackable : MonoBehaviour, TrackableObserver
 {
     [SerializeField]
     private TextMeshPro fixationsText;
@@ -23,7 +23,7 @@ public class DiskplayTrackable : MonoBehaviour, TrackableObserver
 
     // Start is called before the first frame update
     void Start(){
-        gameObject.GetComponent<TrackableObject>().AddObserver(this);
+        gameObject.GetComponent<TrackableObjectController>().AddObserver(this);
         averageFixationDurationText.gameObject.SetActive(false);
         CheckField("Fixations text", fixationsText);
         CheckField("Fixations durations text", fixationDurationText);

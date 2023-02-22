@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6641999938740286431}
   - component: {fileID: 6641999938740286430}
   - component: {fileID: 6641999938740286417}
-  - component: {fileID: 1521734058}
-  - component: {fileID: 1521734059}
+  - component: {fileID: 8796037971363356553}
+  - component: {fileID: 3961935414565089545}
   m_Layer: 0
   m_Name: Physical wall
   m_TagString: Untagged
@@ -100,7 +100,30 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1521734058
+--- !u!114 &8796037971363356553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6641999938740286419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a066e192e73bb0547ac3d4ddce7a37ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackableObject:
+    nameOfObject: 
+    trackableType: 0
+    viewDistance: 0
+    gazeList: []
+  changeColor: 0
+  currentGaze:
+    locationID: 
+    fixations: 0
+    fixationDuration: 7.3680725
+  beingWatched: 0
+--- !u!114 &3961935414565089545
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,27 +138,6 @@ MonoBehaviour:
   fixationsText: {fileID: 3035462167423853636}
   fixationDurationText: {fileID: 3035462168293665569}
   averageFixationDurationText: {fileID: 3035462167660929355}
---- !u!114 &1521734059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6641999938740286419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a066e192e73bb0547ac3d4ddce7a37ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nameOfObject: Background wall
-  changeColor: 0
-  typeOfObject: 0
-  currentGaze:
-    locationID: 
-    fixations: 0
-    fixationDuration: 7.3680725
-  beingWatched: 0
-  gazeList: []
 --- !u!1 &6641999938982181116
 GameObject:
   m_ObjectHideFlags: 0

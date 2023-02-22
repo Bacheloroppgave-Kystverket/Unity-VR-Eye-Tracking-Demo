@@ -123,8 +123,8 @@ GameObject:
   - component: {fileID: 6990208809916051418}
   - component: {fileID: 6990208809916051419}
   - component: {fileID: 6990208809916051364}
-  - component: {fileID: 6990208809916051416}
-  - component: {fileID: 329759474}
+  - component: {fileID: 6161925371211168364}
+  - component: {fileID: 5989776392788643619}
   m_Layer: 0
   m_Name: MirrorSurface
   m_TagString: Untagged
@@ -211,7 +211,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &6990208809916051416
+--- !u!114 &6161925371211168364
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,16 +223,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a066e192e73bb0547ac3d4ddce7a37ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameOfObject: 
+  trackableObject:
+    nameOfObject: 
+    trackableType: 5
+    viewDistance: 0
+    gazeList: []
   changeColor: 0
-  typeOfObject: 5
   currentGaze:
     locationID: 
     fixations: 0
     fixationDuration: 0
   beingWatched: 0
-  gazeList: []
---- !u!114 &329759474
+--- !u!114 &5989776392788643619
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -47,8 +47,8 @@ GameObject:
   - component: {fileID: 7480628301431080930}
   - component: {fileID: 7480628301431080931}
   - component: {fileID: 7480628301431080932}
-  - component: {fileID: 7480628301431080933}
-  - component: {fileID: 630989414}
+  - component: {fileID: 3657726364512367343}
+  - component: {fileID: 1324126704255478930}
   m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
@@ -134,7 +134,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7480628301431080933
+--- !u!114 &3657726364512367343
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -146,16 +146,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a066e192e73bb0547ac3d4ddce7a37ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameOfObject: 
+  trackableObject:
+    nameOfObject: 
+    trackableType: 3
+    viewDistance: 0
+    gazeList: []
   changeColor: 1
-  typeOfObject: 3
   currentGaze:
     locationID: 
     fixations: 0
     fixationDuration: 0
   beingWatched: 0
-  gazeList: []
---- !u!114 &630989414
+--- !u!114 &1324126704255478930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

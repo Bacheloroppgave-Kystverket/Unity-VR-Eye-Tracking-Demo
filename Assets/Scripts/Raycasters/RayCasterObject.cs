@@ -35,13 +35,13 @@ public abstract class RayCasterObject : MonoBehaviour
 
     [Space(5),Header("Debugging lists")]
     [SerializeField]
-    private List<TrackableObject> currentObjectsWatched;
+    private List<TrackableObjectController> currentObjectsWatched;
 
     [SerializeField, Tooltip("The last objects that was looked at.")]
-    private List<TrackableObject> lastObjects;
+    private List<TrackableObjectController> lastObjects;
 
     protected void Start() {
-        currentObjectsWatched = new List<TrackableObject>();
+        currentObjectsWatched = new List<TrackableObjectController>();
         CheckField("Hitspot", hitSpot);
         CheckField("Reference position manager", referencePositionManager);
     }
@@ -107,7 +107,6 @@ public abstract class RayCasterObject : MonoBehaviour
                 UnwatchObjects();
             }
             currentObjectsWatched.Clear(); 
-            MonoBehaviour.print("Watching");
             
             yield return new WaitForSeconds(1 / frequency);
         }
@@ -119,7 +118,7 @@ public abstract class RayCasterObject : MonoBehaviour
     /// </summary>
     /// <param name="raycastHit">the raycast hit</param>
     private void WatchObject(RaycastHit raycastHit) {
-        TrackableObject trackObject = raycastHit.collider.gameObject.GetComponent<TrackableObject>();
+        TrackableObjectController trackObject = raycastHit.collider.gameObject.GetComponent<TrackableObjectController>();
         if (trackObject != null) {
             ObserveObject(trackObject);
         }
@@ -155,9 +154,9 @@ public abstract class RayCasterObject : MonoBehaviour
     /// Unwatches an object based on if its in the list or not.
     /// </summary>
     /// <param name="watchedObjects">a list with the newly watched objects</param>
-    private void UnwatchObjects(List<TrackableObject> watchedObjects = null) {
+    private void UnwatchObjects(List<TrackableObjectController> watchedObjects = null) {
         if (lastObjects.Any()) {
-            List<TrackableObject> objectsToRemove = new List<TrackableObject>();
+            List<TrackableObjectController> objectsToRemove = new List<TrackableObjectController>();
             if (watchedObjects != null && watchedObjects.Count > 0) {
                 lastObjects.ForEach(trackObject => {
                     if (!watchedObjects.Exists(watchObject => trackObject.GetInstanceID() == watchObject.GetInstanceID())) {
@@ -181,7 +180,7 @@ public abstract class RayCasterObject : MonoBehaviour
     /// </summary>
     /// <param name="objectToFind">the object to check against.</param>
     /// <returns>true if the object is watched. False otherwise</returns>
-    private bool CheckIfObjectIsWatched(TrackableObject objectToFind) {
+    private bool CheckIfObjectIsWatched(TrackableObjectController objectToFind) {
         return lastObjects.Exists(trackableObject => GameObject.ReferenceEquals(trackableObject, objectToFind));
     }
 
@@ -189,7 +188,7 @@ public abstract class RayCasterObject : MonoBehaviour
     /// Observes an object.
     /// </summary>
     /// <param name="trackObject">the trackable object</param>
-    private void ObserveObject(TrackableObject trackObject) {
+    private void ObserveObject(TrackableObjectController trackObject) {
         
         if (!CheckIfObjectIsWatched(trackObject)) {
             trackObject.SetBeingWatched();

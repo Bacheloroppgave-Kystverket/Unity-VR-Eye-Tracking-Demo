@@ -1,11 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Represents a position that a user can be in space. 
-/// </summary>
-public class ReferencePosition : MonoBehaviour
+[Serializable]
+public class ReferencePosition
 {
     [SerializeField, Tooltip("The id of the location that this represents")]
     private string locationID;
@@ -15,10 +14,6 @@ public class ReferencePosition : MonoBehaviour
 
     [SerializeField, Tooltip("The time that this position has been used")]
     private float positionDuration;
-
-    private void Awake() {
-        gameObject.tag = typeof(ReferencePosition).Name;
-    }
 
     /// <summary>
     /// Gets the location ID.
@@ -41,7 +36,8 @@ public class ReferencePosition : MonoBehaviour
     /// <summary>
     /// Adds time to the gaze data.
     /// </summary>
-    public void AddTime() {
+    public void AddTime(float timeToAdd)
+    {
         positionDuration += Time.deltaTime;
     }
 }

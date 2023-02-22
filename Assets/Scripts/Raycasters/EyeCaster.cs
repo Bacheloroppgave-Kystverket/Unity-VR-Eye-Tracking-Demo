@@ -15,12 +15,14 @@ public class EyeCaster : RayCasterObject
     [SerializeField, Tooltip("The second raycaster object.")]
     private GameObject eyeTwo;
 
-    private void Start()
+    void Start()
     {
         base.Start();
         CheckField("Eye one", eyeOne);
         CheckField("Eye two", eyeTwo);
     }
+
+    /// <inheritdoc/>
     protected override Vector3 FindDirection() {
         return (eyeOne.transform.forward + eyeTwo.transform.forward) / 2;
     }

@@ -8,16 +8,16 @@ using UnityEngine;
 public class SortedTrackableObjectsMap : MonoBehaviour
 {
     [SerializeField, Tooltip("The sorted trackable objects map")]
-    private HashmapVisualiser<TrackableType, List<TrackableObject>> sortedMap;
+    private HashmapVisualiser<TrackableType, List<TrackableObjectController>> sortedMap;
 
     /// <summary>
     /// Makes an instance of the SortedTrackableObjectsMap
     /// </summary>
     /// <param name="trackableObjects">the trackable objects</param>
     /// <param name="visualizeKeysAndValues">true if the keys and values should show in editor. False otherwise</param>
-    public SortedTrackableObjectsMap(List<TrackableObject> trackableObjects, bool visualizeKeysAndValues) {
-        sortedMap = new HashmapVisualiser<TrackableType, List<TrackableObject>>(visualizeKeysAndValues);
-        foreach (TrackableObject trackableObject in trackableObjects)
+    public SortedTrackableObjectsMap(List<TrackableObjectController> trackableObjects, bool visualizeKeysAndValues) {
+        sortedMap = new HashmapVisualiser<TrackableType, List<TrackableObjectController>>(visualizeKeysAndValues);
+        foreach (TrackableObjectController trackableObject in trackableObjects)
         {
             AddTrackableObject(trackableObject);
         }
@@ -27,11 +27,11 @@ public class SortedTrackableObjectsMap : MonoBehaviour
     /// Adds a trackable object to a list based on its type.
     /// </summary>
     /// <param name="trackableObject">the trackable object</param>
-    private void AddTrackableObject(TrackableObject trackableObject) {
+    private void AddTrackableObject(TrackableObjectController trackableObject) {
         if (trackableObject != null) {
             TrackableType trackableType = trackableObject.GetTrackableType();
             if (!sortedMap.CheckForKey(trackableType)) {
-                sortedMap.Add(trackableType, new List<TrackableObject>());
+                sortedMap.Add(trackableType, new List<TrackableObjectController>());
             }
             sortedMap.GetValue(trackableType).Add(trackableObject);
         }
@@ -50,7 +50,7 @@ public class SortedTrackableObjectsMap : MonoBehaviour
     /// </summary>
     /// <param name="trackableType">the trackable type</param>
     /// <returns>the list for the trackable type</returns>
-    public List<TrackableObject> GetListForTrackableType(TrackableType trackableType) {
-        return sortedMap.CheckForKey(trackableType) ? sortedMap.GetValue(trackableType) : new List<TrackableObject>();
+    public List<TrackableObjectController> GetListForTrackableType(TrackableType trackableType) {
+        return sortedMap.CheckForKey(trackableType) ? sortedMap.GetValue(trackableType) : new List<TrackableObjectController>();
     }
 }

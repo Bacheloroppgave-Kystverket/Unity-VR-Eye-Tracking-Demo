@@ -60,7 +60,7 @@ public class ReferencePositionManager : MonoBehaviour
     /// Gets the currernt reference position.
     /// </summary>
     /// <returns>the current reference position</returns>
-    public ReferencePosition GetCurrentReferencePosition() {
+    public ReferencePositionController GetCurrentReferencePosition() {
         return sessionManager.GetSession().GetReferencePositions()[position];
     }
 
