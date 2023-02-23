@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Enables an object to be teleported to by the player.
+/// </summary>
 public class SeatTeleporter : MonoBehaviour {
     [SerializeField]
     [Tooltip("The collider that will be pointed at in order to teleport")]
@@ -28,12 +31,9 @@ public class SeatTeleporter : MonoBehaviour {
         HideCollider();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    /// <summary>
+    /// Starts making the hitbox around a seatteleporter visible, and stops other similar coroutines from continuing.
+    /// </summary>
     public void ShowCollider() {
         StopAllCoroutines();
         GetComponent<MeshRenderer>().enabled = true;
@@ -42,16 +42,19 @@ public class SeatTeleporter : MonoBehaviour {
     }
 
 
+    /// <summary>
+    /// Starts making the hitbox around a seatteleporter less visible, until it is hidden entirely. 
+    /// </summary>
     public void HideCollider() {
         StopAllCoroutines();
         StartCoroutine(FadeToDisabledCollider());
         displayCanvas.enabled = false;
     }
 
-
-    /*
-     * Sets the alpha (opacity) of a the current material. 
-     */
+    /// <summary>
+    /// Sets the alpha (opacity) of a the current material.
+    /// </summary>
+    /// <param name="alpha">A value between 0 and 1 indicating the alpha of the material, with 0 being completely transparent, and 1 being completely opaque.</param>
     private void SetMaterialAlpha(float alpha) {
         GetComponent<MeshRenderer>().enabled = true;
         Material seatMaterial = GetComponent<Renderer>().material;
@@ -60,11 +63,21 @@ public class SeatTeleporter : MonoBehaviour {
         seatMaterial.color = materialColor;
     }
 
+    /// <summary>
+    /// Fades away the visibility of the collider, then disables its' visibility entirely. 
+    /// </summary>
+    /// <returns>Returns a gradual change of alpha into transparency</returns>
     private IEnumerator FadeToDisabledCollider() {
         yield return StartCoroutine(GraduallyChangeColliderAlpha(0, timeToChange));
         GetComponent<MeshRenderer>().enabled = false;
     }
 
+    /// <summary>
+    /// Gradually changes the alpha of the assigned colliders' material over time.
+    /// </summary>
+    /// <param name="targetAlpha">The alpha the material will have after the coroutine has finished</param>
+    /// <param name="time">The amount of time needed to reach targetAlpha in seconds</param>
+    /// <returns>null, passing the coroutine to the next update</returns>
     private IEnumerator GraduallyChangeColliderAlpha(float targetAlpha, float time) {
         float timeElapsed = 0;
         float startingAlpha = GetComponent<Renderer>().material.color.a;
@@ -74,7 +87,9 @@ public class SeatTeleporter : MonoBehaviour {
             yield return null;
         }
     }
-
+    /// <summary>
+    /// Sets the player position to the coordinates of the gameobject with this component attached. 
+    /// </summary>
     public void TeleportToSeat() {
         player.transform.position = transform.position;
     }
