@@ -19,7 +19,7 @@ public class ReferencePositionController : MonoBehaviour
     /// Gets the location ID.
     /// </summary>
     /// <returns>the location ID</returns>
-    public string GetLocationId() => referencePosition.GetLocationId();
+    public string GetLocationId() => referencePosition.GetLocationName();
 
     /// <summary>
     /// Gets the location name.

@@ -12,12 +12,13 @@ using UnityEngine;
 [Serializable]
 public class HashmapVisualiser<K, V>
 {
-    [SerializeField, Tooltip("Keys of the data")]
+    [Tooltip("Keys of the data")]
     private List<K> keys;
 
-    [SerializeField, Tooltip("Values of the data")]
+    [Tooltip("Values of the data")]
     private List<V> values;
 
+    [SerializeField]
     private Dictionary<K, V> dictionary;
 
     private bool visualizeKeysAndValues;
@@ -46,6 +47,8 @@ public class HashmapVisualiser<K, V>
             keys = dictionary.Keys.ToList();
             values = dictionary.Values.ToList();
         }
+        MonoBehaviour.print(dictionary.Count);
+        MonoBehaviour.print(JsonUtility.ToJson(dictionary));
         this.visualizeKeysAndValues = visualizeKeysAndValues;
     }
 

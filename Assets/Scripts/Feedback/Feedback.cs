@@ -8,7 +8,7 @@ using UnityEngine;
 /// Reprents the feedback that the user gets. 
 /// </summary>
 [Serializable]
-public abstract class Feedback : MonoBehaviour
+public abstract class Feedback
 {
     [SerializeField, Tooltip("The date of this feedback")]
     private DateTime feedbackTime;

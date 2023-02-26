@@ -49,11 +49,12 @@ public class FeedbackManager : MonoBehaviour{
         return valid;
     }
 
-
+    /// <summary>
+    /// Calculates and displays the feedback to the user.
+    /// </summary>
     public void CalculateAndDisplayProsentageFeedback() {
         SessionController session = sessionManager.GetSession();
-        Dictionary<TrackableType, float> prosentageMap = CalculateProsentageWatchedForSeat();
-        ProsentageTypeFeedback feedback = new ProsentageTypeFeedback(prosentageMap);
+        ProsentageTypeFeedback feedback = new ProsentageTypeFeedback(CalculateProsentageWatchedForSeat());
         session.AddFeedback(feedback);
         overlayManager.DisplayFeedback(feedback);
     }
@@ -62,9 +63,10 @@ public class FeedbackManager : MonoBehaviour{
     /// Calculates the prosentage watched for the current seat.
     /// </summary>
     /// <returns>the calculated result per trackable type</returns>
-    public Dictionary<TrackableType, float> CalculateProsentageWatchedForSeat()
+    public List<CalculatedFeedback> CalculateProsentageWatchedForSeat()
     {
-        Dictionary<TrackableType, float> prosentageWatchedMap = new Dictionary<TrackableType, float>();
+        List<CalculatedFeedback> prosentageList = new List<CalculatedFeedback>();
+
         ReferencePositionController referencePosition = referencePositionManager.GetCurrentReferencePosition();
         float timeForPosition = referencePosition.GetPositionDuration();
         IEnumerator<TrackableType> it = sortedTrackableObjectsMap.GetEnumerator();
@@ -73,6 +75,7 @@ public class FeedbackManager : MonoBehaviour{
         while (it.MoveNext())
         {
             float totalTypeTime = 0;
+            int i = 0;
             TrackableType trackableType = it.Current;
             List<TrackableObjectController> trackableObjects = sortedTrackableObjectsMap.GetListForTrackableType(trackableType);
             foreach (TrackableObjectController trackableObject in trackableObjects)
@@ -80,16 +83,23 @@ public class FeedbackManager : MonoBehaviour{
                 totalTypeTime += trackableObject.GetGazeDataForPosition(referencePosition.GetLocationId()).GetFixationDuration();
             }
             totalTime += totalTypeTime;
-            prosentageWatchedMap.Add(trackableType, FindProsentage(totalTypeTime, timeForPosition));
-            prosentage += prosentageWatchedMap[trackableType];
+            prosentageList.Add(new CalculatedFeedback(trackableType, FindProsentage(totalTypeTime, timeForPosition)));
+            prosentage += prosentageList.Last().GetProsentage();
+            i++;
         }
-        prosentageWatchedMap.Add(TrackableType.OTHER, 100 - FindProsentage(totalTime, timeForPosition));
-        prosentage += prosentageWatchedMap[TrackableType.OTHER];
-        prosentageWatchedMap.Add(TrackableType.UNDEFINED, 100 - prosentage);
+        prosentageList.Add(new CalculatedFeedback(TrackableType.OTHER, 100 - FindProsentage(totalTime, timeForPosition)));
+        prosentage += prosentageList.Last().GetProsentage();
+        prosentageList.Add(new CalculatedFeedback(TrackableType.UNDEFINED, 100 - prosentage));
 
-        return prosentageWatchedMap;
+        return prosentageList;
     }
 
+    /// <summary>
+    /// Finds the prosentage of the time.
+    /// </summary>
+    /// <param name="time">the time</param>
+    /// <param name="timeForPosition">the time for the position</param>
+    /// <returns></returns>
     private float FindProsentage(float time, float timeForPosition)
     {
         return Mathf.Round(((time / timeForPosition)) * 100);

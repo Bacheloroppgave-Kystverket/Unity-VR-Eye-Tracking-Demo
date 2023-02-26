@@ -9,7 +9,7 @@ using UnityEngine;
 public class FeedbackConfiguration{
 
     [SerializeField, Tooltip("The trackable object that should have feedback")]
-    private TrackableType trackableObject;
+    private TrackableType trackableType;
 
     [SerializeField, Range(0.01f, 0.99f), Tooltip("The threshold that the object should be looked at")]
     private float threshold = 0.5f;
@@ -17,9 +17,9 @@ public class FeedbackConfiguration{
     /// <summary>
     /// Makes an instance of the feedback object.
     /// </summary>
-    /// <param name="trackableObject"></param>
-    public FeedbackConfiguration(TrackableType trackableObject) {
-        this.trackableObject = trackableObject;
+    /// <param name="trackableType">the trackable type</param>
+    public FeedbackConfiguration(TrackableType trackableType) {
+        this.trackableType = trackableType;
     }
 
     /// <summary>
@@ -35,6 +35,6 @@ public class FeedbackConfiguration{
     /// </summary>
     /// <returns>the trackable object</returns>
     public TrackableType GetTrackableObject() {
-        return trackableObject;
+        return trackableType;
     }
 }

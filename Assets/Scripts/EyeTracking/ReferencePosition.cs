@@ -6,8 +6,6 @@ using UnityEngine;
 [Serializable]
 public class ReferencePosition
 {
-    [SerializeField, Tooltip("The id of the location that this represents")]
-    private string locationID;
 
     [SerializeField, Tooltip("The name of the location")]
     private string locationName;
@@ -16,16 +14,11 @@ public class ReferencePosition
     private float positionDuration;
 
     /// <summary>
-    /// Gets the location ID.
-    /// </summary>
-    /// <returns>the location ID</returns>
-    public string GetLocationId() => locationID;
-
-    /// <summary>
     /// Gets the location name.
     /// </summary>
     /// <returns>the location name</returns>
     public string GetLocationName() => locationName;
+
 
     /// <summary>
     /// Gets the duration that was spent at this position.

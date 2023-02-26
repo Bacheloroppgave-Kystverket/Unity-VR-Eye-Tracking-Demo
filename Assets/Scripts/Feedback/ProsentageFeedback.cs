@@ -10,18 +10,21 @@ using UnityEngine;
 [Serializable]
 public class ProsentageTypeFeedback : Feedback
 {
-    [SerializeField, Tooltip("True if the keys and values should show in editor. False otherwise")]
-    private bool visualizeKeysAndValues = true;
 
-    [SerializeField, Tooltip("The hashmap itself")]
-    private HashmapVisualiser<TrackableType, float> hashmapVisualiser;
+    [SerializeField]
+    private List<CalculatedFeedback> feedbackList;
 
     /// <summary>
     /// Makes an instance of the feedback object.
     /// </summary>
-    /// <param name="dictionary">the dictionary with the values.</param>
-    public ProsentageTypeFeedback(Dictionary<TrackableType, float> dictionary) : base() {
-        hashmapVisualiser = new HashmapVisualiser<TrackableType, float>(dictionary, visualizeKeysAndValues);
+    /// <param name="feedbackList">the list with the values.</param>
+    public ProsentageTypeFeedback(List<CalculatedFeedback> feedbackList) : base() {
+        
+        //ONLY FOR TESTING
+        Dictionary<TrackableType, float> map = new Dictionary<TrackableType, float>();
+
+        this.feedbackList = feedbackList;
+
     }
 
     /// <inheritdoc/>
@@ -36,12 +39,12 @@ public class ProsentageTypeFeedback : Feedback
     /// <returns>the feedback as string with prosentages of all objects</returns>
     private string GetFeedbackAsString() {
         StringBuilder stringBuilder = new StringBuilder();
-        IEnumerator<TrackableType> it = GetTrackableObjectIterator();
+        IEnumerator<CalculatedFeedback> it = feedbackListIEnumerator();
         while (it.MoveNext()) {
-            TrackableType currentType = it.Current;
-            stringBuilder.Append(currentType);
+            CalculatedFeedback calculatedFeedback = it.Current;
+            stringBuilder.Append(calculatedFeedback.GetTrackableType());
             stringBuilder.Append(" : ");
-            stringBuilder.Append(GetTrackableObjectValue(currentType).ToString());
+            stringBuilder.Append(calculatedFeedback.GetProsentage().ToString());
             stringBuilder.AppendLine("%");
         }
         return stringBuilder.ToString();
@@ -51,17 +54,7 @@ public class ProsentageTypeFeedback : Feedback
     /// Gets the iterator for the keys.
     /// </summary>
     /// <returns>the iterator</returns>
-    private IEnumerator<TrackableType> GetTrackableObjectIterator() {
-        return hashmapVisualiser.GetKeyIterator();
-    }
-
-    /// <summary>
-    /// Gets the value of the trackable object.
-    /// </summary>
-    /// <param name="trackableObject">the trackable object</param>
-    /// <returns>the corrensponding value</returns>
-    private float GetTrackableObjectValue(TrackableType trackableObject)
-    {
-        return hashmapVisualiser.GetValue(trackableObject);
+    private IEnumerator<CalculatedFeedback> feedbackListIEnumerator() {
+        return feedbackList.GetEnumerator();
     }
 }

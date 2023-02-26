@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class SessionController : MonoBehaviour{
 
-    [SerializeField]
+    [SerializeField, Tooltip("The session")]
     private Session session;
 
     [SerializeField, Tooltip("The ray caster object")]
@@ -24,6 +24,9 @@ public class SessionController : MonoBehaviour{
 
     [SerializeField, Tooltip("The list of all the trackable objects that are close to this user.")]
     private List<TrackableObjectController> closeTrackableObjects = new List<TrackableObjectController>();
+
+    [SerializeField, Tooltip("The networking that sends the session")]
+    private SendData<Session> sendData;
 
     /// <summary>
     /// Gets the raycaster object.
@@ -56,6 +59,14 @@ public class SessionController : MonoBehaviour{
             trackables.Add(trackableObject);
         });
         session.AddTrackableObjects(trackables);
+    }
+
+    /// <summary>
+    /// Sends the session to the backend.
+    /// </summary>
+    public void SendSession() {
+        sendData.SetData(session);
+        StartCoroutine(sendData.SendCurrentData());
     }
 
     /// <summary>
