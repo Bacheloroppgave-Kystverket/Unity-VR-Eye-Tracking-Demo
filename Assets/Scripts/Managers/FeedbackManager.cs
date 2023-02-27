@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,7 +6,6 @@ using UnityEngine;
 /// <summary>
 /// This manager has a responsebility to handle the feedback that the user gets through the adaptive training system.
 /// </summary>
-[SerializeField]
 public class FeedbackManager : MonoBehaviour{
 
     [SerializeField, Tooltip("The trackable objects that is sorted in a map")]
@@ -24,12 +24,46 @@ public class FeedbackManager : MonoBehaviour{
     [SerializeField, Tooltip("Set to true in order to visualize keys and values")]
     private bool visualizeKeysAndValues = true;
 
+    [SerializeField, Tooltip("The interval that the adaptive training system should be active for."), Min(10)]
+    private int seconds = 10;
+
+    [SerializeField, Tooltip("Set to true if the adaptive training system should be running.")]
+    private bool activeAdaptiveTrainingSystem = true;
+
+    [SerializeField, Tooltip("Set to true if eyetracking is done.")]
+    private bool eyeTracking = false;
+
 
     // Start is called before the first frame update
     void Start(){
         CheckField("Session manager", sessionManager);
         CheckField("Reference position manager", referencePositionManager);
         sortedTrackableObjectsMap = new SortedTrackableObjectsMap(sessionManager.GetSession().GetCloseTrackableObjects(), visualizeKeysAndValues);
+    }
+
+
+    public void StartEyetracking() {
+        if (!eyeTracking) {
+            eyeTracking = true;
+            StartCoroutine(StartAdaptiveTrainingSystem());
+        }
+    }
+
+    public void StopEyeTracking() {
+        eyeTracking = false;
+    }
+
+
+
+    /// <summary>
+    /// Starts the adaptive training system.
+    /// </summary>
+    /// <returns>the wait time</returns>
+    private IEnumerator StartAdaptiveTrainingSystem() {
+        while (activeAdaptiveTrainingSystem && eyeTracking) {
+            yield return new WaitForSeconds(seconds);
+            CalculateAndDisplayProsentageFeedback();
+        }
     }
 
     
@@ -52,56 +86,40 @@ public class FeedbackManager : MonoBehaviour{
     /// <summary>
     /// Calculates and displays the feedback to the user.
     /// </summary>
-    public void CalculateAndDisplayProsentageFeedback() {
+    private void CalculateAndDisplayProsentageFeedback() {
         SessionController session = sessionManager.GetSession();
-        ProsentageTypeFeedback feedback = new ProsentageTypeFeedback(CalculateProsentageWatchedForSeat());
-        session.AddFeedback(feedback);
-        overlayManager.DisplayFeedback(feedback);
-    }
+        IEnumerator<ReferencePositionController> it = referencePositionManager.GetEnumeratorForReferencePositions();
+        List<AdaptiveFeedback> adaptiveFeedbacks = new List<AdaptiveFeedback>();
+        ReferencePosition currentPosition = referencePositionManager.GetCurrentReferencePosition().GetReferencePosition();
+        while (it.MoveNext()) {
+            ReferencePosition position = it.Current.GetReferencePosition();
+            AdaptiveFeedback adaptiveFeedback = CalculateAdaptiveFeedbackForPosition(position);
+            adaptiveFeedbacks.Add(adaptiveFeedback);
+            session.AddFeedback(adaptiveFeedback);
 
-    /// <summary>
-    /// Calculates the prosentage watched for the current seat.
-    /// </summary>
-    /// <returns>the calculated result per trackable type</returns>
-    public List<CalculatedFeedback> CalculateProsentageWatchedForSeat()
-    {
-        List<CalculatedFeedback> prosentageList = new List<CalculatedFeedback>();
-
-        ReferencePositionController referencePosition = referencePositionManager.GetCurrentReferencePosition();
-        float timeForPosition = referencePosition.GetPositionDuration();
-        IEnumerator<TrackableType> it = sortedTrackableObjectsMap.GetEnumerator();
-        float totalTime = 0;
-        float prosentage = 0;
-        while (it.MoveNext())
-        {
-            float totalTypeTime = 0;
-            int i = 0;
-            TrackableType trackableType = it.Current;
-            List<TrackableObjectController> trackableObjects = sortedTrackableObjectsMap.GetListForTrackableType(trackableType);
-            foreach (TrackableObjectController trackableObject in trackableObjects)
-            {
-                totalTypeTime += trackableObject.GetGazeDataForPosition(referencePosition.GetLocationId()).GetFixationDuration();
+            if (currentPosition == position) {
+                overlayManager.DisplayFeedback(adaptiveFeedback);
             }
-            totalTime += totalTypeTime;
-            prosentageList.Add(new CalculatedFeedback(trackableType, FindProsentage(totalTypeTime, timeForPosition)));
-            prosentage += prosentageList.Last().GetProsentage();
-            i++;
         }
-        prosentageList.Add(new CalculatedFeedback(TrackableType.OTHER, 100 - FindProsentage(totalTime, timeForPosition)));
-        prosentage += prosentageList.Last().GetProsentage();
-        prosentageList.Add(new CalculatedFeedback(TrackableType.UNDEFINED, 100 - prosentage));
-
-        return prosentageList;
     }
 
     /// <summary>
-    /// Finds the prosentage of the time.
+    /// Calculates the adaptive feedback for the position.
     /// </summary>
-    /// <param name="time">the time</param>
-    /// <param name="timeForPosition">the time for the position</param>
-    /// <returns></returns>
-    private float FindProsentage(float time, float timeForPosition)
+    /// <param name="referencePosition">the reference position</param>
+    /// <returns>the adaptive feedback</returns>
+    private AdaptiveFeedback CalculateAdaptiveFeedbackForPosition(ReferencePosition referencePosition)
     {
-        return Mathf.Round(((time / timeForPosition)) * 100);
+        List<CategoryFeedback> categoryFeedbacks = new List<CategoryFeedback>();
+        IEnumerator<TrackableType> it = sortedTrackableObjectsMap.GetEnumerator();
+        while (it.MoveNext()) {
+            TrackableType trackableType = it.Current;
+            float totalTime = 0;
+            foreach (TrackableObjectController trackableController in sortedTrackableObjectsMap.GetListForTrackableType(trackableType)) {
+                totalTime += trackableController.GetGazeDataForPosition(referencePosition.GetLocationName()).GetFixationDuration();
+            }
+            categoryFeedbacks.Add(new CategoryFeedback(trackableType, totalTime));
+        }
+        return new AdaptiveFeedback(referencePosition.GetLocationName(), referencePosition.GetPositionDuration(), categoryFeedbacks) ;
     }
 }

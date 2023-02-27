@@ -91,7 +91,7 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     /// <param name="locationID">the location id</param>
     /// <returns>the gaze data that matches that location id. Is null if location does not exsist</returns>
     public GazeData GetGazeDataForPosition(string locationID) {
-        return trackableObject.GetGazeDataForPosition(locationID);
+        return trackableObject.GetGazeDataForLocation(locationID);
     }
 
     /// <summary>
@@ -101,7 +101,7 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     public void SetPosition(string locationID) {
         if (locationID != null && locationID != "")
         {
-            currentGaze = trackableObject.GetGazeDataForPosition(locationID);
+            currentGaze = trackableObject.GetGazeDataForLocation(locationID);
 
             if (beingWatched && currentGaze != null) {
                 currentGaze.IncrementFixation();

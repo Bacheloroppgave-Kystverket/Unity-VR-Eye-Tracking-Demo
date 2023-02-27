@@ -30,14 +30,14 @@ public class OverlayManager : MonoBehaviour, SessionObserver
     /// Displays the feedback to the user.
     /// </summary>
     /// <param name="feedback">the feedback</param>
-    public void DisplayFeedback(ProsentageTypeFeedback feedback) {
+    public void DisplayFeedback(AdaptiveFeedback feedback) {
         feedbackText.text = feedback.GetFeedback();
     }
 
     /// <inheritdoc/>
     public void UpdateFeedback(Feedback feedback)
     {
-        if (feedback is ProsentageTypeFeedback feed)
+        if (feedback is AdaptiveFeedback feed)
         {
             DisplayFeedback(feed);
         }

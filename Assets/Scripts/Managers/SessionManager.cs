@@ -19,6 +19,13 @@ public class SessionManager : MonoBehaviour
     [SerializeField]
     private ReferencePositionManager referencePositionManager;
 
+    [SerializeField]
+    private FeedbackManager feedbackManager;
+
+    private float pauseDuration;
+
+    private bool isPaused;
+
     // Start is called before the first frame update
     void Start() {
         CheckField("Session", session);
@@ -38,12 +45,32 @@ public class SessionManager : MonoBehaviour
         }
     }
 
+    public void PauseEyeTrackingForNSeconds(float duration) {
+        if (!isPaused && duration > 0) { 
+            isPaused = true;
+            pauseDuration = duration;
+            StartCoroutine(PauseEyeTracking());
+        }
+    }
+
+    /// <summary>
+    /// Pauses the eyetracking for a set duration in the class.
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator PauseEyeTracking() {
+        StopEyeTracking();
+        yield return new WaitForSeconds(pauseDuration);
+        StartEyeTracking();
+        isPaused = false;
+    }
+
     /// <summary>
     /// Starts the eye tracking.
     /// </summary>
     public void StartEyeTracking() {
         referencePositionManager.StartEyeTracking();
         session.GetRayCasterObject().StartTracking();
+        feedbackManager.StartEyetracking();
     }
 
     /// <summary>
@@ -52,6 +79,7 @@ public class SessionManager : MonoBehaviour
     public void StopEyeTracking() {
         referencePositionManager.StopEyeTracking();
         session.GetRayCasterObject().StopEyeTracking();
+        feedbackManager.StopEyeTracking();
 
     }
 

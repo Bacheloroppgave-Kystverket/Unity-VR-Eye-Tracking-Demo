@@ -221,5 +221,6 @@ public abstract class RayCasterObject : MonoBehaviour
     public void StopEyeTracking()
     {
         casting = false;
+        UnwatchObjects();
     }
 }

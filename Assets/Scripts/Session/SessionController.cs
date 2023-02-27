@@ -117,11 +117,11 @@ public class SessionController : MonoBehaviour{
     }
 
     /// <summary>
-    /// Adds feedback to the log.
+    /// Adds a adaptiveFeedback to the session.
     /// </summary>
-    /// <param name="feedback">the feedback to add</param>
-    public void AddFeedback(Feedback feedback) {
-        session.AddFeedback(feedback);
+    /// <param name="adaptiveFeedback">the adaptiveFeedback to add</param>
+    public void AddFeedback(AdaptiveFeedback adaptiveFeedback) {
+        session.AddFeedback(adaptiveFeedback);
     }
 
     /// <summary>

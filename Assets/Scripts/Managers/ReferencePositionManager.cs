@@ -20,12 +20,15 @@ public class ReferencePositionManager : MonoBehaviour
     [SerializeField, Tooltip("Position")]
     private int position;
 
+    [SerializeField, Tooltip("The amount of seconds to wait when changing position")]
+    private float secondsToWait = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
         CheckField("Player", playerObject);
         CheckField("Trackable Object Manager", trackableObjectsManager);
-        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetLocationId());
+        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetLocationName());
     }
 
     /// <summary>
@@ -64,6 +67,11 @@ public class ReferencePositionManager : MonoBehaviour
         return sessionManager.GetSession().GetReferencePositions()[position];
     }
 
+
+    public IEnumerator<ReferencePositionController> GetEnumeratorForReferencePositions() {
+        return sessionManager.GetSession().GetReferencePositions().GetEnumerator();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -76,9 +84,10 @@ public class ReferencePositionManager : MonoBehaviour
     /// Goes to the next reference position.
     /// </summary>
     public void NextPosition(){
+        sessionManager.PauseEyeTrackingForNSeconds(secondsToWait);
         position = (position + 1) % sessionManager.GetSession().GetReferencePositions().Count;
         playerObject.gameObject.transform.position = GetCurrentReferencePosition().gameObject.transform.position;
-        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetLocationId());
+        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetLocationName());
     }
 
     /// <inheritdoc/>

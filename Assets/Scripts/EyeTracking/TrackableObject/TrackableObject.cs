@@ -59,7 +59,7 @@ public class TrackableObject
     /// </summary>
     /// <param name="locationID">the location id</param>
     /// <returns>the gaze data that matches that location id. Is null if location does not exsist</returns>
-    public GazeData GetGazeDataForPosition(string locationID)
+    private GazeData GetGazeDataForPosition(string locationID)
     {
         return gazeList.Find(gazeData => gazeData.GetLocationID() == locationID);
     }
@@ -72,13 +72,12 @@ public class TrackableObject
     public GazeData GetGazeDataForLocation(string locationID) {
         GazeData gazeData = null;
         if (locationID != null && locationID != ""){
-            gazeData = gazeList.Find(data => data.GetLocationID() == locationID);
+            gazeData = GetGazeDataForPosition(locationID);
             if (gazeData == null){
                 gazeData = new GazeData(locationID);
                 gazeList.Add(gazeData);
             }
         }
-
         return gazeData;
     }
 }

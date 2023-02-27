@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Represents a Sorted trackable objects map that sorts the objects based on their category.
 /// </summary>
-public class SortedTrackableObjectsMap : MonoBehaviour
+public class SortedTrackableObjectsMap 
 {
     [SerializeField, Tooltip("The sorted trackable objects map")]
     private HashmapVisualiser<TrackableType, List<TrackableObjectController>> sortedMap;

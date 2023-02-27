@@ -19,17 +19,10 @@ public class TrackableObjectsManager : MonoBehaviour{
     [SerializeField, Tooltip("The reference position manager")]
     private ReferencePositionManager referencePositionManager;
 
-    // Start is called before the first frame update
-    void Start(){
-        trackableObjects = new List<TrackableObjectController>();
-        GameObject[] trackableObjs = GameObject.FindGameObjectsWithTag(typeof(TrackableObjectController).Name);
-        foreach (GameObject trackObject in trackableObjs)
-        {
-            trackableObjects.Add(trackObject.GetComponent<TrackableObjectController>());
-        }
-        
+
+    private void Awake(){
+        trackableObjects = GameObject.FindObjectsOfType<TrackableObjectController>().ToList();
         CheckIfListIsValid("Trackable objects", trackableObjects.Any());
-        
     }
 
     /// <summary>
@@ -73,7 +66,7 @@ public class TrackableObjectsManager : MonoBehaviour{
     /// </summary>
     public void CalculateAverageFixationTimePerObjectForPosition()
     {
-        trackableObjects.ForEach(trackableObject => trackableObject.CalculateCurrentAverageFixationDuration(referencePositionManager.GetCurrentReferencePosition().GetLocationId()));
+        trackableObjects.ForEach(trackableObject => trackableObject.CalculateCurrentAverageFixationDuration(referencePositionManager.GetCurrentReferencePosition().GetLocationName()));
     }
 
 
