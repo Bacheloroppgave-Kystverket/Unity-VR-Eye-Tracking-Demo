@@ -100,7 +100,7 @@ public abstract class RayCasterObject : MonoBehaviour
                     WatchObject(raycastHit);
                 }
                 UnwatchObjects(currentObjectsWatched);
-                VisualizeHitpoint(raycastHits.First(), position, direction);
+                VisualizeHitpointAndDrawLine(raycastHits, position, direction);
             }
             else
             {
@@ -129,10 +129,10 @@ public abstract class RayCasterObject : MonoBehaviour
     /// </summary>
     /// <param name="position">the starting position</param>
     /// <param name="direction">the direction</param>
-    /// <returns></returns>
+    /// <returns>gets the raycast hits</returns>
     private RaycastHit[] ShootMultipleObjects(Vector3 position, Vector3 direction) {
         //Shoots ray
-        RaycastHit[] hits = Physics.SphereCastAll(position, sphereSize, direction, range);//Physics.RaycastAll(position, direction, range);
+        RaycastHit[] hits = Physics.RaycastAll(position, direction, range); //Physics.RaycastAll(position, direction, range);
         return hits;
     }
 
@@ -203,9 +203,9 @@ public abstract class RayCasterObject : MonoBehaviour
     /// <param name="raycastHit">the first hit</param>
     /// <param name="position">the starting position</param>
     /// <param name="direction">the direction</param>
-    private void VisualizeHitpoint(RaycastHit raycastHit, Vector3 position, Vector3 direction) {
-        hitSpot.transform.position = raycastHit.point;
-        Debug.DrawRay(position, direction * raycastHit.distance);
+    private void VisualizeHitpointAndDrawLine(RaycastHit[] raycastHit, Vector3 position, Vector3 direction) {
+        hitSpot.transform.position = raycastHit.Last().point;
+        Debug.DrawRay(position, direction * raycastHit.First().distance);
     }
 
     /// <inheritdoc/>
