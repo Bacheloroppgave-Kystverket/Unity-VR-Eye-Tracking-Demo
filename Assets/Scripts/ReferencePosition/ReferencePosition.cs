@@ -13,6 +13,9 @@ public class ReferencePosition
     [SerializeField, Tooltip("The time that this position has been used")]
     private float positionDuration;
 
+    [SerializeField, Tooltip("The feedback configuration for this seat")]
+    private FeedbackConfiguration feedbackConfiguration;
+
     /// <summary>
     /// Gets the location name.
     /// </summary>
@@ -33,4 +36,10 @@ public class ReferencePosition
     {
         positionDuration += Time.deltaTime;
     }
+
+    /// <summary>
+    /// Gets the feedback configuration.
+    /// </summary>
+    /// <returns>the feedback configuration</returns>
+    public FeedbackConfiguration GetFeedbackConfiguration() => feedbackConfiguration;
 }
