@@ -93,14 +93,14 @@ public abstract class RayCasterObject : MonoBehaviour
             Vector3 direction = FindDirection();
             Vector3 position = FindPosition();
             raycastHits = shootMutliple ? ShootMultipleObjects(position, direction) : ShootSingleObject(position, direction);
-
+            bool hitSolid = false;
             if (raycastHits.Any()){
-                foreach (RaycastHit raycastHit in raycastHits)
-                {
-                    WatchObject(raycastHit);
+                IEnumerator<RaycastHit> it = raycastHits.Reverse().GetEnumerator();
+                while (it.MoveNext() && !hitSolid) { 
+                    hitSolid = WatchObject(it.Current);
                 }
                 UnwatchObjects(currentObjectsWatched);
-                VisualizeHitpointAndDrawLine(raycastHits, position, direction);
+                VisualizeHitpointAndDrawLine(raycastHits, position, direction);;
             }
             else
             {
@@ -117,11 +117,15 @@ public abstract class RayCasterObject : MonoBehaviour
     /// Watches the object that was hit if its not null.
     /// </summary>
     /// <param name="raycastHit">the raycast hit</param>
-    private void WatchObject(RaycastHit raycastHit) {
+    /// <returns>true if the object is solid. False if the object is not solid</returns>
+    private bool WatchObject(RaycastHit raycastHit) {
+        bool isSolid = false;
         TrackableObjectController trackObject = raycastHit.collider.gameObject.GetComponent<TrackableObjectController>();
         if (trackObject != null) {
             ObserveObject(trackObject);
+            isSolid = TrackableTypeMethods.IsTrackableSolid(trackObject.GetTrackableObject().GetTrackableType());
         }
+        return isSolid;
     }
 
     /// <summary>
