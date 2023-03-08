@@ -23,7 +23,9 @@ public class SeatTeleporter : MonoBehaviour {
     [Range(0f,1f)]
     private float maxAlpha = 0.6f;
 
-    private float timeToChange = 0.3f;
+    private float changeDuration = 0.3f;
+
+    private bool seatIsAvailable = true;
 
     // Start is called before the first frame update
     void Start()
@@ -35,12 +37,13 @@ public class SeatTeleporter : MonoBehaviour {
     /// Starts making the hitbox around a seatteleporter visible, and stops other similar coroutines from continuing.
     /// </summary>
     public void ShowCollider() {
-        StopAllCoroutines();
-        GetComponent<MeshRenderer>().enabled = true;
-        displayCanvas.enabled = true;
-        StartCoroutine(GraduallyChangeColliderAlpha(maxAlpha, timeToChange));
+       //Missing functionality to make the seat available. Commented out for now. 
+        // if (seatIsAvailable) {
+            GetComponent<MeshRenderer>().enabled = true;
+            displayCanvas.enabled = true;
+            StartCoroutine(GraduallyChangeColliderAlpha(maxAlpha, changeDuration));
+        //}
     }
-
 
     /// <summary>
     /// Starts making the hitbox around a seatteleporter less visible, until it is hidden entirely. 
@@ -68,7 +71,7 @@ public class SeatTeleporter : MonoBehaviour {
     /// </summary>
     /// <returns>Returns a gradual change of alpha into transparency</returns>
     private IEnumerator FadeToDisabledCollider() {
-        yield return StartCoroutine(GraduallyChangeColliderAlpha(0, timeToChange));
+        yield return StartCoroutine(GraduallyChangeColliderAlpha(0, changeDuration));
         GetComponent<MeshRenderer>().enabled = false;
     }
 
@@ -87,10 +90,21 @@ public class SeatTeleporter : MonoBehaviour {
             yield return null;
         }
     }
+
+    /// <summary>
+    /// Sets the availability of the seat. Unavailable seats can not be highlighted. 
+    /// </summary>
+    /// <param name="availability">Whether the seat should be available</param>
+    public void SetSeatAvailability (bool availability) {
+        seatIsAvailable = availability;
+    }
+    
+        
     /// <summary>
     /// Sets the player position to the coordinates of the gameobject with this component attached. 
     /// </summary>
     public void TeleportToSeat() {
+        SetSeatAvailability(false);
         player.transform.position = transform.position;
     }
 }
