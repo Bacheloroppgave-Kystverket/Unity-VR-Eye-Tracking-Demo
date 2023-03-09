@@ -92,12 +92,12 @@ public class FeedbackManager : MonoBehaviour{
         List<AdaptiveFeedback> adaptiveFeedbacks = new List<AdaptiveFeedback>();
         ReferencePosition currentPosition = referencePositionManager.GetCurrentReferencePosition().GetReferencePosition();
         while (it.MoveNext()) {
-            ReferencePosition position = it.Current.GetReferencePosition();
+            ReferencePositionController position = it.Current;
             AdaptiveFeedback adaptiveFeedback = CalculateAdaptiveFeedbackForPosition(position);
             adaptiveFeedbacks.Add(adaptiveFeedback);
             session.AddFeedback(adaptiveFeedback);
 
-            if (currentPosition == position) {
+            if (currentPosition == position.GetReferencePosition()) {
                 overlayManager.DisplayFeedback(adaptiveFeedback);
             }
         }
@@ -106,10 +106,10 @@ public class FeedbackManager : MonoBehaviour{
     /// <summary>
     /// Calculates the adaptive feedback for the position.
     /// </summary>
-    /// <param name="referencePosition">the reference position</param>
+    /// <param name="referencePositionController">the reference position</param>
     /// <returns>the adaptive feedback</returns>
-    private AdaptiveFeedback CalculateAdaptiveFeedbackForPosition(ReferencePosition referencePosition)
-    {
+    private AdaptiveFeedback CalculateAdaptiveFeedbackForPosition(ReferencePositionController referencePositionController) {
+        ReferencePosition referencePosition = referencePositionController.GetReferencePosition();
         List<CategoryFeedback> categoryFeedbacks = new List<CategoryFeedback>();
         IEnumerator<TrackableType> it = sortedTrackableObjectsMap.GetEnumerator();
         while (it.MoveNext()) {
@@ -120,6 +120,6 @@ public class FeedbackManager : MonoBehaviour{
             }
             categoryFeedbacks.Add(new CategoryFeedback(trackableType, totalTime));
         }
-        return new AdaptiveFeedback(referencePosition.GetLocationName(), referencePosition.GetPositionDuration(), categoryFeedbacks) ;
+        return new AdaptiveFeedback(referencePosition.GetLocationName(), referencePosition.GetPositionDuration(), categoryFeedbacks, referencePositionController.GetCurrentConfig()) ;
     }
 }

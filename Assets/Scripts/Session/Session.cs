@@ -15,9 +15,6 @@ public class Session
     [SerializeField, Tooltip("The date of the session")]
     private DateTime currentDate = DateTime.Now;
 
-    [SerializeField, Tooltip("The configuration for the objects")]
-    private List<FeedbackConfiguration> feedbackConfigurations = new List<FeedbackConfiguration>();
-
     [SerializeField, Tooltip("The list of all the trackable objects that are close to this user.")]
     private List<TrackableObject> closeTrackableObjects = new List<TrackableObject>();
 
@@ -32,7 +29,7 @@ public class Session
     /// </summary>
     /// <param name="trackableObjects">the trackable objects</param>
     public void AddTrackableObjects(List<TrackableObject> trackableObjects) {
-        if (trackableObjects != null) {
+        if (trackableObjects != null){
             trackableObjects.ForEach(trackableObject =>
             {
                 if (!closeTrackableObjects.Contains(trackableObject)) {
@@ -71,11 +68,6 @@ public class Session
     /// <returns></returns>
     public List<TrackableObject> GetTrackableObjects() => closeTrackableObjects;
 
-    /// <summary>
-    /// Gets the adaptiveFeedback configurations
-    /// </summary>
-    /// <returns>a list with the configurations</returns>
-    public List<FeedbackConfiguration> GetFeedbackConfigurations() => feedbackConfigurations;
 
     /// <summary>
     /// Adds adaptiveFeedback to the log.
