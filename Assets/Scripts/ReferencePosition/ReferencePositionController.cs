@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -17,6 +18,7 @@ public class ReferencePositionController : MonoBehaviour
 
     private void Awake() {
         gameObject.tag = typeof(ReferencePositionController).Name;
+        CheckIfListIsValid("feedbackconfigurations", referencePosition.GetAllFeedbackConfigurations().Any());
     }
 
     /// <summary>
@@ -85,6 +87,19 @@ public class ReferencePositionController : MonoBehaviour
         if (number < higherThan)
         {
             throw new CouldNotSetNumberException(error + " cannot be higher than the feedback configurations.");
+        }
+    }
+
+    /// <summary>
+    /// Checks if the list has any elements.
+    /// </summary>
+    /// <param name="error">the error to display</param>
+    /// <param name="hasAny">true if the list has any. False otherwise</param>
+    private void CheckIfListIsValid(string error, bool hasAny)
+    {
+        if (!hasAny)
+        {
+            Debug.Log("<color=red>Error:</color>" + error + " cannot be emtpy", gameObject);
         }
     }
 

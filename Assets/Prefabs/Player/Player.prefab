@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa074891b288d049ae10d09aeb8ebfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  casting: 1
+  casting: 0
   shootMutliple: 1
   frequency: 30
   sphereSize: 0.03

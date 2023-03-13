@@ -71,6 +71,7 @@ public class SessionManager : MonoBehaviour
         referencePositionManager.StartEyeTracking();
         session.GetRayCasterObject().StartTracking();
         feedbackManager.StartEyetracking();
+        MonoBehaviour.print("Pog?");
     }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using Oculus.Voice.Windows;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,6 +49,34 @@ public class AdaptiveFeedback : Feedback
     {
         return GetFeedbackAsString();
     }
+
+    public string GetLeastViewedObjectAsString(List<FeedbackConfiguration> feedbackConfigurations) {
+        StringBuilder stringBuilder = new StringBuilder();
+        float biggestDifference = 0;
+        CategoryFeedback differenceHolder = null;
+        feedbackConfigurations.ForEach(feedbackConfiguration => {
+            CategoryFeedback feedback = feedbackList.Find(categoryFeedback => categoryFeedback.GetTrackableType() == feedbackConfiguration.GetTrackableType());
+            float difference = feedback == null ? 0 : (feedbackConfiguration.GetThreshold() * 100) - feedback.CalculateProsentage(positionTime);
+            if (Math.Abs(difference) > Math.Abs(biggestDifference)) {
+                biggestDifference = difference;
+                differenceHolder = feedback;
+            }
+        });
+        stringBuilder.Append(differenceHolder.GetTrackableType());
+        if (biggestDifference < 0) {
+            stringBuilder.Append(" needs to get less time since its ");
+            stringBuilder.Append(biggestDifference);
+            stringBuilder.Append("% over the threshold.");
+        }
+        else {
+            stringBuilder.Append(" needs more time since its ");
+            stringBuilder.Append(Math.Abs(biggestDifference));
+            stringBuilder.Append("% under the threshold.");
+        }
+
+        return stringBuilder.ToString();
+    }
+
 
     /// <summary>
     /// Gets the feedback as a basic string.

@@ -89,16 +89,14 @@ public class FeedbackManager : MonoBehaviour{
     private void CalculateAndDisplayProsentageFeedback() {
         SessionController session = sessionManager.GetSession();
         IEnumerator<ReferencePositionController> it = referencePositionManager.GetEnumeratorForReferencePositions();
-        List<AdaptiveFeedback> adaptiveFeedbacks = new List<AdaptiveFeedback>();
         ReferencePosition currentPosition = referencePositionManager.GetCurrentReferencePosition().GetReferencePosition();
         while (it.MoveNext()) {
             ReferencePositionController position = it.Current;
             AdaptiveFeedback adaptiveFeedback = CalculateAdaptiveFeedbackForPosition(position);
-            adaptiveFeedbacks.Add(adaptiveFeedback);
             session.AddFeedback(adaptiveFeedback);
-
             if (currentPosition == position.GetReferencePosition()) {
-                overlayManager.DisplayFeedback(adaptiveFeedback);
+                //overlayManager.DisplayFeedback(adaptiveFeedback);
+                overlayManager.DisplayLeastViewedObject(adaptiveFeedback, position.GetReferencePosition());
             }
         }
     }

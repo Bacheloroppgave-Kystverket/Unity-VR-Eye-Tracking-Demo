@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -94,6 +95,7 @@ public abstract class RayCasterObject : MonoBehaviour
             Vector3 position = FindPosition();
             raycastHits = shootMutliple ? ShootMultipleObjects(position, direction) : ShootSingleObject(position, direction);
             bool hitSolid = false;
+            MonoBehaviour.print("Casting");
             if (raycastHits.Any()){
                 IEnumerator<RaycastHit> it = raycastHits.Reverse().GetEnumerator();
                 while (it.MoveNext() && !hitSolid) { 
@@ -108,7 +110,7 @@ public abstract class RayCasterObject : MonoBehaviour
             }
             currentObjectsWatched.Clear(); 
             
-            yield return new WaitForSeconds(1 / frequency);
+            yield return new FixedUpdate();
         }
         MonoBehaviour.print("Eyetracking has stopped.");
     }

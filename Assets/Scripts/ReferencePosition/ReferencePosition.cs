@@ -15,7 +15,9 @@ public class ReferencePosition
     private float positionDuration;
 
     [SerializeField, Tooltip("The feedback configuration for this seat")]
-    private List<FeedbackConfiguration> feedbackConfigurations;
+    private List<FeedbackConfiguration> feedbackConfigurations = new List<FeedbackConfiguration>()
+    {new FeedbackConfiguration(TrackableType.WALL,0.1f), new FeedbackConfiguration(TrackableType.WINDOW, 0.6f), 
+        new FeedbackConfiguration(TrackableType.MIRROR, 0.2f), new FeedbackConfiguration(TrackableType.OTHER,0.1f)};
     
     
 

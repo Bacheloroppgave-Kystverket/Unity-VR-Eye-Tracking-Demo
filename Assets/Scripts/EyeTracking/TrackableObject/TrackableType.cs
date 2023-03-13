@@ -17,21 +17,6 @@ public enum TrackableType
     WINDOW,
 
     /// <summary>
-    /// Represents objects that are spheres
-    /// </summary>
-    SPHERE,
-
-    /// <summary>
-    /// Represents objects that are cubes
-    /// </summary>
-    CUBE,
-
-    /// <summary>
-    /// Represents objects that are cubes
-    /// </summary>
-    LONGCUBE,
-
-    /// <summary>
     /// Represents objects that are mirrors
     /// </summary>
     MIRROR,
