@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// Represents a session that is done by a user. 
+/// Represents a sessionController that is done by a user. 
 /// Should be placed on an object that represents the main location that has all the reference positions.
 /// </summary>
 public class SessionController : MonoBehaviour{
@@ -35,6 +35,7 @@ public class SessionController : MonoBehaviour{
     public RayCasterObject GetRayCasterObject() => rayCasterObject;
 
     private void Start(){
+        sendData.SetData(session);
         //closeTrackableObjects = GetComponentsInChildren<TrackableObjectController>().ToList();
         //referencePositions = GetComponentsInChildren<ReferencePosition>().ToList();
         CheckIfListIsValid("Close trackable objects", closeTrackableObjects.Any());
@@ -47,7 +48,7 @@ public class SessionController : MonoBehaviour{
         AddAllTrackableObjectsToSession(otherTrackableObjects, ViewDistance.FAR);
     }
     /// <summary>
-    /// Adds all teh trackable objects to the session.
+    /// Adds all teh trackable objects to the sessionController.
     /// </summary>
     /// <param name="objectsToAdd">the list of objects to add</param>
     /// <param name="viewDistance">the distance to these objects.</param>
@@ -62,7 +63,7 @@ public class SessionController : MonoBehaviour{
     }
 
     /// <summary>
-    /// Sends the session to the backend.
+    /// Sends the sessionController to the backend.
     /// </summary>
     public void SendSession() {
         sendData.SetData(session);
@@ -117,7 +118,7 @@ public class SessionController : MonoBehaviour{
     }
 
     /// <summary>
-    /// Adds a adaptiveFeedback to the session.
+    /// Adds a adaptiveFeedback to the sessionController.
     /// </summary>
     /// <param name="adaptiveFeedback">the adaptiveFeedback to add</param>
     public void AddFeedback(AdaptiveFeedback adaptiveFeedback) {

@@ -95,8 +95,8 @@ public class FeedbackManager : MonoBehaviour{
             AdaptiveFeedback adaptiveFeedback = CalculateAdaptiveFeedbackForPosition(position);
             session.AddFeedback(adaptiveFeedback);
             if (currentPosition == position.GetReferencePosition()) {
-                //overlayManager.DisplayFeedback(adaptiveFeedback);
-                overlayManager.DisplayLeastViewedObject(adaptiveFeedback, position.GetReferencePosition());
+                overlayManager.DisplayFeedback(adaptiveFeedback);
+                //overlayManager.DisplayLeastViewedObject(adaptiveFeedback, position.GetReferencePosition());
             }
         }
     }

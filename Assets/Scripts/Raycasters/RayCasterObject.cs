@@ -95,7 +95,6 @@ public abstract class RayCasterObject : MonoBehaviour
             Vector3 position = FindPosition();
             raycastHits = shootMutliple ? ShootMultipleObjects(position, direction) : ShootSingleObject(position, direction);
             bool hitSolid = false;
-            MonoBehaviour.print("Casting");
             if (raycastHits.Any()){
                 IEnumerator<RaycastHit> it = raycastHits.Reverse().GetEnumerator();
                 while (it.MoveNext() && !hitSolid) { 

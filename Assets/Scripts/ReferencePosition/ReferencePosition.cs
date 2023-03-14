@@ -7,6 +7,8 @@ using UnityEngine;
 [Serializable]
 public class ReferencePosition
 {
+    [SerializeField]
+    private long locationID = long.MaxValue;
 
     [SerializeField, Tooltip("The id of the location")]
     private string locationName;
