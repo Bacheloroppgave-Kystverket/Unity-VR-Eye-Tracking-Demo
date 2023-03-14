@@ -20,12 +20,14 @@ public class SeatTeleporter : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("The maximum amount of opacity the collider will have on selection")]
-    [Range(0f,1f)]
+    [Range(0f, 1f)]
     private float maxAlpha = 0.6f;
 
     private float changeDuration = 0.3f;
 
     private bool seatIsAvailable = true;
+
+    private int aimedAtAmount = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -37,11 +39,14 @@ public class SeatTeleporter : MonoBehaviour {
     /// Starts making the hitbox around a seatteleporter visible, and stops other similar coroutines from continuing.
     /// </summary>
     public void ShowCollider() {
-       //Missing functionality to make the seat available. Commented out for now. 
+        //Missing functionality to make the seat available. Commented out for now. 
         // if (seatIsAvailable) {
+        if(aimedAtAmount > 0)
+        {
             GetComponent<MeshRenderer>().enabled = true;
             displayCanvas.enabled = true;
             StartCoroutine(GraduallyChangeColliderAlpha(maxAlpha, changeDuration));
+        }
         //}
     }
 
@@ -49,9 +54,12 @@ public class SeatTeleporter : MonoBehaviour {
     /// Starts making the hitbox around a seatteleporter less visible, until it is hidden entirely. 
     /// </summary>
     public void HideCollider() {
-        StopAllCoroutines();
-        StartCoroutine(FadeToDisabledCollider());
-        displayCanvas.enabled = false;
+        if(aimedAtAmount < 1)
+        {
+            StopAllCoroutines();
+            StartCoroutine(FadeToDisabledCollider());
+            displayCanvas.enabled = false;
+        }
     }
 
     /// <summary>
@@ -84,7 +92,7 @@ public class SeatTeleporter : MonoBehaviour {
     private IEnumerator GraduallyChangeColliderAlpha(float targetAlpha, float time) {
         float timeElapsed = 0;
         float startingAlpha = GetComponent<Renderer>().material.color.a;
-        while(timeElapsed < time) {
+        while (timeElapsed < time) {
             SetMaterialAlpha(Mathf.Lerp(startingAlpha, targetAlpha, timeElapsed / time));
             timeElapsed += Time.deltaTime;
             yield return null;
@@ -95,11 +103,11 @@ public class SeatTeleporter : MonoBehaviour {
     /// Sets the availability of the seat. Unavailable seats can not be highlighted. 
     /// </summary>
     /// <param name="availability">Whether the seat should be available</param>
-    public void SetSeatAvailability (bool availability) {
+    public void SetSeatAvailability(bool availability) {
         seatIsAvailable = availability;
     }
-    
-        
+
+
     /// <summary>
     /// Sets the player position to the coordinates of the gameobject with this component attached. 
     /// </summary>
@@ -107,4 +115,7 @@ public class SeatTeleporter : MonoBehaviour {
         SetSeatAvailability(false);
         player.transform.position = transform.position;
     }
+
+    public void IncrementAimedAtAmount(){ aimedAtAmount++; }
+    public void DecrementAimedAtAmount() { aimedAtAmount--; }
 }
