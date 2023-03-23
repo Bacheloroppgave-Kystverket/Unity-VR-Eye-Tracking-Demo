@@ -40,7 +40,7 @@ public class OverlayManager : MonoBehaviour, SessionObserver
     /// <param name="adaptiveFeedback">the adaptive feedback</param>
     /// <param name="referencePosition">the reference position</param>
    public void DisplayLeastViewedObject(AdaptiveFeedback adaptiveFeedback, ReferencePosition referencePosition) {
-        feedbackText.text = adaptiveFeedback.GetLeastViewedObjectAsString(referencePosition.GetAllFeedbackConfigurations());
+        feedbackText.text = adaptiveFeedback.GetLeastViewedObjectAsString(referencePosition.GetCategoryConfigurationsForPosition());
     }
 
     /// <inheritdoc/>

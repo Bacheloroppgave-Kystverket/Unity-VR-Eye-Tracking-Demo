@@ -13,8 +13,8 @@ using UnityEngine;
 [Serializable]
 public class AdaptiveFeedback : Feedback
 {
-    [SerializeField, Tooltip("The position name")]
-    private string positionName;
+    [SerializeField, Tooltip("The feedback id")]
+    private long feedbackId;
 
     [SerializeField, Tooltip("The time of the position")]
     private float positionTime;
@@ -22,21 +22,15 @@ public class AdaptiveFeedback : Feedback
     [SerializeField, Tooltip("The list with the feedbacks")]
     private List<CategoryFeedback> feedbackList;
 
-    [Tooltip("The current config from that seat."), DoNotSerialize]
-    private int currentConfig = 0;
 
     /// <summary>
     /// Makes an instance of the feedback object.
     /// </summary>
-    /// <param name="positionName">the name of the position</param>
-    /// <param name="positionTime">the time for the position</param>
+    /// <param name="positionTime">the time of the position</param>
     /// <param name="feedbackList">the list with the values</param>
-    /// <param name="currentConfig">the current config</param>
-    public AdaptiveFeedback(string positionName, float positionTime ,List<CategoryFeedback> feedbackList, int currentConfig) : base() {
-        this.positionName = positionName;
+    public AdaptiveFeedback(float positionTime ,List<CategoryFeedback> feedbackList) : base() {
         this.positionTime = positionTime;
         this.feedbackList = feedbackList;
-        this.currentConfig = currentConfig;
         float totalTime = 0;
         foreach (CategoryFeedback feedback in feedbackList) {
             totalTime += feedback.GetTime();
@@ -50,7 +44,12 @@ public class AdaptiveFeedback : Feedback
         return GetFeedbackAsString();
     }
 
-    public string GetLeastViewedObjectAsString(List<FeedbackConfiguration> feedbackConfigurations) {
+    /// <summary>
+    /// Gets the least viewed object as a string.
+    /// </summary>
+    /// <param name="feedbackConfigurations">the feedback configuration of this position</param>
+    /// <returns>the message with the biggest difference object</returns>
+    public string GetLeastViewedObjectAsString(List<CategoryConfiguration> feedbackConfigurations) {
         StringBuilder stringBuilder = new StringBuilder();
         float biggestDifference = 0;
         CategoryFeedback differenceHolder = null;

@@ -18,7 +18,7 @@ public class ReferencePositionController : MonoBehaviour
 
     private void Awake() {
         gameObject.tag = typeof(ReferencePositionController).Name;
-        CheckIfListIsValid("feedbackconfigurations", referencePosition.GetAllFeedbackConfigurations().Any());
+        CheckIfListIsValid("feedbackconfigurations", referencePosition.GetCategoryConfigurationsForPosition().Any());
     }
 
     /// <summary>
@@ -64,7 +64,7 @@ public class ReferencePositionController : MonoBehaviour
     /// <param name="currentNumber">the current number</param>
     public void SetCurrentConfig(int currentNumber)
     {
-        CheckIfNumberIsHigherThanX(currentNumber, "current position", referencePosition.GetAllFeedbackConfigurations().Count);
+        CheckIfNumberIsHigherThanX(currentNumber, "current position", referencePosition.GetCategoryConfigurationsForPosition().Count);
         this.currentConfig = currentNumber;
     }
 
@@ -72,7 +72,7 @@ public class ReferencePositionController : MonoBehaviour
     /// Gets the feedback configuration.
     /// </summary>
     /// <returns>the feedback configuration</returns>
-    public FeedbackConfiguration GetCurrentFeedbackConfiguration() => referencePosition.GetAllFeedbackConfigurations()[currentConfig];
+    public CategoryConfiguration GetCurrentFeedbackConfiguration() => referencePosition.GetCategoryConfigurationsForPosition()[currentConfig];
 
     /// <summary>
     /// Checks if the number is higher than x.
@@ -80,13 +80,13 @@ public class ReferencePositionController : MonoBehaviour
     /// <param name="number">the number to check.</param>
     /// <param name="error">the error string</param>
     /// <param name="higherThan">the number that the input number should be equal to or below.</param>
-    /// <exception cref="CouldNotSetNumberException"></exception>
+    /// <exception cref="IllegalArgumentException"></exception>
     private void CheckIfNumberIsHigherThanX(int number, string error, int higherThan)
     {
         CheckIfNumberIsValid(number, error);
         if (number < higherThan)
         {
-            throw new CouldNotSetNumberException(error + " cannot be higher than the feedback configurations.");
+            throw new IllegalArgumentException(error + " cannot be higher than the feedback configurations.");
         }
     }
 
@@ -108,12 +108,12 @@ public class ReferencePositionController : MonoBehaviour
     /// </summary>
     /// <param name="number">the number to check.</param>
     /// <param name="error">the error string</param>
-    /// <exception cref="CouldNotSetNumberException">gets thrown when the number is less than zero</exception>
+    /// <exception cref="IllegalArgumentException">gets thrown when the number is less than zero</exception>
     private void CheckIfNumberIsValid(int number, string error)
     {
         if (number < 0)
         {
-            throw new CouldNotSetNumberException(error + " cannot be below zero");
+            throw new IllegalArgumentException(error + " cannot be below zero");
         }
     }
 }

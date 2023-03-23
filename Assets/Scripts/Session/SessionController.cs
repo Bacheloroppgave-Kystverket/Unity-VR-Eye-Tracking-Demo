@@ -120,8 +120,9 @@ public class SessionController : MonoBehaviour{
     /// Adds a adaptiveFeedback to the session.
     /// </summary>
     /// <param name="adaptiveFeedback">the adaptiveFeedback to add</param>
-    public void AddFeedback(AdaptiveFeedback adaptiveFeedback) {
-        session.AddFeedback(adaptiveFeedback);
+    /// <param name="referencePosition">the reference position</param>
+    public void AddFeedback(AdaptiveFeedback adaptiveFeedback, ReferencePosition referencePosition) {
+        session.GetReferenceRecording(referencePosition).AddFeedback(adaptiveFeedback);
     }
 
     /// <summary>

@@ -12,12 +12,6 @@ public class TrackableObject
     [SerializeField, Tooltip("Defines the type of object that we are looking at.")]
     private TrackableType trackableType = TrackableType.UNDEFINED;
 
-    [SerializeField, Tooltip("The viewing distance that the object is from the player.")]
-    private ViewDistance viewDistance;
-
-    [SerializeField, Tooltip("The list with all the gaze data that this object has.")]
-    private List<GazeData> gazeList = new List<GazeData>();
-
     /// <summary>
     /// Sets the name of the object.
     /// </summary>
@@ -26,14 +20,6 @@ public class TrackableObject
         if (nameOfObject != null && nameOfObject != "") {
             this.nameOfObject = nameOfObject;
         }
-    }
-
-    /// <summary>
-    /// Sets the viewdistance for the object.
-    /// </summary>
-    /// <param name="viewDistance">the view distance</param>
-    public void SetViewDistance(ViewDistance viewDistance) { 
-        this.viewDistance = viewDistance;
     }
 
     /// <summary>
@@ -52,16 +38,6 @@ public class TrackableObject
     public string GetNameOfObject()
     {
         return nameOfObject;
-    }
-
-    /// <summary>
-    /// Gets the gaze data that has that location id.
-    /// </summary>
-    /// <param name="locationID">the location id</param>
-    /// <returns>the gaze data that matches that location id. Is null if location does not exsist</returns>
-    private GazeData GetGazeDataForPosition(string locationID)
-    {
-        return gazeList.Find(gazeData => gazeData.GetLocationID() == locationID);
     }
 
     /// <summary>
