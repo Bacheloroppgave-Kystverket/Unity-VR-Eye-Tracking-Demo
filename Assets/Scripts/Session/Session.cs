@@ -23,7 +23,7 @@ public class Session
     private List<PositionRecord> positionRecords = new List<PositionRecord>();
 
     /// <summary>
-    /// Adds all the trackable objects to this session.
+    /// Adds all the trackable objects to this sessionController.
     /// </summary>
     /// <param name="trackableObjects">the trackable objects</param>
     public void AddTrackableObjects(List<TrackableObject> trackableObjects, ViewDistance viewDistance) {
@@ -47,7 +47,7 @@ public class Session
         {
             referencePositions.ForEach(referencePosition =>
             {
-                if (!referencePositions.Contains(referencePosition))
+                if (!this.referencePositions.Contains(referencePosition))
                 {
                     this.positionRecords.Add(new PositionRecord(referencePosition));
                 }

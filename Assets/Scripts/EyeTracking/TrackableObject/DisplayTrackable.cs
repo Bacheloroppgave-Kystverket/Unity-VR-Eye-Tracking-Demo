@@ -11,23 +11,25 @@ using UnityEngine;
 public class DisplayTrackable : MonoBehaviour, TrackableObserver
 {
     [SerializeField]
-    private TextMeshPro fixationsText;
+    private StatController statController;
 
     [SerializeField]
-    private TextMeshPro fixationDurationText;
+    private GameObject prefab;
 
     [SerializeField]
-    private TextMeshPro averageFixationDurationText;
+    private bool deployPrefab;
 
-    private bool activeText = true;
+    [SerializeField, Tooltip("Set to true if the object has a predefined stat controller")]
+    private bool checkStatController = true;
+
 
     // Start is called before the first frame update
     void Start(){
         gameObject.GetComponent<TrackableObjectController>().AddObserver(this);
-        averageFixationDurationText.gameObject.SetActive(false);
-        CheckField("Fixations text", fixationsText);
-        CheckField("Fixations durations text", fixationDurationText);
-        CheckField("Average fixation duration text", averageFixationDurationText);
+        CheckField("prefab", prefab);
+        if (checkStatController) {
+            CheckField("stat controller", statController);
+        }
     }
 
     /// <summary>
@@ -47,27 +49,25 @@ public class DisplayTrackable : MonoBehaviour, TrackableObserver
 
     /// </inheritdoc>
     public void UpdateAverageFixationDuration(float averageFixationDuration){
-        averageFixationDurationText.text = Math.Round(averageFixationDuration, 1).ToString();
-        averageFixationDurationText.gameObject.SetActive(true);
+        
+        statController.SetAverageFixationDurationText(Math.Round(averageFixationDuration, 1).ToString());        
     }
 
     /// </inheritdoc>
     public void UpdateFixationDuration(float fixationDuration){
-        fixationDurationText.text = Math.Round(fixationDuration, 1).ToString();
+        statController.SetFixationDurationText(Math.Round(fixationDuration, 1).ToString());
     }
 
     /// </inheritdoc>
-    public void UpdateFixations(int fixations){
-       fixationsText.text = fixations.ToString();
+    public void UpdateFixations(int fixations) {
+        statController.SetFixationsText(fixations.ToString());
     }
 
     /// <summary>
     /// Toggles the text between being visible and not
     /// </summary>
-    public void ToggleVisibleStats() {
-        activeText = !activeText;
-        fixationsText.gameObject.SetActive(activeText);
-        fixationDurationText.gameObject.SetActive(activeText);
-        averageFixationDurationText.gameObject.SetActive(activeText);
+    public void ToggleVisibleStats()
+    {
+        statController.ToggleVisibleStats();
     }
 }

@@ -6,12 +6,12 @@ using UnityEngine;
 using UnityEngine.Scripting;
 
 /// <summary>
-/// Represents a session that a user is doing each time they put on the headset.
+/// Represents a sessionController that a user is doing each time they put on the headset.
 /// </summary>
 public class SessionManager : MonoBehaviour
 {
     [SerializeField, Tooltip("The session that this is.")]
-    private SessionController session;
+    private SessionController sessionController;
 
     [SerializeField, Tooltip("The main raycaster object")]
     private RayCasterObject rayCasterObject;
@@ -28,8 +28,13 @@ public class SessionManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        CheckField("Session", session);
+        CheckField("Session", sessionController);
         CheckField("Raycaster object", rayCasterObject);
+    }
+
+    public void SendData() {
+        StopEyeTracking();
+        sessionController.SendSession();
     }
 
     /// <summary>
@@ -69,9 +74,8 @@ public class SessionManager : MonoBehaviour
     /// </summary>
     public void StartEyeTracking() {
         referencePositionManager.StartEyeTracking();
-        session.GetRayCasterObject().StartTracking();
+        sessionController.GetRayCasterObject().StartTracking();
         feedbackManager.StartEyetracking();
-        MonoBehaviour.print("Pog?");
     }
 
     /// <summary>
@@ -79,16 +83,16 @@ public class SessionManager : MonoBehaviour
     /// </summary>
     public void StopEyeTracking() {
         referencePositionManager.StopEyeTracking();
-        session.GetRayCasterObject().StopEyeTracking();
+        sessionController.GetRayCasterObject().StopEyeTracking();
         feedbackManager.StopEyeTracking();
 
     }
 
     /// <summary>
-    /// Gets the session.
+    /// Gets the sessionController.
     /// </summary>
-    /// <returns>the current session</returns>
-    public SessionController GetSession() => session;
+    /// <returns>the current sessionController</returns>
+    public SessionController GetSession() => sessionController;
 
     /// <summary>
     /// Checks if a string field is valid.

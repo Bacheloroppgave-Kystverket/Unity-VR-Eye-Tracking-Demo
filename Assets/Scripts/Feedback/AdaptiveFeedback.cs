@@ -2,6 +2,7 @@ using Oculus.Voice.Windows;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using Unity.VisualScripting;
@@ -32,10 +33,25 @@ public class AdaptiveFeedback : Feedback
         this.positionTime = positionTime;
         this.feedbackList = feedbackList;
         float totalTime = 0;
+
+        CategoryFeedback categoryOther = null;
+
         foreach (CategoryFeedback feedback in feedbackList) {
             totalTime += feedback.GetTime();
+            if (feedback.GetTrackableType() == TrackableType.OTHER) {
+                categoryOther = feedback;
+            }
         }
-        feedbackList.Add(new CategoryFeedback(TrackableType.OTHER, positionTime - totalTime));
+
+        float time = positionTime - totalTime;
+
+        if (categoryOther != null){
+            categoryOther.AddTime(time);
+        }
+        else {
+            categoryOther = new CategoryFeedback(TrackableType.OTHER, time);
+            this.feedbackList.Add(categoryOther);
+        }
     }
 
     /// <inheritdoc/>
