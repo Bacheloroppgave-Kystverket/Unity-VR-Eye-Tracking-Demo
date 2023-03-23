@@ -1,42 +1,49 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class TrackableObject
+[Serializable]
+public class SimulationSetup
 {
-    [Header("Configure object")]
-    [SerializeField, Tooltip("The name of the object")]
-    private string nameOfObject;
+    [SerializeField, Tooltip("The simulation setup id")]
+    private long simulationSetupId;
 
-    [SerializeField, Tooltip("Defines the type of object that we are looking at.")]
-    private TrackableType trackableType = TrackableType.UNDEFINED;
+    [SerializeField, Tooltip("The name of the setup")]
+    private string nameOfSetup;
+
+    [SerializeField, Tooltip("The trackable objects")]
+    private List<TrackableObject> trackableObjects = new List<TrackableObject>();
+
+    [SerializeField, Tooltip("The reference positions")]
+    private List<ReferencePosition> referencePositions = new List<ReferencePosition>();
 
     /// <summary>
-    /// Sets the name of the object.
+    /// Sets the name of the setup.
     /// </summary>
-    /// <param name="nameOfObject">the new object name</param>
-    public void SetGameObjectName(string nameOfObject) {
-        CheckIfStringIsValid(nameOfObject, "name of object");
-        this.nameOfObject = nameOfObject;
+    /// <param name="nameOfSetup">the setup name</param>
+    public void SetNameOfSetup(string nameOfSetup) {
+        CheckIfStringIsValid(nameOfSetup, "name of setup");
+        this.nameOfSetup = nameOfSetup;
     }
 
     /// <summary>
-    /// Gets the trackable object type
+    /// Sets the trackable objects for the setup.
     /// </summary>
-    /// <returns>the trackable object type</returns>
-    public TrackableType GetTrackableType()
-    {
-        return trackableType;
+    /// <param name="trackableObjects">the trackable objects</param>
+    public void SetTrackableObjects(List<TrackableObject> trackableObjects) {
+        CheckIfObjectIsNull(trackableObjects, "trackable objects");
+        this.trackableObjects = trackableObjects;
+    
     }
 
     /// <summary>
-    /// Gets the name of the object
+    /// Sets the reference postions.
     /// </summary>
-    /// <returns>the name of the object</returns>
-    public string GetNameOfObject()
-    {
-        return nameOfObject;
+    /// <param name="referencePositions">the reference positions</param>
+    public void SetReferencePositions(List<ReferencePosition> referencePositions) {
+        CheckIfObjectIsNull(referencePositions, "reference positions");
+        this.referencePositions = referencePositions;
     }
 
     /// <summary>

@@ -25,8 +25,14 @@ public class SessionController : MonoBehaviour{
     [SerializeField, Tooltip("The list of all the trackable objects that are close to this user.")]
     private List<TrackableObjectController> closeTrackableObjects = new List<TrackableObjectController>();
 
+    [SerializeField, Tooltip("The simulation setup")]
+    private SimulationSetup simulationSetup;
+
     [SerializeField, Tooltip("The networking that sends the session")]
     private SendData<Session> sendData;
+
+    [SerializeField, Tooltip("The simulation setup sender")]
+    private SendData<SimulationSetup> simulationSetupSend;
 
     /// <summary>
     /// Gets the raycaster object.
@@ -44,6 +50,7 @@ public class SessionController : MonoBehaviour{
         List<ReferencePosition> references = new List<ReferencePosition>();
         referencePositions.ForEach(positionController => references.Add(positionController.GetReferencePosition()));
         session.AddReferencePositions(references);
+        simulationSetup.SetReferencePositions(references);
         AddAllTrackableObjectsToSession(closeTrackableObjects, ViewDistance.CLOSE);
         AddAllTrackableObjectsToSession(otherTrackableObjects, ViewDistance.FAR);
     }
@@ -56,10 +63,12 @@ public class SessionController : MonoBehaviour{
         List<TrackableObject> trackables = new List<TrackableObject>();
         objectsToAdd.ForEach(trackableObjectController => {
             TrackableObject trackableObject = trackableObjectController.GetTrackableObject();
-            trackableObject.SetViewDistance(viewDistance);
             trackables.Add(trackableObject);
         });
-        session.AddTrackableObjects(trackables);
+        if (viewDistance == ViewDistance.CLOSE) {
+            simulationSetup.SetTrackableObjects(trackables);
+        }
+        session.AddTrackableObjects(trackables, viewDistance);
     }
 
     /// <summary>
@@ -68,6 +77,14 @@ public class SessionController : MonoBehaviour{
     public void SendSession() {
         sendData.SetData(session);
         StartCoroutine(sendData.SendCurrentData());
+    }
+
+    public void SendSimulationSetup() {
+        simulationSetup.SetNameOfSetup(gameObject.name);
+
+        MonoBehaviour.print("oig");
+        simulationSetupSend.SetData(simulationSetup);
+        StartCoroutine(simulationSetupSend.SendCurrentData());
     }
 
     /// <summary>
@@ -122,8 +139,8 @@ public class SessionController : MonoBehaviour{
     /// </summary>
     /// <param name="adaptiveFeedback">the adaptiveFeedback to add</param>
     /// <param name="referencePosition">the reference position</param>
-    public void AddFeedback(AdaptiveFeedback adaptiveFeedback, ReferencePosition referencePosition) {
-        session.GetReferenceRecording(referencePosition).AddFeedback(adaptiveFeedback);
+    public PositionRecord GetPositionRecord(ReferencePosition referencePosition) {
+        return session.GetReferenceRecording(referencePosition);
     }
 
     /// <summary>

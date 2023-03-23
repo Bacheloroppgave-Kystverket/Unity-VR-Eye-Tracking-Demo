@@ -29,6 +29,21 @@ public class TrackableRecord
     }
 
     /// <summary>
+    /// Gets the gaze data that belongs to that reference position.
+    /// </summary>
+    /// <param name="referencePosition">the reference position</param>
+    /// <returns>the gaze data that matches that reference position</returns>
+    public GazeData GetGazeDataForPosition(ReferencePosition referencePosition)
+    {
+        GazeData gazeData = gazeList.Find(gazeData => gazeData.GetReferencePosition() == referencePosition);
+        if (gazeData == null) {
+            gazeData = new GazeData(referencePosition);
+            gazeList.Add(gazeData);
+        }
+        return gazeData;
+    }
+
+    /// <summary>
     /// Gets the trackable object.
     /// </summary>
     /// <returns>the trackable object</returns>
@@ -44,31 +59,7 @@ public class TrackableRecord
         this.viewDistance = viewDistance;
     }
 
-    /// <summary>
-    /// Gets the gaze data that has that location id.
-    /// </summary>
-    /// <param name="locationID">the location id</param>
-    /// <returns>the gaze data that matches that location id. Is null if location does not exsist</returns>
-    private GazeData GetGazeDataForPosition(string locationID)
-    {
-        CheckIfStringIsValid(locationID, "location id");
-        return gazeList.Find(gazeData => gazeData.GetLocationID() == locationID);
-    }
-
-    /// <summary>
-    /// Checks if the string is null or empty. Throws exceptions if one of these conditions are true.
-    /// </summary>
-    /// <param name="stringToCheck">the string to check</param>
-    /// <param name="error">the error of the string</param>
-    /// <exception cref="IllegalArgumentException">gets thrown if the string to check is empty or null.</exception>
-    private void CheckIfStringIsValid(string stringToCheck, string error)
-    {
-        CheckIfObjectIsNull(stringToCheck, error);
-        if (stringToCheck.Trim().Length == 0)
-        {
-            throw new IllegalArgumentException("The" + error + " cannot be empty.");
-        }
-    }
+    
 
     /// <summary>
     /// Checks if the object is null or not. Throws an exception if the object is null.

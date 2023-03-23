@@ -13,12 +13,21 @@ public class ReferencePositionController : MonoBehaviour
     [SerializeField, Tooltip("The reference position")]
     private ReferencePosition referencePosition;
 
-    [SerializeField, Tooltip("The current feedback config.")]
-    private int currentConfig = 0;
+    [SerializeField, Tooltip("The record of this position")]
+    private PositionRecord positionRecord;
 
     private void Awake() {
         gameObject.tag = typeof(ReferencePositionController).Name;
         CheckIfListIsValid("feedbackconfigurations", referencePosition.GetCategoryConfigurationsForPosition().Any());
+    }
+
+    /// <summary>
+    /// Gets the position record.
+    /// </summary>
+    /// <returns>the position record</returns>
+    public PositionRecord GetPositionRecord()
+    {
+        return positionRecord;
     }
 
     /// <summary>
@@ -37,13 +46,13 @@ public class ReferencePositionController : MonoBehaviour
     /// Gets the duration that was spent at this position.
     /// </summary>
     /// <returns>the position duration</returns>
-    public float GetPositionDuration() => referencePosition.GetPositionDuration();
+    public float GetPositionDuration() => positionRecord.GetPositionDuration();
 
     /// <summary>
     /// Adds time to the gaze data.
     /// </summary>
     public void AddTime() {
-        referencePosition.AddTime(Time.deltaTime);
+        positionRecord.AddTime(Time.deltaTime);
     }
 
     /// <summary>
@@ -51,28 +60,6 @@ public class ReferencePositionController : MonoBehaviour
     /// </summary>
     /// <returns>the reference position.</returns>
     public ReferencePosition GetReferencePosition() => referencePosition;
-
-    /// <summary>
-    /// Gets the current config number.
-    /// </summary>
-    /// <returns>the index of the current config</returns>
-    public int GetCurrentConfig() => currentConfig;
-
-    /// <summary>
-    /// Sets the current config.
-    /// </summary>
-    /// <param name="currentNumber">the current number</param>
-    public void SetCurrentConfig(int currentNumber)
-    {
-        CheckIfNumberIsHigherThanX(currentNumber, "current position", referencePosition.GetCategoryConfigurationsForPosition().Count);
-        this.currentConfig = currentNumber;
-    }
-
-    /// <summary>
-    /// Gets the feedback configuration.
-    /// </summary>
-    /// <returns>the feedback configuration</returns>
-    public CategoryConfiguration GetCurrentFeedbackConfiguration() => referencePosition.GetCategoryConfigurationsForPosition()[currentConfig];
 
     /// <summary>
     /// Checks if the number is higher than x.

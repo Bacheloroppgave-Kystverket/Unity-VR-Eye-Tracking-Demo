@@ -47,6 +47,12 @@ public class PositionRecord{
     }
 
     /// <summary>
+    /// Gets the duration of this position.
+    /// </summary>
+    /// <returns>the position duration</returns>
+    public float GetPositionDuration() { return positionDuration; }
+
+    /// <summary>
     /// Adds time to the gaze data.
     /// </summary>
     public void AddTime(float timeToAdd)

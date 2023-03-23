@@ -56,9 +56,9 @@ public class TrackableObjectsManager : MonoBehaviour{
     /// <summary>
     /// Updates all the trackable objects to the new position.
     /// </summary>
-    /// <param name="locationID">the new location id</param>
-    public void UpdatePositionOnAllTrackableObjects(string locationID) {
-        trackableObjects.ForEach(trackableObject => trackableObject.SetPosition(locationID));
+    /// <param name="referencePosition">the new reference position</param>
+    public void UpdatePositionOnAllTrackableObjects(ReferencePosition referencePosition) {
+        trackableObjects.ForEach(trackableObject => trackableObject.SetPosition(referencePosition));
     }
 
     /// <summary>

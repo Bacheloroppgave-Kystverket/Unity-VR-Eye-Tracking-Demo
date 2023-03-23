@@ -10,6 +10,9 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     [SerializeField, Tooltip("The trackable object")]
     private TrackableObject trackableObject;
 
+    [SerializeField, Tooltip("The trackable record")]
+    private TrackableRecord trackableRecord;
+
     [SerializeField, Tooltip("Set to true if the object is supposed to change color")]
     private bool changeColor = true;
 
@@ -34,8 +37,9 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
             Debug.Log("<color=red>Error:</color>" + "Type of object must be defined for " + gameObject.name, gameObject);
         }
         CheckField("Object to track", gameObject);
-        
     }
+
+    
 
     /// <summary>
     /// Checks if the defined field is set in the editor.
@@ -90,19 +94,18 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     /// </summary>
     /// <param name="locationID">the location id</param>
     /// <returns>the gaze data that matches that location id. Is null if location does not exsist</returns>
-    public GazeData GetGazeDataForPosition(string locationID) {
-        return trackableObject.GetGazeDataForLocation(locationID);
+    public GazeData GetGazeDataForPosition(ReferencePosition referencePosition) {
+        return trackableRecord.GetGazeDataForPosition(referencePosition);
     }
 
     /// <summary>
     /// Sets the new position that this trackable object should watch.
     /// </summary>
-    /// <param name="locationID">the new location ID</param>
-    public void SetPosition(string locationID) {
-        if (locationID != null && locationID != "")
+    /// <param name="referencePosition">the reference position</param>
+    public void SetPosition(ReferencePosition referencePosition) {
+        currentGaze = trackableRecord.GetGazeDataForPosition(referencePosition);
+        if (currentGaze != null)
         {
-            currentGaze = trackableObject.GetGazeDataForLocation(locationID);
-
             if (beingWatched && currentGaze != null) {
                 currentGaze.IncrementFixation();
             }

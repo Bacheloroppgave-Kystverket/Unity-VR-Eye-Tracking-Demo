@@ -27,6 +27,8 @@ public class Session
     /// </summary>
     /// <param name="trackableObjects">the trackable objects</param>
     public void AddTrackableObjects(List<TrackableObject> trackableObjects, ViewDistance viewDistance) {
+        //Todo: Here the data from the DB should be loaded.
+
         if (trackableObjects != null){
             trackableObjects.ForEach(trackableObject => {
                 if (!trackableRecords.Any(record => record.GetTrackableObject() == trackableObject)) {
@@ -43,11 +45,11 @@ public class Session
     /// </summary>
     /// <param name="referencePositions">the positions</param>
     public void AddReferencePositions(List<ReferencePosition> referencePositions) {
-        if(referencePositions != null)
-        {
-            referencePositions.ForEach(referencePosition =>
-            {
-                if (!this.referencePositions.Contains(referencePosition))
+        //Todo: Here the data from the DB should be loaded.
+
+        if(referencePositions != null){
+            referencePositions.ForEach(referencePosition =>{
+                if (!this.positionRecords.Any(record => record.GetReferencePosition() == referencePosition))
                 {
                     this.positionRecords.Add(new PositionRecord(referencePosition));
                 }
