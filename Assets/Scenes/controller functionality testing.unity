@@ -4825,14 +4825,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6249843505062768527, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6249843505558327498, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6249843505674548754, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
       propertyPath: m_InteractionManager
       value: 
@@ -4889,25 +4881,5 @@ PrefabInstance:
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 1821950350}
-    - target: {fileID: 6249843507057457573, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_AnimateModel
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6253362228225766005, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_player
-      value: 
-      objectReference: {fileID: 436579146}
-    - target: {fileID: 6253362228231483157, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7903668179524469613, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_player
-      value: 
-      objectReference: {fileID: 436579146}
-    - target: {fileID: 7903668179534353083, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
