@@ -11,7 +11,7 @@ public class Session
     private string sessionID;
 
     [SerializeField, Tooltip("The date of the session")]
-    private DateTime currentDate = DateTime.Now;
+    private DateTime currentDate = DateTime.Now.Date;
 
     [SerializeField, Tooltip("The user that is doing this session.")]
     private User user;
@@ -22,13 +22,16 @@ public class Session
     [SerializeField, Tooltip("The list of all the positions and the time spent there.")]
     private List<PositionRecord> positionRecords = new List<PositionRecord>();
 
+    [SerializeField, Tooltip("The simulation setup.")]
+    private SimulationSetup simulationSetup;
+
     /// <summary>
     /// Adds all the trackable objects to this sessionController.
     /// </summary>
     /// <param name="trackableObjects">the trackable objects</param>
     public void AddTrackableObjects(List<TrackableObject> trackableObjects, ViewDistance viewDistance) {
         //Todo: Here the data from the DB should be loaded.
-
+        MonoBehaviour.print(currentDate);
         if (trackableObjects != null){
             trackableObjects.ForEach(trackableObject => {
                 if (!trackableRecords.Any(record => record.GetTrackableObject() == trackableObject)) {
@@ -38,6 +41,15 @@ public class Session
                 }
             });
         }
+    }
+
+    /// <summary>
+    /// Sets the simulation settup.
+    /// </summary>
+    /// <param name="simulationSetup">the new simulation setup.</param>
+    public void SetSimulationSetup(SimulationSetup simulationSetup) {
+        CheckIfObjectIsNull(simulationSetup, "simulation setup");
+        this.simulationSetup = simulationSetup;
     }
 
     /// <summary>

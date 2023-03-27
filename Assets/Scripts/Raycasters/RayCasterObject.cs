@@ -21,7 +21,7 @@ public abstract class RayCasterObject : MonoBehaviour
     [SerializeField, Tooltip("The frequency to gather data for the raycaster. Quest pro has a rate of 30 hz in the forums.")]
     private int frequency = 30;
 
-    [SerializeField, Min(0.01f), Tooltip("The size of the sphere that we shoot to determine what you look at.")]
+    [SerializeField, Range(0.01f, 0.5f), Tooltip("The size of the sphere that we shoot to determine what you look at.")]
     private float sphereSize = 0.03f;
 
     [SerializeField, Range(1,100), Tooltip("The range that the ray should be shot")]
@@ -209,7 +209,9 @@ public abstract class RayCasterObject : MonoBehaviour
     /// <param name="position">the starting position</param>
     /// <param name="direction">the direction</param>
     private void VisualizeHitpointAndDrawLine(RaycastHit[] raycastHit, Vector3 position, Vector3 direction) {
-        hitSpot.transform.position = raycastHit.Last().point;
+        Vector3 hitPos = raycastHit.Last().point;
+        hitSpot.transform.position = hitPos;
+
         Debug.DrawRay(position, direction * raycastHit.First().distance);
     }
 
@@ -227,5 +229,53 @@ public abstract class RayCasterObject : MonoBehaviour
     {
         casting = false;
         UnwatchObjects();
+    }
+
+    /// <summary>
+    /// Gets the current objects watched.
+    /// </summary>
+    /// <returns>A list with all the current objects.</returns>
+    public List<TrackableObjectController> GetCurrentObjectsWatched() {
+        return currentObjectsWatched;
+    }
+
+    /// <summary>
+    /// Gets the last objects watched.
+    /// </summary>
+    /// <returns>the last objects</returns>
+    public List<TrackableObjectController> GetLastObjects() {
+        return lastObjects;
+    }
+
+    public void SetProperties(int frequency, float sphereSize, int range) {
+        CheckIfNumberIsAboveZero(frequency, "frequency");
+        CheckIfNumberIsAboveZeroAndUnderN(sphereSize, "sphere size", 0.5f);
+        CheckIfNumberIsAboveZeroAndUnderN(range, "range", 100);
+    }
+
+    /// <summary>
+    /// Checks if the number is above zero and under N.
+    /// </summary>
+    /// <param name="number">the number to check</param>
+    /// <param name="error">the value as a prefix</param>
+    /// <param name="maxValue">the max amount</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the number is negative or above the max limit.</exception>
+    private void CheckIfNumberIsAboveZeroAndUnderN(float number, string error, float maxValue) {
+        CheckIfNumberIsAboveZero(number, error);
+        if (number > maxValue) {
+            throw new IllegalArgumentException("Expected the " + error + " to be larger than " + maxValue + ".");
+        }
+    }
+
+    /// <summary>
+    /// Checks if a number is above zero.
+    /// </summary>
+    /// <param name="number">the number to check.</param>
+    /// <param name="error">the error prefix.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the number is negative.</exception>
+    private void CheckIfNumberIsAboveZero(float number, string error) {
+        if (number < 0) {
+            throw new IllegalArgumentException("The " + error +  " must be above zero.");
+        }
     }
 }

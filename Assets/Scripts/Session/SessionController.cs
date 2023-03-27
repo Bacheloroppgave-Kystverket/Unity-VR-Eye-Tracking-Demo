@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -29,10 +30,10 @@ public class SessionController : MonoBehaviour{
     private SimulationSetup simulationSetup;
 
     [SerializeField, Tooltip("The networking that sends the session")]
-    private SendData<Session> sendData;
+    private ServerRequest<Session> sendData;
 
     [SerializeField, Tooltip("The simulation setup sender")]
-    private SendData<SimulationSetup> simulationSetupSend;
+    private ServerRequest<SimulationSetup> simulationSetupSend;
 
     /// <summary>
     /// Gets the raycaster object.
@@ -51,6 +52,7 @@ public class SessionController : MonoBehaviour{
         referencePositions.ForEach(positionController => references.Add(positionController.GetReferencePosition()));
         session.AddReferencePositions(references);
         simulationSetup.SetReferencePositions(references);
+        session.SetSimulationSetup(simulationSetup);
         AddAllTrackableObjectsToSession(closeTrackableObjects, ViewDistance.CLOSE);
         AddAllTrackableObjectsToSession(otherTrackableObjects, ViewDistance.FAR);
     }
@@ -87,6 +89,10 @@ public class SessionController : MonoBehaviour{
         StartCoroutine(simulationSetupSend.SendCurrentData());
     }
 
+    public void UpdateSimulationSetup() {
+        //simulationSetup.UpdateSimulationSetup();
+    }
+
     /// <summary>
     /// Gets the reference positions.
     /// </summary>
@@ -97,7 +103,7 @@ public class SessionController : MonoBehaviour{
     /// Checks if the defined field is set in the editor.
     /// </summary>
     /// <param name="error">the type of error like "type of object"</param>
-    /// <param name="fieldToCheck">The field to check</param>
+    /// <param name="fieldToCheck">the field to check</param>
     private bool CheckField(string error, object fieldToCheck)
     {
         bool valid = fieldToCheck == null;

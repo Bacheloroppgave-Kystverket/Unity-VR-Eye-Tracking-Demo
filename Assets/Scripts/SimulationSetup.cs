@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class SimulationSetup
-{
+public class SimulationSetup {
+
     [SerializeField, Tooltip("The simulation setup id")]
     private long simulationSetupId;
 
@@ -13,10 +13,10 @@ public class SimulationSetup
     private string nameOfSetup;
 
     [SerializeField, Tooltip("The trackable objects")]
-    private List<TrackableObject> trackableObjects = new List<TrackableObject>();
+    private List<TrackableObject> closeTrackableObjects = new List<TrackableObject>();
 
     [SerializeField, Tooltip("The reference positions")]
-    private List<ReferencePosition> referencePositions = new List<ReferencePosition>();
+    private List<ReferencePosition> referencePositionList = new List<ReferencePosition>();
 
     /// <summary>
     /// Sets the name of the setup.
@@ -33,8 +33,7 @@ public class SimulationSetup
     /// <param name="trackableObjects">the trackable objects</param>
     public void SetTrackableObjects(List<TrackableObject> trackableObjects) {
         CheckIfObjectIsNull(trackableObjects, "trackable objects");
-        this.trackableObjects = trackableObjects;
-    
+        this.closeTrackableObjects = trackableObjects;
     }
 
     /// <summary>
@@ -43,7 +42,49 @@ public class SimulationSetup
     /// <param name="referencePositions">the reference positions</param>
     public void SetReferencePositions(List<ReferencePosition> referencePositions) {
         CheckIfObjectIsNull(referencePositions, "reference positions");
-        this.referencePositions = referencePositions;
+        this.referencePositionList = referencePositions;
+    }
+
+    /// <summary>
+    /// Updates this simulation setup to match the input simulation setup.
+    /// </summary>
+    /// <param name="simulationSetup">the new simulation setup</param>
+    public void UpdateSimulationSetup(SimulationSetup simulationSetup) {
+        CheckIfObjectIsNull(simulationSetup, "simulation setup");
+        this.simulationSetupId = simulationSetup.GetSimulationSetupId();
+        foreach(TrackableObject trackableObject in simulationSetup.GetTrackableObjects()) {
+            TrackableObject matchObject = this.closeTrackableObjects.Find(trackable => trackable.GetNameOfObject() == trackableObject.GetNameOfObject());
+            matchObject.SetTrackableObjectId(trackableObject.GetTrackableObjectId());
+        }
+        foreach (ReferencePosition referencePosition in simulationSetup.GetReferencePositions()) {
+            ReferencePosition referencePostionMatch = this.GetReferencePositions().Find(pos => pos.GetLocationName() == referencePosition.GetLocationName());
+            referencePostionMatch.SetLocationId(referencePosition.GetLocationId());
+            referencePostionMatch.SetPositionConfiguration(referencePosition.GetPositionConfiguration());
+        }
+    }
+
+    /// <summary>
+    /// Gets all the close trackable objects.
+    /// </summary>
+    /// <returns>the close trackable objects</returns>
+    public List<TrackableObject> GetTrackableObjects() {
+        return closeTrackableObjects;
+    }
+
+    /// <summary>
+    /// Gets the reference positions.
+    /// </summary>
+    /// <returns>the reference positions</returns>
+    public List<ReferencePosition> GetReferencePositions() {
+        return referencePositionList;
+    }
+
+    /// <summary>
+    /// Gets the simulation setup id.
+    /// </summary>
+    /// <returns>the simulation setup id</returns>
+    public long GetSimulationSetupId() {
+        return simulationSetupId;
     }
 
     /// <summary>

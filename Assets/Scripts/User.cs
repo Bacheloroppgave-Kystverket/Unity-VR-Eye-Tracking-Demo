@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 
 [Serializable]
@@ -9,9 +10,11 @@ public class User
     [SerializeField, Tooltip("The unique id of the user")]
     private long userId;
 
-    private string userName;
+    [SerializeField, Tooltip("The username")]
+    private string username;
 
-    private string password;
+    [SerializeField, PasswordPropertyText]
+    private string password = " ";
 
     /// <summary>
     /// Sets the name of the user.
@@ -19,7 +22,7 @@ public class User
     /// <param name="username">the new username</param>
     public void setUsername(string username) {
         CheckIfStringIsValid(username, "username");
-        this.userName = username;
+        this.username = username;
     }
 
     /// <summary>

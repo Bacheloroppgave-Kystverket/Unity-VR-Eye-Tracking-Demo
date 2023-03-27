@@ -14,9 +14,6 @@ using UnityEngine;
 [Serializable]
 public class AdaptiveFeedback : Feedback
 {
-    [SerializeField, Tooltip("The feedback id")]
-    private long feedbackId;
-
     [SerializeField, Tooltip("The time of the position")]
     private float positionTime;
 
