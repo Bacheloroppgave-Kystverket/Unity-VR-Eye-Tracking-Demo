@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -95,6 +96,7 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     /// <param name="locationID">the location id</param>
     /// <returns>the gaze data that matches that location id. Is null if location does not exsist</returns>
     public GazeData GetGazeDataForPosition(ReferencePosition referencePosition) {
+        CheckIfObjectIsNull(referencePosition, "reference position");
         return trackableRecord.GetGazeDataForPosition(referencePosition);
     }
 
@@ -103,6 +105,7 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     /// </summary>
     /// <param name="referencePosition">the reference position</param>
     public void SetPosition(ReferencePosition referencePosition) {
+        CheckIfObjectIsNull(referencePosition, "reference position");
         currentGaze = trackableRecord.GetGazeDataForPosition(referencePosition);
         if (currentGaze != null)
         {
@@ -201,5 +204,34 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     private void UpdateObserversAverageFixationDuration(float averageFixation)
     {
         observers.ForEach(observer => observer.UpdateAverageFixationDuration(averageFixation));
+    }
+
+    /// <summary>
+    /// Checks if the string is null or empty. Throws exceptions if one of these conditions are true.
+    /// </summary>
+    /// <param name="stringToCheck">the string to check</param>
+    /// <param name="error">the error of the string</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the string to check is empty or null.</exception>
+    private void CheckIfStringIsValid(string stringToCheck, string error)
+    {
+        CheckIfObjectIsNull(stringToCheck, error);
+        if (stringToCheck.Trim().Length == 0)
+        {
+            throw new IllegalArgumentException("The" + error + " cannot be empty.");
+        }
+    }
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
+        }
     }
 }

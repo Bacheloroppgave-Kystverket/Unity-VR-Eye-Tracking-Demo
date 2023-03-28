@@ -30,8 +30,7 @@ public class LaunchObject : MonoBehaviour
     private IEnumerator SwitchDirection() {
         yield return new WaitForSeconds(3);
         while (true) {
-            if (forward)
-            {
+            if (forward){
                 float times = firstTime ? 1 : 2;
                 rigidbody.AddForce(Vector3.fwd * (force * times));
                 forward = false;

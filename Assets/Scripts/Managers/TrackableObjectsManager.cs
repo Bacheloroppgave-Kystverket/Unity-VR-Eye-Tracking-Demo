@@ -12,6 +12,9 @@ public class TrackableObjectsManager : MonoBehaviour{
     [SerializeField, Tooltip("This list will populate itself with all the objects once the session starts")]
     private List<TrackableObjectController> trackableObjects = new List<TrackableObjectController>();
 
+    [SerializeField, Tooltip("The point of interest controllers")]
+    private List<PointOfInterestController> pointOfInterestControllers = new List<PointOfInterestController>();
+
     [Space(10), Header("Managers")]
     [SerializeField, Tooltip("The session manager")]
     private SessionManager sessionManager;
@@ -19,7 +22,10 @@ public class TrackableObjectsManager : MonoBehaviour{
     [SerializeField, Tooltip("The reference position manager")]
     private ReferencePositionManager referencePositionManager;
 
+    [SerializeField, Tooltip("The point placer")]
+    private PointPlacerController pointPlacer;
 
+    
     private void Awake(){
         trackableObjects = GameObject.FindObjectsOfType<TrackableObjectController>().ToList();
         CheckIfListIsValid("Trackable objects", trackableObjects.Any());
@@ -69,8 +75,7 @@ public class TrackableObjectsManager : MonoBehaviour{
         trackableObjects.ForEach(trackableObject => trackableObject.CalculateCurrentAverageFixationDuration(referencePositionManager.GetCurrentReferencePosition().GetLocationName()));
     }
 
-
-    
-
-    
+    public void ShowAllPointsOfInterest() {
+        pointPlacer.ShowPointsOfInterest();
+    }
 }
