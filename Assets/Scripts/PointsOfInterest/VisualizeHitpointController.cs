@@ -43,10 +43,13 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
     /// <param name="direction">the direction</param>
     private void VisualizeHitpointAndDrawLine(RaycastHit[] raycastHit, Vector3 position, Vector3 direction)
     {
-        Vector3 hitPos = raycastHit.Last().point;
-        hitSpot.transform.position = hitPos;
-
-        Debug.DrawRay(position, direction * raycastHit.First().distance);
+        if (visualizeHitpoint) {
+            Vector3 hitPos = raycastHit.Last().point;
+            hitSpot.transform.position = hitPos;
+        }
+        if (visualizeLine) {
+            Debug.DrawRay(position, direction * raycastHit.First().distance);
+        }
     }
 
     /// <summary>

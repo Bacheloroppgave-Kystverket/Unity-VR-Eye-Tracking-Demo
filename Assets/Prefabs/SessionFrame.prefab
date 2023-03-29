@@ -4373,7 +4373,7 @@ MonoBehaviour:
   pointsOfInterest: []
   pointOfInterestControllers: []
   currentPoint: 1
-  sampleSize: 2
+  sampleSize: 30
   frequency: 0
   pointPrefab: {fileID: 7746015807731111323, guid: a0c4ae0ba01bb2848bba3913fff38e08, type: 3}
 --- !u!114 &6733984506319979286 stripped
