@@ -32,7 +32,7 @@ public class LaunchObject : MonoBehaviour
         while (true) {
             if (forward){
                 float times = firstTime ? 1 : 2;
-                rigidbody.AddForce(Vector3.fwd * (force * times));
+                rigidbody.AddForce(Vector3.forward * (force * times));
                 forward = false;
                 firstTime = false;
             }

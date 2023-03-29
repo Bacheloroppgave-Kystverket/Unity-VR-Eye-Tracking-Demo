@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7746015807731111321}
   - component: {fileID: 7746015807731111322}
   - component: {fileID: 7746015807731111334}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PointOfInterest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -114,5 +114,6 @@ MonoBehaviour:
     order: 0
     localPosition: {x: 0, y: 0, z: 0}
     worldPosition: {x: 0, y: 0, z: 0}
+    parentTransform: {fileID: 0}
   defaultMaterial: {fileID: 2100000, guid: f667211679fce7b4ba153211cc180f29, type: 2}
   heatMapMaterial: {fileID: 2100000, guid: af7d466e33bd0714c810f127e7029388, type: 2}

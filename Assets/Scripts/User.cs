@@ -17,7 +17,7 @@ public class User
     private string password = " ";
 
     /// <summary>
-    /// Sets the name of the user.
+    /// Sets the name of the user
     /// </summary>
     /// <param name="username">the new username</param>
     public void setUsername(string username) {

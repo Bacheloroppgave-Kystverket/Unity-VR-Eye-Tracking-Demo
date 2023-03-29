@@ -17,11 +17,15 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     [SerializeField, Tooltip("The current point")]
     private int currentPoint = 1;
 
+    [SerializeField, Tooltip("The amount of samples per ")]
+    private int sampleSize;
+
     [SerializeField, Tooltip("The frequency of the tracker")]
     private int frequency;
 
     [SerializeField, Tooltip("The prefab that the points of interest should have")]
     private GameObject pointPrefab;
+
 
     private void Start()
     {
@@ -35,28 +39,56 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     /// </summary>
     /// <param name="raycastHit">the raycast hit</param>
     private void AddInterestPoint(RaycastHit raycastHit) {
-        pointsOfInterest.Add(new PointOfInterest(currentPoint / frequency, raycastHit));
+        pointsOfInterest.Add(new PointOfInterest(currentPoint / (frequency/sampleSize), raycastHit));
     }
 
     ///<inheritdoc/>
     public void ObservedObjects(RaycastHit[] raycastHits){
         CheckIfObjectIsNull(raycastHits, "raycast hits");
-        if (currentPoint % frequency == 0 && raycastHits.Length > 0)
+        if (currentPoint % (frequency/sampleSize) == 0 && raycastHits.Length > 0)
         {
             AddInterestPoint(raycastHits.Last());
         }
         currentPoint += 1;
     }
 
-    public void ShowPointsOfInterest() {
-        int nextPos =  pointOfInterestControllers.Count();
+    /// <summary>
+    /// Shows all the points of interest in the worldspace.
+    /// </summary>
+    public void ShowPointsOfInterestAsDefault() {
+        AddNewestPointsOfInterest();
+        pointOfInterestControllers.ForEach(pointController => pointController.ShowPointOfInterest());
+    }
+
+    /// <summary>
+    /// Shows the points of interest with a transparent membrane. 
+    /// </summary>
+    public void ShowPointsOfInterestAsHeatmap() {
+        AddNewestPointsOfInterest();
+        pointOfInterestControllers.ForEach(pointController => pointController.ShowPointOfInterestAsHeatmap());
+    }
+
+    
+    /// <summary>
+    /// Hides the points of interest.
+    /// </summary>
+    public void HidePointsOfInterest() {
+        pointOfInterestControllers.ForEach(pointController => pointController.HidePointOfInterest());
+    }
+
+    /// <summary>
+    /// Adds the newest points of interest. The old ones are not added again.
+    /// </summary>
+    public void AddNewestPointsOfInterest()
+    {
+        int nextPos = pointOfInterestControllers.Count();
         int maxAmount = pointsOfInterest.Count();
-        while (nextPos < maxAmount) {
+        while (nextPos < maxAmount)
+        {
             PointOfInterest pointOfInterest = pointsOfInterest[nextPos];
             InstansiatePoint(pointOfInterest);
             nextPos += 1;
         }
-        pointOfInterestControllers.ForEach(pointController => pointController.gameObject.SetActive(true));
     }
 
     /// <summary>

@@ -26,6 +26,29 @@ public class PointOfInterestController : MonoBehaviour
     }
 
     /// <summary>
+    /// Shows the point of interest with its default material
+    /// </summary>
+    public void ShowPointOfInterest() { 
+        gameObject.SetActive(true);
+        GetComponent<MeshRenderer>().material = defaultMaterial;
+    }
+
+    /// <summary>
+    /// Shows the point of interest as a heatmap.
+    /// </summary>
+    public void ShowPointOfInterestAsHeatmap() { 
+        gameObject.SetActive(true);
+        GetComponent<MeshRenderer>().material = heatMapMaterial;
+    }
+
+    /// <summary>
+    /// Hides the point of interest.
+    /// </summary>
+    public void HidePointOfInterest() { 
+        gameObject.SetActive(false);
+    }
+
+    /// <summary>
     /// Checks if the object is null or not. Throws an exception if the object is null.
     /// </summary>
     /// <param name="objecToCheck">the object to check</param>

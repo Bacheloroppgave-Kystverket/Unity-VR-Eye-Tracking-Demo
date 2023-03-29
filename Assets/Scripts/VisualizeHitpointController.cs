@@ -20,13 +20,15 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
     [SerializeField, Tooltip("The raycaster object.")]
     private RayCasterObject raycaster;
 
+    ///<inheritdoc/>
     private void Start()
     {
         CheckField("Hitspot", hitSpot);
         this.raycaster = GetComponent<RayCasterObject>();
-
+        raycaster.AddObserver(this);
     }
 
+    ///<inheritdoc/>
     public void ObservedObjects(RaycastHit[] raycastHits)
     {
         CheckIfObjectIsNull(raycastHits, "raycast hits");

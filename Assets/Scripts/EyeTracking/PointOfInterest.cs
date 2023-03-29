@@ -21,7 +21,11 @@ public class PointOfInterest
     [SerializeField, Tooltip("The transform of the object this point hit.")]
     private Transform parentTransform;
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pointOfInterestOrder"></param>
+    /// <param name="hit"></param>
     public PointOfInterest(int pointOfInterestOrder, RaycastHit hit) {
         CheckIfNumberIsAboveZero(pointOfInterestOrder, "point of inteterst order");
         CheckIfObjectIsNull(hit, "raycast hit");
