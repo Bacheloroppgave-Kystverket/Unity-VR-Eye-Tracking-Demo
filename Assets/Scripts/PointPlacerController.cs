@@ -40,6 +40,7 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
 
     ///<inheritdoc/>
     public void ObservedObjects(RaycastHit[] raycastHits){
+        CheckIfObjectIsNull(raycastHits, "raycast hits");
         if (currentPoint % frequency == 0 && raycastHits.Length > 0)
         {
             AddInterestPoint(raycastHits.Last());
@@ -63,8 +64,22 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     /// </summary>
     /// <param name="pointOfInterest">the point of interest to instansiate</param>
     private void InstansiatePoint(PointOfInterest pointOfInterest) {
-        PointOfInterestController pointOfInterestController = Instantiate(gameObject).GetComponent<PointOfInterestController>();
+        PointOfInterestController pointOfInterestController = Instantiate(pointPrefab).GetComponent<PointOfInterestController>();
         pointOfInterestController.SetPointOfInterest(pointOfInterest);
         pointOfInterestControllers.Add(pointOfInterestController);
+    }
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
+        }
     }
 }

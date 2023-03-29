@@ -22,14 +22,11 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     [SerializeField, Tooltip("The frequency to gather data for the raycaster. Quest pro has a rate of 30 hz in the forums.")]
     private int frequency = 30;
 
-    [SerializeField, Range(0.01f, 0.5f), Tooltip("The size of the sphere that we shoot to determine what you look at.")]
-    private float sphereSize = 0.03f;
-
     [SerializeField, Range(1, 100), Tooltip("The range that the ray should be shot")]
     private int range = 50;
 
-    [SerializeField, Tooltip("The object to visualize where the user looks")]
-    private GameObject hitSpot;
+    [SerializeField, Tooltip("The raycaster configuration of this raycater object")]
+    private RaycasterConfiguration raycasterConfiguration = new NormalRaycastConfig();
 
     [Space(5), Header("Debugging lists")]
     [SerializeField]
@@ -43,18 +40,6 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
 
     protected void Start() {
         currentObjectsWatched = new List<TrackableObjectController>();
-        CheckField("Hitspot", hitSpot);
-    }
-
-    /// <summary>
-    /// Checks if the defined field is set in the editor.
-    /// </summary>
-    /// <param name="error">the type of error like "type of object"</param>
-    /// <param name="fieldToCheck">The field to check</param>
-    private void CheckField(string error, object fieldToCheck) {
-        if (fieldToCheck == null) {
-            Debug.Log("<color=red>Error:</color>" + error + " must be set.", gameObject);
-        }
     }
 
     /// <summary>
@@ -84,21 +69,24 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     /// Gets the position to shoot the ray from.
     /// </summary>
     /// <returns>the position</returns>
-    protected abstract Vector3 FindPosition();
+    public abstract Vector3 FindPosition();
 
-    protected abstract Vector3 FindDirection();
+    public abstract Vector3 FindDirection();
 
     /// <summary>
     /// Starts the eye tracking in the application. 
     /// </summary>
     /// <returns>the time to wait</returns>
     private IEnumerator StartEyeTracking() {
+        RaycastHit[] raycastHits;
+        Vector3 direction;
+        Vector3 position;
         while (casting) {
-            float timeToWait = 1 / frequency;
+            float timeToWait = 1f / frequency;
             //Makes ray
-            RaycastHit[] raycastHits;
-            Vector3 direction = FindDirection();
-            Vector3 position = FindPosition();
+            
+            direction = FindDirection();
+            position = FindPosition();
             raycastHits = shootMutliple ? ShootMultipleObjects(position, direction) : ShootSingleObject(position, direction);
             bool hitSolid = false;
             if (raycastHits.Any()) {
@@ -107,7 +95,6 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
                     hitSolid = WatchObject(it.Current);
                 }
                 UnwatchObjects(currentObjectsWatched);
-                VisualizeHitpointAndDrawLine(raycastHits, position, direction);
             }
             else
             {
@@ -115,7 +102,7 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
             }
             currentObjectsWatched.Clear();
             UpdateObservers(raycastHits);
-            yield return new WaitForSeconds(1f / frequency);
+            yield return new WaitForSeconds(timeToWait);
         }
         MonoBehaviour.print("Eyetracking has stopped.");
     }
@@ -144,8 +131,7 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     /// <returns>gets the raycast hits</returns>
     private RaycastHit[] ShootMultipleObjects(Vector3 position, Vector3 direction) {
         //Shoots ray
-        RaycastHit[] hits = Physics.RaycastAll(position, direction, range); //Physics.RaycastAll(position, direction, range);
-        return hits;
+        return raycasterConfiguration.ShootMultipleObjectsConfiguration(position, direction, range);
     }
 
     /// <summary>
@@ -156,10 +142,7 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     /// <returns></returns>
     private RaycastHit[] ShootSingleObject(Vector3 position, Vector3 direction) {
         //Shoots ray
-        RaycastHit raycastHit;
-        Physics.Raycast(position, direction, out raycastHit, range);
-        RaycastHit[] hits = { raycastHit };
-        return hits;
+        return raycasterConfiguration.ShootSingleConfiguration(position, direction, range);
     }
 
     /// <summary>
@@ -208,18 +191,7 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
         currentObjectsWatched.Add(trackObject);
     }
 
-    /// <summary>
-    /// Visualizes the hitpoint in space.
-    /// </summary>
-    /// <param name="raycastHit">the first hit</param>
-    /// <param name="position">the starting position</param>
-    /// <param name="direction">the direction</param>
-    private void VisualizeHitpointAndDrawLine(RaycastHit[] raycastHit, Vector3 position, Vector3 direction) {
-        Vector3 hitPos = raycastHit.Last().point;
-        hitSpot.transform.position = hitPos;
-
-        Debug.DrawRay(position, direction * raycastHit.First().distance);
-    }
+    
 
     /// <inheritdoc/>
     public void StartTracking() {
