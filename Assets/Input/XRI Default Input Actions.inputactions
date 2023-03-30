@@ -796,13 +796,22 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Trigger Released",
+                    "type": "Button",
+                    "id": "07e55670-8552-4a58-8fa8-8f370cd7d73c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "1ce80054-410d-4112-a332-50faa7fb4f23",
-                    "path": "<XRInputV1::Oculus::OculusTouchControllerLeft>{RightHand}/triggerpressed",
+                    "path": "<XRInputV1::Oculus::OculusTouchControllerRight>{RightHand}/triggerpressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "Generic XR Controller",
@@ -974,6 +983,17 @@
                     "action": "Translate Anchor",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "e8afb6e1-fce4-4efe-8533-ce90dab33430",
+                    "path": "<OculusTouchController>{RightHand}/primaryTouched",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger Released",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

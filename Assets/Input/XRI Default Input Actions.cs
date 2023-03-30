@@ -818,13 +818,22 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Trigger Released"",
+                    ""type"": ""Button"",
+                    ""id"": ""07e55670-8552-4a58-8fa8-8f370cd7d73c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""1ce80054-410d-4112-a332-50faa7fb4f23"",
-                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerLeft>{RightHand}/triggerpressed"",
+                    ""path"": ""<XRInputV1::Oculus::OculusTouchControllerRight>{RightHand}/triggerpressed"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Generic XR Controller"",
@@ -996,6 +1005,17 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
                     ""action"": ""Translate Anchor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e8afb6e1-fce4-4efe-8533-ce90dab33430"",
+                    ""path"": ""<OculusTouchController>{RightHand}/primaryTouched"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Trigger Released"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1201,6 +1221,7 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
         m_XRIRightHandInteraction_UIPressValue = m_XRIRightHandInteraction.FindAction("UI Press Value", throwIfNotFound: true);
         m_XRIRightHandInteraction_RotateAnchor = m_XRIRightHandInteraction.FindAction("Rotate Anchor", throwIfNotFound: true);
         m_XRIRightHandInteraction_TranslateAnchor = m_XRIRightHandInteraction.FindAction("Translate Anchor", throwIfNotFound: true);
+        m_XRIRightHandInteraction_TriggerReleased = m_XRIRightHandInteraction.FindAction("Trigger Released", throwIfNotFound: true);
         // XRI RightHand Locomotion
         m_XRIRightHandLocomotion = asset.FindActionMap("XRI RightHand Locomotion", throwIfNotFound: true);
         m_XRIRightHandLocomotion_TeleportSelect = m_XRIRightHandLocomotion.FindAction("Teleport Select", throwIfNotFound: true);
@@ -1584,6 +1605,7 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
     private readonly InputAction m_XRIRightHandInteraction_UIPressValue;
     private readonly InputAction m_XRIRightHandInteraction_RotateAnchor;
     private readonly InputAction m_XRIRightHandInteraction_TranslateAnchor;
+    private readonly InputAction m_XRIRightHandInteraction_TriggerReleased;
     public struct XRIRightHandInteractionActions
     {
         private @XRIDefaultInputActions m_Wrapper;
@@ -1596,6 +1618,7 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
         public InputAction @UIPressValue => m_Wrapper.m_XRIRightHandInteraction_UIPressValue;
         public InputAction @RotateAnchor => m_Wrapper.m_XRIRightHandInteraction_RotateAnchor;
         public InputAction @TranslateAnchor => m_Wrapper.m_XRIRightHandInteraction_TranslateAnchor;
+        public InputAction @TriggerReleased => m_Wrapper.m_XRIRightHandInteraction_TriggerReleased;
         public InputActionMap Get() { return m_Wrapper.m_XRIRightHandInteraction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1629,6 +1652,9 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
                 @TranslateAnchor.started -= m_Wrapper.m_XRIRightHandInteractionActionsCallbackInterface.OnTranslateAnchor;
                 @TranslateAnchor.performed -= m_Wrapper.m_XRIRightHandInteractionActionsCallbackInterface.OnTranslateAnchor;
                 @TranslateAnchor.canceled -= m_Wrapper.m_XRIRightHandInteractionActionsCallbackInterface.OnTranslateAnchor;
+                @TriggerReleased.started -= m_Wrapper.m_XRIRightHandInteractionActionsCallbackInterface.OnTriggerReleased;
+                @TriggerReleased.performed -= m_Wrapper.m_XRIRightHandInteractionActionsCallbackInterface.OnTriggerReleased;
+                @TriggerReleased.canceled -= m_Wrapper.m_XRIRightHandInteractionActionsCallbackInterface.OnTriggerReleased;
             }
             m_Wrapper.m_XRIRightHandInteractionActionsCallbackInterface = instance;
             if (instance != null)
@@ -1657,6 +1683,9 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
                 @TranslateAnchor.started += instance.OnTranslateAnchor;
                 @TranslateAnchor.performed += instance.OnTranslateAnchor;
                 @TranslateAnchor.canceled += instance.OnTranslateAnchor;
+                @TriggerReleased.started += instance.OnTriggerReleased;
+                @TriggerReleased.performed += instance.OnTriggerReleased;
+                @TriggerReleased.canceled += instance.OnTriggerReleased;
             }
         }
     }
@@ -1801,6 +1830,7 @@ public partial class @XRIDefaultInputActions : IInputActionCollection2, IDisposa
         void OnUIPressValue(InputAction.CallbackContext context);
         void OnRotateAnchor(InputAction.CallbackContext context);
         void OnTranslateAnchor(InputAction.CallbackContext context);
+        void OnTriggerReleased(InputAction.CallbackContext context);
     }
     public interface IXRIRightHandLocomotionActions
     {
