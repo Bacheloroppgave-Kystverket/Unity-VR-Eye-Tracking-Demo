@@ -1,10 +1,11 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
-/// Represents a session that is done by a user. 
+/// Represents a sessionController that is done by a user. 
 /// Should be placed on an object that represents the main location that has all the reference positions.
 /// </summary>
 public class SessionController : MonoBehaviour{
@@ -25,8 +26,14 @@ public class SessionController : MonoBehaviour{
     [SerializeField, Tooltip("The list of all the trackable objects that are close to this user.")]
     private List<TrackableObjectController> closeTrackableObjects = new List<TrackableObjectController>();
 
+    [SerializeField, Tooltip("The simulation setup")]
+    private SimulationSetup simulationSetup;
+
     [SerializeField, Tooltip("The networking that sends the session")]
-    private SendData<Session> sendData;
+    private ServerRequest<Session> sendData;
+
+    [SerializeField, Tooltip("The simulation setup sender")]
+    private ServerRequest<SimulationSetup> simulationSetupSend;
 
     /// <summary>
     /// Gets the raycaster object.
@@ -35,6 +42,7 @@ public class SessionController : MonoBehaviour{
     public RayCasterObject GetRayCasterObject() => rayCasterObject;
 
     private void Start(){
+        sendData.SetData(session);
         //closeTrackableObjects = GetComponentsInChildren<TrackableObjectController>().ToList();
         //referencePositions = GetComponentsInChildren<ReferencePosition>().ToList();
         CheckIfListIsValid("Close trackable objects", closeTrackableObjects.Any());
@@ -43,11 +51,13 @@ public class SessionController : MonoBehaviour{
         List<ReferencePosition> references = new List<ReferencePosition>();
         referencePositions.ForEach(positionController => references.Add(positionController.GetReferencePosition()));
         session.AddReferencePositions(references);
+        simulationSetup.SetReferencePositions(references);
+        session.SetSimulationSetup(simulationSetup);
         AddAllTrackableObjectsToSession(closeTrackableObjects, ViewDistance.CLOSE);
         AddAllTrackableObjectsToSession(otherTrackableObjects, ViewDistance.FAR);
     }
     /// <summary>
-    /// Adds all teh trackable objects to the session.
+    /// Adds all teh trackable objects to the sessionController.
     /// </summary>
     /// <param name="objectsToAdd">the list of objects to add</param>
     /// <param name="viewDistance">the distance to these objects.</param>
@@ -55,18 +65,32 @@ public class SessionController : MonoBehaviour{
         List<TrackableObject> trackables = new List<TrackableObject>();
         objectsToAdd.ForEach(trackableObjectController => {
             TrackableObject trackableObject = trackableObjectController.GetTrackableObject();
-            trackableObject.SetViewDistance(viewDistance);
             trackables.Add(trackableObject);
         });
-        session.AddTrackableObjects(trackables);
+        if (viewDistance == ViewDistance.CLOSE) {
+            simulationSetup.SetTrackableObjects(trackables);
+        }
+        session.AddTrackableObjects(trackables, viewDistance);
     }
 
     /// <summary>
-    /// Sends the session to the backend.
+    /// Sends the sessionController to the backend.
     /// </summary>
     public void SendSession() {
         sendData.SetData(session);
         StartCoroutine(sendData.SendCurrentData());
+    }
+
+    public void SendSimulationSetup() {
+        simulationSetup.SetNameOfSetup(gameObject.name);
+
+        MonoBehaviour.print("oig");
+        simulationSetupSend.SetData(simulationSetup);
+        StartCoroutine(simulationSetupSend.SendCurrentData());
+    }
+
+    public void UpdateSimulationSetup() {
+        //simulationSetup.UpdateSimulationSetup();
     }
 
     /// <summary>
@@ -79,7 +103,7 @@ public class SessionController : MonoBehaviour{
     /// Checks if the defined field is set in the editor.
     /// </summary>
     /// <param name="error">the type of error like "type of object"</param>
-    /// <param name="fieldToCheck">The field to check</param>
+    /// <param name="fieldToCheck">the field to check</param>
     private bool CheckField(string error, object fieldToCheck)
     {
         bool valid = fieldToCheck == null;
@@ -117,11 +141,12 @@ public class SessionController : MonoBehaviour{
     }
 
     /// <summary>
-    /// Adds a adaptiveFeedback to the session.
+    /// Adds a adaptiveFeedback to the sessionController.
     /// </summary>
     /// <param name="adaptiveFeedback">the adaptiveFeedback to add</param>
-    public void AddFeedback(AdaptiveFeedback adaptiveFeedback) {
-        session.AddFeedback(adaptiveFeedback);
+    /// <param name="referencePosition">the reference position</param>
+    public PositionRecord GetPositionRecord(ReferencePosition referencePosition) {
+        return session.GetReferenceRecording(referencePosition);
     }
 
     /// <summary>

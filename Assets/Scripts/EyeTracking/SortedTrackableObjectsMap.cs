@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,13 @@ using UnityEngine;
 /// <summary>
 /// Represents a Sorted trackable objects map that sorts the objects based on their category.
 /// </summary>
+[Serializable]
 public class SortedTrackableObjectsMap 
 {
+
+    [SerializeField]
+    private List<TrackableType> trackableTypes;
+
     [SerializeField, Tooltip("The sorted trackable objects map")]
     private HashmapVisualiser<TrackableType, List<TrackableObjectController>> sortedMap;
 
@@ -17,6 +23,7 @@ public class SortedTrackableObjectsMap
     /// <param name="visualizeKeysAndValues">true if the keys and values should show in editor. False otherwise</param>
     public SortedTrackableObjectsMap(List<TrackableObjectController> trackableObjects, bool visualizeKeysAndValues) {
         sortedMap = new HashmapVisualiser<TrackableType, List<TrackableObjectController>>(visualizeKeysAndValues);
+        trackableTypes = new List<TrackableType>();
         foreach (TrackableObjectController trackableObject in trackableObjects)
         {
             AddTrackableObject(trackableObject);
@@ -32,6 +39,7 @@ public class SortedTrackableObjectsMap
             TrackableType trackableType = trackableObject.GetTrackableType();
             if (!sortedMap.CheckForKey(trackableType)) {
                 sortedMap.Add(trackableType, new List<TrackableObjectController>());
+                trackableTypes.Add(trackableType);
             }
             sortedMap.GetValue(trackableType).Add(trackableObject);
         }

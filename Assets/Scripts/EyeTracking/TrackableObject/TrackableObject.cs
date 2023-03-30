@@ -5,6 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class TrackableObject
 {
+    [SerializeField]
+    private long trackableObjectID;
+
     [Header("Configure object")]
     [SerializeField, Tooltip("The name of the object")]
     private string nameOfObject;
@@ -12,28 +15,22 @@ public class TrackableObject
     [SerializeField, Tooltip("Defines the type of object that we are looking at.")]
     private TrackableType trackableType = TrackableType.UNDEFINED;
 
-    [SerializeField, Tooltip("The viewing distance that the object is from the player.")]
-    private ViewDistance viewDistance;
-
-    [SerializeField, Tooltip("The list with all the gaze data that this object has.")]
-    private List<GazeData> gazeList = new List<GazeData>();
-
     /// <summary>
     /// Sets the name of the object.
     /// </summary>
     /// <param name="nameOfObject">the new object name</param>
     public void SetGameObjectName(string nameOfObject) {
-        if (nameOfObject != null && nameOfObject != "") {
-            this.nameOfObject = nameOfObject;
-        }
+        CheckIfStringIsValid(nameOfObject, "name of object");
+        this.nameOfObject = nameOfObject;
     }
 
     /// <summary>
-    /// Sets the viewdistance for the object.
+    /// Sets the trackable object id.
     /// </summary>
-    /// <param name="viewDistance">the view distance</param>
-    public void SetViewDistance(ViewDistance viewDistance) { 
-        this.viewDistance = viewDistance;
+    /// <param name="trackableObjectID">the new trackable object id</param>
+    public void SetTrackableObjectId(long trackableObjectID) {
+        CheckIfNumberIsAboveZero(trackableObjectID, "trackable object id");
+        this.trackableObjectID = trackableObjectID;
     }
 
     /// <summary>
@@ -55,29 +52,51 @@ public class TrackableObject
     }
 
     /// <summary>
-    /// Gets the gaze data that has that location id.
+    /// Gets the trackable object id.
     /// </summary>
-    /// <param name="locationID">the location id</param>
-    /// <returns>the gaze data that matches that location id. Is null if location does not exsist</returns>
-    private GazeData GetGazeDataForPosition(string locationID)
-    {
-        return gazeList.Find(gazeData => gazeData.GetLocationID() == locationID);
+    /// <returns>the id of the trackable object</returns>
+    public long GetTrackableObjectId() {
+        return trackableObjectID;
     }
 
     /// <summary>
-    /// Gets the gaze data that has that location id.
+    /// Checks if the string is null or empty. Throws exceptions if one of these conditions are true.
     /// </summary>
-    /// <param name="locationID">the location id</param>
-    /// <returns>the gaze data that matches that location id. Is null if location does not exsist</returns>
-    public GazeData GetGazeDataForLocation(string locationID) {
-        GazeData gazeData = null;
-        if (locationID != null && locationID != ""){
-            gazeData = GetGazeDataForPosition(locationID);
-            if (gazeData == null){
-                gazeData = new GazeData(locationID);
-                gazeList.Add(gazeData);
-            }
+    /// <param name="stringToCheck">the string to check</param>
+    /// <param name="error">the error of the string</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the string to check is empty or null.</exception>
+    private void CheckIfStringIsValid(string stringToCheck, string error)
+    {
+        CheckIfObjectIsNull(stringToCheck, error);
+        if (stringToCheck.Trim().Length == 0)
+        {
+            throw new IllegalArgumentException("The" + error + " cannot be empty.");
         }
-        return gazeData;
+    }
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
+        }
+    }
+
+    /// <summary>
+    /// Checks if a number is above zero.
+    /// </summary>
+    /// <param name="number">the number to check.</param>
+    /// <param name="error">the error prefix.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the number is negative.</exception>
+    private void CheckIfNumberIsAboveZero(float number, string error) {
+        if (number < 0) {
+            throw new IllegalArgumentException("The " + error + " must be above zero.");
+        }
     }
 }

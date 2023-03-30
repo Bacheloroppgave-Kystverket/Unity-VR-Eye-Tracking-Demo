@@ -9,8 +9,8 @@ using UnityEngine;
 [Serializable]
 public class GazeData{
 
-    [SerializeField, Tooltip("The location of the gaze data")]
-    private string locationID;
+    [SerializeField, Tooltip("The position that has observed this object")]
+    private ReferencePosition referencePosition;
 
     [SerializeField, Tooltip("The amount of times this object has been looked at")]
     private int fixations;
@@ -21,10 +21,10 @@ public class GazeData{
     /// <summary>
     /// Makes an instance of the GazeData object
     /// </summary>
-    /// <param name="locationID">the id of the location</param>
-    public GazeData(string locationID) {
-        CheckIfStringIsValid(locationID);
-        this.locationID = locationID;
+    /// <param name="referencePosition">the reference position</param>
+    public GazeData(ReferencePosition referencePosition) {
+        CheckIfObjectIsNull(referencePosition, "reference position");
+        this.referencePosition = referencePosition;
     }
 
     /// <summary>
@@ -41,8 +41,6 @@ public class GazeData{
         fixationDuration += Time.deltaTime;
     }
 
-
-
     /// <summary>
     /// Gets the amount of fixations.
     /// </summary>
@@ -56,19 +54,22 @@ public class GazeData{
     public float GetFixationDuration() => fixationDuration;
 
     /// <summary>
-    /// Gets the location ID.
+    /// Gets the reference position.
     /// </summary>
-    /// <returns>the location ID</returns>
-    public string GetLocationID() => locationID;
+    /// <returns>the reference position</returns>
+    public ReferencePosition GetReferencePosition() => referencePosition;
 
     /// <summary>
-    /// Checks if a string is of invalid format.
+    /// Checks if the object is null or not. Throws an exception if the object is null.
     /// </summary>
-    /// <param name="wordToCheck">the word to check</param>
-    private void CheckIfStringIsValid(string wordToCheck) {
-        if (string.IsNullOrEmpty(wordToCheck)) {
-            throw new ArgumentNullException("The location cant be null or a empty string");
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
         }
     }
-
 }

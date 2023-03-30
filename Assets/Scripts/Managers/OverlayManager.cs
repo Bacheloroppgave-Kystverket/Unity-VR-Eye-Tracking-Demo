@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class OverlayManager : MonoBehaviour, SessionObserver
+public class OverlayManager : MonoBehaviour
 {
     [SerializeField]
     private TextMeshProUGUI feedbackText;
@@ -34,15 +34,12 @@ public class OverlayManager : MonoBehaviour, SessionObserver
         feedbackText.text = feedback.GetFeedback();
     }
 
-    /// <inheritdoc/>
-    public void UpdateFeedback(Feedback feedback)
-    {
-        if (feedback is AdaptiveFeedback feed)
-        {
-            DisplayFeedback(feed);
-        }
-        else {
-            MonoBehaviour.print("Feedback type of " + feedback.GetType() + " is not implemented");
-        }
+    /// <summary>
+    /// Displays the least viewed object to the user based on their threshold.
+    /// </summary>
+    /// <param name="adaptiveFeedback">the adaptive feedback</param>
+    /// <param name="referencePosition">the reference position</param>
+   public void DisplayLeastViewedObject(AdaptiveFeedback adaptiveFeedback, ReferencePosition referencePosition) {
+        feedbackText.text = adaptiveFeedback.GetLeastViewedObjectAsString(referencePosition.GetCategoryConfigurationsForPosition());
     }
 }

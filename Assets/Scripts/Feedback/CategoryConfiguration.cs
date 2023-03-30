@@ -6,7 +6,7 @@ using UnityEngine;
 /// Represents feedback that a user is given per object.
 /// </summary>
 [System.Serializable]
-public class FeedbackConfiguration{
+public class CategoryConfiguration{
 
     [SerializeField, Tooltip("The trackable object that should have feedback")]
     private TrackableType trackableType;
@@ -18,8 +18,10 @@ public class FeedbackConfiguration{
     /// Makes an instance of the feedback object.
     /// </summary>
     /// <param name="trackableType">the trackable type</param>
-    public FeedbackConfiguration(TrackableType trackableType) {
+    /// <param name="threshold">the threshold of the trackable type</param>
+    public CategoryConfiguration(TrackableType trackableType, float threshold) {
         this.trackableType = trackableType;
+        this.threshold = threshold;
     }
 
     /// <summary>
@@ -31,10 +33,10 @@ public class FeedbackConfiguration{
     }
 
     /// <summary>
-    /// Gets the trackable object.
+    /// Gets the trackable type.
     /// </summary>
-    /// <returns>the trackable object</returns>
-    public TrackableType GetTrackableObject() {
+    /// <returns>the trackable type</returns>
+    public TrackableType GetTrackableType() {
         return trackableType;
     }
 }

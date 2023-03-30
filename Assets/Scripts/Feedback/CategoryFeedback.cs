@@ -23,6 +23,16 @@ public class CategoryFeedback
     }
 
     /// <summary>
+    /// Adds time to the feedback object.
+    /// </summary>
+    /// <param name="timeToAdd">the time to add.</param>
+    public void AddTime(float timeToAdd) {
+        if (timeToAdd > 0) {
+            this.time += timeToAdd;
+        }
+    }
+
+    /// <summary>
     /// Gets the trackable type.
     /// </summary>
     /// <returns>the trackable type</returns>

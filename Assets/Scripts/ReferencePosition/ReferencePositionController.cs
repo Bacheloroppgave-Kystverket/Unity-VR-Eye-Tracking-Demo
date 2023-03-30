@@ -1,5 +1,7 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -11,8 +13,21 @@ public class ReferencePositionController : MonoBehaviour
     [SerializeField, Tooltip("The reference position")]
     private ReferencePosition referencePosition;
 
+    [SerializeField, Tooltip("The record of this position")]
+    private PositionRecord positionRecord;
+
     private void Awake() {
         gameObject.tag = typeof(ReferencePositionController).Name;
+        CheckIfListIsValid("feedbackconfigurations", referencePosition.GetCategoryConfigurationsForPosition().Any());
+    }
+
+    /// <summary>
+    /// Gets the position record.
+    /// </summary>
+    /// <returns>the position record</returns>
+    public PositionRecord GetPositionRecord()
+    {
+        return positionRecord;
     }
 
     /// <summary>
@@ -31,13 +46,13 @@ public class ReferencePositionController : MonoBehaviour
     /// Gets the duration that was spent at this position.
     /// </summary>
     /// <returns>the position duration</returns>
-    public float GetPositionDuration() => referencePosition.GetPositionDuration();
+    public float GetPositionDuration() => positionRecord.GetPositionDuration();
 
     /// <summary>
     /// Adds time to the gaze data.
     /// </summary>
     public void AddTime() {
-        referencePosition.AddTime(Time.deltaTime);
+        positionRecord.AddTime(Time.deltaTime);
     }
 
     /// <summary>
@@ -45,4 +60,47 @@ public class ReferencePositionController : MonoBehaviour
     /// </summary>
     /// <returns>the reference position.</returns>
     public ReferencePosition GetReferencePosition() => referencePosition;
+
+    /// <summary>
+    /// Checks if the number is higher than x.
+    /// </summary>
+    /// <param name="number">the number to check.</param>
+    /// <param name="error">the error string</param>
+    /// <param name="higherThan">the number that the input number should be equal to or below.</param>
+    /// <exception cref="IllegalArgumentException"></exception>
+    private void CheckIfNumberIsHigherThanX(int number, string error, int higherThan)
+    {
+        CheckIfNumberIsValid(number, error);
+        if (number < higherThan)
+        {
+            throw new IllegalArgumentException(error + " cannot be higher than the feedback configurations.");
+        }
+    }
+
+    /// <summary>
+    /// Checks if the list has any elements.
+    /// </summary>
+    /// <param name="error">the error to display</param>
+    /// <param name="hasAny">true if the list has any. False otherwise</param>
+    private void CheckIfListIsValid(string error, bool hasAny)
+    {
+        if (!hasAny)
+        {
+            Debug.Log("<color=red>Error:</color>" + error + " cannot be emtpy", gameObject);
+        }
+    }
+
+    /// <summary>
+    /// Checks if the number is under zero. Throws exception if the number is less than zero.
+    /// </summary>
+    /// <param name="number">the number to check.</param>
+    /// <param name="error">the error string</param>
+    /// <exception cref="IllegalArgumentException">gets thrown when the number is less than zero</exception>
+    private void CheckIfNumberIsValid(int number, string error)
+    {
+        if (number < 0)
+        {
+            throw new IllegalArgumentException(error + " cannot be below zero");
+        }
+    }
 }

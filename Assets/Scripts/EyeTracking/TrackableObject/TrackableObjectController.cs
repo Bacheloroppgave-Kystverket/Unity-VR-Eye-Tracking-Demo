@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,6 +10,9 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
 {
     [SerializeField, Tooltip("The trackable object")]
     private TrackableObject trackableObject;
+
+    [SerializeField, Tooltip("The trackable record")]
+    private TrackableRecord trackableRecord;
 
     [SerializeField, Tooltip("Set to true if the object is supposed to change color")]
     private bool changeColor = true;
@@ -34,8 +38,9 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
             Debug.Log("<color=red>Error:</color>" + "Type of object must be defined for " + gameObject.name, gameObject);
         }
         CheckField("Object to track", gameObject);
-        
     }
+
+    
 
     /// <summary>
     /// Checks if the defined field is set in the editor.
@@ -90,19 +95,20 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     /// </summary>
     /// <param name="locationID">the location id</param>
     /// <returns>the gaze data that matches that location id. Is null if location does not exsist</returns>
-    public GazeData GetGazeDataForPosition(string locationID) {
-        return trackableObject.GetGazeDataForLocation(locationID);
+    public GazeData GetGazeDataForPosition(ReferencePosition referencePosition) {
+        CheckIfObjectIsNull(referencePosition, "reference position");
+        return trackableRecord.GetGazeDataForPosition(referencePosition);
     }
 
     /// <summary>
     /// Sets the new position that this trackable object should watch.
     /// </summary>
-    /// <param name="locationID">the new location ID</param>
-    public void SetPosition(string locationID) {
-        if (locationID != null && locationID != "")
+    /// <param name="referencePosition">the reference position</param>
+    public void SetPosition(ReferencePosition referencePosition) {
+        CheckIfObjectIsNull(referencePosition, "reference position");
+        currentGaze = trackableRecord.GetGazeDataForPosition(referencePosition);
+        if (currentGaze != null)
         {
-            currentGaze = trackableObject.GetGazeDataForLocation(locationID);
-
             if (beingWatched && currentGaze != null) {
                 currentGaze.IncrementFixation();
             }
@@ -198,5 +204,34 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     private void UpdateObserversAverageFixationDuration(float averageFixation)
     {
         observers.ForEach(observer => observer.UpdateAverageFixationDuration(averageFixation));
+    }
+
+    /// <summary>
+    /// Checks if the string is null or empty. Throws exceptions if one of these conditions are true.
+    /// </summary>
+    /// <param name="stringToCheck">the string to check</param>
+    /// <param name="error">the error of the string</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the string to check is empty or null.</exception>
+    private void CheckIfStringIsValid(string stringToCheck, string error)
+    {
+        CheckIfObjectIsNull(stringToCheck, error);
+        if (stringToCheck.Trim().Length == 0)
+        {
+            throw new IllegalArgumentException("The" + error + " cannot be empty.");
+        }
+    }
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
+        }
     }
 }

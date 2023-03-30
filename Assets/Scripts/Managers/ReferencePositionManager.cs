@@ -28,7 +28,7 @@ public class ReferencePositionManager : MonoBehaviour
     {
         CheckField("Player", playerObject);
         CheckField("Trackable Object Manager", trackableObjectsManager);
-        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetLocationName());
+        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetReferencePosition());
     }
 
     /// <summary>
@@ -87,7 +87,7 @@ public class ReferencePositionManager : MonoBehaviour
         sessionManager.PauseEyeTrackingForNSeconds(secondsToWait);
         position = (position + 1) % sessionManager.GetSession().GetReferencePositions().Count;
         playerObject.gameObject.transform.position = GetCurrentReferencePosition().gameObject.transform.position;
-        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetLocationName());
+        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetReferencePosition());
     }
 
     /// <inheritdoc/>

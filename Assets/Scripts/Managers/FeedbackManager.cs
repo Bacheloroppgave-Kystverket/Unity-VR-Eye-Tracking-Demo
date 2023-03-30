@@ -89,16 +89,14 @@ public class FeedbackManager : MonoBehaviour{
     private void CalculateAndDisplayProsentageFeedback() {
         SessionController session = sessionManager.GetSession();
         IEnumerator<ReferencePositionController> it = referencePositionManager.GetEnumeratorForReferencePositions();
-        List<AdaptiveFeedback> adaptiveFeedbacks = new List<AdaptiveFeedback>();
         ReferencePosition currentPosition = referencePositionManager.GetCurrentReferencePosition().GetReferencePosition();
         while (it.MoveNext()) {
-            ReferencePosition position = it.Current.GetReferencePosition();
+            ReferencePositionController position = it.Current;
             AdaptiveFeedback adaptiveFeedback = CalculateAdaptiveFeedbackForPosition(position);
-            adaptiveFeedbacks.Add(adaptiveFeedback);
-            session.AddFeedback(adaptiveFeedback);
-
-            if (currentPosition == position) {
+            session.GetPositionRecord(currentPosition).AddFeedback(adaptiveFeedback);
+            if (currentPosition == position.GetReferencePosition()) {
                 overlayManager.DisplayFeedback(adaptiveFeedback);
+                //overlayManager.DisplayLeastViewedObject(adaptiveFeedback, position.GetReferencePosition());
             }
         }
     }
@@ -106,20 +104,19 @@ public class FeedbackManager : MonoBehaviour{
     /// <summary>
     /// Calculates the adaptive feedback for the position.
     /// </summary>
-    /// <param name="referencePosition">the reference position</param>
+    /// <param name="referencePositionController">the reference position</param>
     /// <returns>the adaptive feedback</returns>
-    private AdaptiveFeedback CalculateAdaptiveFeedbackForPosition(ReferencePosition referencePosition)
-    {
+    private AdaptiveFeedback CalculateAdaptiveFeedbackForPosition(ReferencePositionController referencePositionController) {
         List<CategoryFeedback> categoryFeedbacks = new List<CategoryFeedback>();
         IEnumerator<TrackableType> it = sortedTrackableObjectsMap.GetEnumerator();
         while (it.MoveNext()) {
             TrackableType trackableType = it.Current;
             float totalTime = 0;
             foreach (TrackableObjectController trackableController in sortedTrackableObjectsMap.GetListForTrackableType(trackableType)) {
-                totalTime += trackableController.GetGazeDataForPosition(referencePosition.GetLocationName()).GetFixationDuration();
+                totalTime += trackableController.GetGazeDataForPosition(referencePositionController.GetReferencePosition()).GetFixationDuration();
             }
             categoryFeedbacks.Add(new CategoryFeedback(trackableType, totalTime));
         }
-        return new AdaptiveFeedback(referencePosition.GetLocationName(), referencePosition.GetPositionDuration(), categoryFeedbacks) ;
+        return new AdaptiveFeedback(referencePositionController.GetPositionDuration(), categoryFeedbacks) ;
     }
 }
