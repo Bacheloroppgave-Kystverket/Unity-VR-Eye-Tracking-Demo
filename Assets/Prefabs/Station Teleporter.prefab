@@ -650,7 +650,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 0
+        m_CallState: 1
   m_SelectExited:
     m_PersistentCalls:
       m_Calls: []
@@ -668,7 +668,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
   m_Deactivated:
     m_PersistentCalls:
       m_Calls: []
