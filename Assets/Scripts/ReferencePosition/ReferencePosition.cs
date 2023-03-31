@@ -29,16 +29,58 @@ public class ReferencePosition
     public List<CategoryConfiguration> GetCategoryConfigurationsForPosition() => positionConfiguration.GetCategoryConfigurations();
 
     /// <summary>
-    /// Checks if the number is under zero. Throws exception if the number is less than zero.
+    /// Sets the location id to a new value.
+    /// </summary>
+    /// <param name="locationID">the location id</param>
+    public void SetLocationId(long locationID) {
+        CheckIfNumberIsAboveZero(locationID, "location id");
+        this.locationId = locationID;
+    }
+
+    /// <summary>
+    /// Sets the position configuration.
+    /// </summary>
+    /// <param name="positionConfiguration">the position configuration</param>
+    public void SetPositionConfiguration(PositionConfiguration positionConfiguration) {
+        CheckIfObjectIsNull(positionConfiguration, "position configuration");
+        this.positionConfiguration = positionConfiguration;
+    }
+
+    /// <summary>
+    /// Gets the position configuration.
+    /// </summary>
+    /// <returns>the position configuration</returns>
+    public PositionConfiguration GetPositionConfiguration() => positionConfiguration;
+
+    /// <summary>
+    /// Gets the location id.
+    /// </summary>
+    /// <returns>the location id</returns>
+    public long GetLocationId() {
+        return locationId;
+    }
+
+    /// <summary>
+    /// Checks if a number is above zero.
     /// </summary>
     /// <param name="number">the number to check.</param>
-    /// <param name="error">the error string</param>
-    /// <exception cref="IllegalArgumentException">gets thrown when the number is less than zero</exception>
-    private void CheckIfNumberIsValid(int number, string error)
-    {
-        if (number < 0)
-        {
-            throw new IllegalArgumentException(error + " cannot be below zero");
+    /// <param name="error">the error prefix.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the number is negative.</exception>
+    private void CheckIfNumberIsAboveZero(float number, string error) {
+        if (number < 0) {
+            throw new IllegalArgumentException("The " + error + " must be above zero.");
+        }
+    }
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error) {
+        if (objecToCheck == null) {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
         }
     }
 }

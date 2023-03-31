@@ -19,7 +19,7 @@ public class TrackableObjectsManager : MonoBehaviour{
     [SerializeField, Tooltip("The reference position manager")]
     private ReferencePositionManager referencePositionManager;
 
-
+    
     private void Awake(){
         trackableObjects = GameObject.FindObjectsOfType<TrackableObjectController>().ToList();
         CheckIfListIsValid("Trackable objects", trackableObjects.Any());
@@ -68,9 +68,4 @@ public class TrackableObjectsManager : MonoBehaviour{
     {
         trackableObjects.ForEach(trackableObject => trackableObject.CalculateCurrentAverageFixationDuration(referencePositionManager.GetCurrentReferencePosition().GetLocationName()));
     }
-
-
-    
-
-    
 }

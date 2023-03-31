@@ -13,10 +13,9 @@ public class PlayerConfigurationInspector : Editor
     {
         PlayerEyetrackingConfig config = (PlayerEyetrackingConfig)target;
         DrawDefaultInspector();
-        config.UpdatePlayer();
-        if (GUILayout.Button("Log pog")) {
-            Debug.Log("Pog");
+        if (GUILayout.Button("Update values")) {
+            Debug.Log("Values updated");
+            config.UpdatePlayer();
         }
-
     }
 }

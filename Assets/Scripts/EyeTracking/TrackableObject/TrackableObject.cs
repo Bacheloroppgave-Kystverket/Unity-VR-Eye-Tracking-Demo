@@ -5,6 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class TrackableObject
 {
+    [SerializeField]
+    private long trackableObjectID;
+
     [Header("Configure object")]
     [SerializeField, Tooltip("The name of the object")]
     private string nameOfObject;
@@ -19,6 +22,15 @@ public class TrackableObject
     public void SetGameObjectName(string nameOfObject) {
         CheckIfStringIsValid(nameOfObject, "name of object");
         this.nameOfObject = nameOfObject;
+    }
+
+    /// <summary>
+    /// Sets the trackable object id.
+    /// </summary>
+    /// <param name="trackableObjectID">the new trackable object id</param>
+    public void SetTrackableObjectId(long trackableObjectID) {
+        CheckIfNumberIsAboveZero(trackableObjectID, "trackable object id");
+        this.trackableObjectID = trackableObjectID;
     }
 
     /// <summary>
@@ -37,6 +49,14 @@ public class TrackableObject
     public string GetNameOfObject()
     {
         return nameOfObject;
+    }
+
+    /// <summary>
+    /// Gets the trackable object id.
+    /// </summary>
+    /// <returns>the id of the trackable object</returns>
+    public long GetTrackableObjectId() {
+        return trackableObjectID;
     }
 
     /// <summary>
@@ -65,6 +85,18 @@ public class TrackableObject
         if (objecToCheck == null)
         {
             throw new IllegalArgumentException("The " + error + " cannot be null.");
+        }
+    }
+
+    /// <summary>
+    /// Checks if a number is above zero.
+    /// </summary>
+    /// <param name="number">the number to check.</param>
+    /// <param name="error">the error prefix.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the number is negative.</exception>
+    private void CheckIfNumberIsAboveZero(float number, string error) {
+        if (number < 0) {
+            throw new IllegalArgumentException("The " + error + " must be above zero.");
         }
     }
 }

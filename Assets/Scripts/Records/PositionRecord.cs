@@ -6,9 +6,6 @@ using UnityEngine;
 [Serializable]
 public class PositionRecord{
 
-    [SerializeField, Tooltip("The position data identification")]
-    private long posDataId;
-
     [SerializeField, Tooltip("The reference position this record represents")]
     private ReferencePosition referencePosition;
 

@@ -46,12 +46,12 @@ public class EyeCaster : RayCasterObject
     }
 
     /// <inheritdoc/>
-    protected override Vector3 FindDirection() {
+    public override Vector3 FindDirection() {
         return (eyeOne.transform.forward + eyeTwo.transform.forward) / 2;
     }
 
     ///<inheritdoc/>
-    protected override Vector3 FindPosition() {
+    public override Vector3 FindPosition() {
         return (eyeOne.transform.position + eyeTwo.transform.position) / 2;
     }
 

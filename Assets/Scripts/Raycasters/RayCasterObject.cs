@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using UnityEngine.UIElements;
 /// <summary>
 /// Represents a object that can cast rays. 
 /// </summary>
-public abstract class RayCasterObject : MonoBehaviour
+public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObserver>
 {
     [Header("Configure raycaster")]
     [SerializeField, Tooltip("True if the object should be 'casting' rays")]
@@ -21,41 +22,24 @@ public abstract class RayCasterObject : MonoBehaviour
     [SerializeField, Tooltip("The frequency to gather data for the raycaster. Quest pro has a rate of 30 hz in the forums.")]
     private int frequency = 30;
 
-    [SerializeField, Min(0.01f), Tooltip("The size of the sphere that we shoot to determine what you look at.")]
-    private float sphereSize = 0.03f;
-
-    [SerializeField, Range(1,100), Tooltip("The range that the ray should be shot")]
+    [SerializeField, Range(1, 100), Tooltip("The range that the ray should be shot")]
     private int range = 50;
 
-    [SerializeField, Tooltip("The object to visualize where the user looks")]
-    private GameObject hitSpot;
+    [SerializeField, Tooltip("The raycaster configuration of this raycater object")]
+    private RaycasterConfiguration raycasterConfiguration = new NormalRaycastConfig();
 
-    [Space(5),Header("Managers")]
-    [SerializeField, Tooltip("The session object")]
-    private ReferencePositionManager referencePositionManager;
-
-    [Space(5),Header("Debugging lists")]
+    [Space(5), Header("Debugging lists")]
     [SerializeField]
-    private List<Trackable> currentObjectsWatched;
+    private List<GameObject> currentObjectsWatched;
 
     [SerializeField, Tooltip("The last objects that was looked at.")]
-    private List<Trackable> lastObjects;
+    private List<GameObject> lastObjects;
+
+    [SerializeField, Tooltip("The raycast observers")]
+    private List<RaycasterObserver> raycasterObservers = new List<RaycasterObserver>();
 
     protected void Start() {
-        currentObjectsWatched = new List<Trackable>();
-        CheckField("Hitspot", hitSpot);
-        CheckField("Reference position manager", referencePositionManager);
-    }
-
-    /// <summary>
-    /// Checks if the defined field is set in the editor.
-    /// </summary>
-    /// <param name="error">the type of error like "type of object"</param>
-    /// <param name="fieldToCheck">The field to check</param>
-    private void CheckField(string error, object fieldToCheck) {
-        if (fieldToCheck == null) {
-            Debug.Log("<color=red>Error:</color>" + error + " must be set.", gameObject);
-        }
+        currentObjectsWatched = new List<GameObject>();
     }
 
     /// <summary>
@@ -76,40 +60,49 @@ public abstract class RayCasterObject : MonoBehaviour
     }
 
     /// <summary>
+    /// Gets the frequency.
+    /// </summary>
+    /// <returns>the frequency</returns>
+    public int GetFrequency() => frequency;
+
+    /// <summary>
     /// Gets the position to shoot the ray from.
     /// </summary>
     /// <returns>the position</returns>
-    protected abstract Vector3 FindPosition();
+    public abstract Vector3 FindPosition();
 
-    protected abstract Vector3 FindDirection();
+    public abstract Vector3 FindDirection();
 
     /// <summary>
     /// Starts the eye tracking in the application. 
     /// </summary>
     /// <returns>the time to wait</returns>
     private IEnumerator StartEyeTracking() {
+        RaycastHit[] raycastHits;
+        Vector3 direction;
+        Vector3 position;
         while (casting) {
+            float timeToWait = 1f / frequency;
             //Makes ray
-            RaycastHit[] raycastHits;
-            Vector3 direction = FindDirection();
-            Vector3 position = FindPosition();
+            
+            direction = FindDirection();
+            position = FindPosition();
             raycastHits = shootMutliple ? ShootMultipleObjects(position, direction) : ShootSingleObject(position, direction);
             bool hitSolid = false;
-            if (raycastHits.Any()){
+            if (raycastHits.Any()) {
                 IEnumerator<RaycastHit> it = raycastHits.Reverse().GetEnumerator();
-                while (it.MoveNext() && !hitSolid) { 
+                while (it.MoveNext() && !hitSolid) {
                     hitSolid = WatchObject(it.Current);
                 }
                 UnwatchObjects(currentObjectsWatched);
-                VisualizeHitpointAndDrawLine(raycastHits, position, direction);;
             }
             else
             {
                 UnwatchObjects();
             }
-            currentObjectsWatched.Clear(); 
-            
-            yield return new FixedUpdate();
+            currentObjectsWatched.Clear();
+            UpdateObservers(raycastHits);
+            yield return new WaitForSeconds(timeToWait);
         }
         MonoBehaviour.print("Eyetracking has stopped.");
     }
@@ -122,11 +115,15 @@ public abstract class RayCasterObject : MonoBehaviour
     private bool WatchObject(RaycastHit raycastHit) {
         bool isSolid = false;
         TrackableObjectController trackObject = raycastHit.collider.gameObject.GetComponent<TrackableObjectController>();
-        if (trackObject != null) {
-            ObserveObject(trackObject);
-            isSolid = TrackableTypeMethods.IsTrackableSolid(trackObject.GetTrackableObject().GetTrackableType());
+        GameObject currentGameObject = raycastHit.collider.gameObject;
+        
+        if (currentGameObject != null)
+        {
+            ObserveObject(currentGameObject);
+            if (trackObject != null) {
+                isSolid = TrackableTypeMethods.IsTrackableSolid(trackObject.GetTrackableObject().GetTrackableType());
+            }
         }
-        gameObject.GetInstanceID();
         return isSolid;
     }
 
@@ -138,8 +135,7 @@ public abstract class RayCasterObject : MonoBehaviour
     /// <returns>gets the raycast hits</returns>
     private RaycastHit[] ShootMultipleObjects(Vector3 position, Vector3 direction) {
         //Shoots ray
-        RaycastHit[] hits = Physics.RaycastAll(position, direction, range); //Physics.RaycastAll(position, direction, range);
-        return hits;
+        return raycasterConfiguration.ShootMultipleObjectsConfiguration(position, direction, range);
     }
 
     /// <summary>
@@ -150,33 +146,29 @@ public abstract class RayCasterObject : MonoBehaviour
     /// <returns></returns>
     private RaycastHit[] ShootSingleObject(Vector3 position, Vector3 direction) {
         //Shoots ray
-        RaycastHit raycastHit;
-        Physics.Raycast(position, direction, out raycastHit, range);
-        RaycastHit[] hits = { raycastHit };
-        return hits;
+        return raycasterConfiguration.ShootSingleConfiguration(position, direction, range);
     }
 
     /// <summary>
     /// Unwatches an object based on if its in the list or not.
     /// </summary>
     /// <param name="watchedObjects">a list with the newly watched objects</param>
-    private void UnwatchObjects(List<Trackable> watchedObjects = null) {
+    private void UnwatchObjects(List<GameObject> watchedObjects = null) {
         if (lastObjects.Any()) {
-            List<Trackable> objectsToRemove = new List<Trackable>();
+            List<GameObject> objectsToRemove = new List<GameObject>();
             if (watchedObjects != null && watchedObjects.Count > 0) {
                 lastObjects.ForEach(currentGameObject => {
-                    if (!watchedObjects.Exists(watchObject => currentGameObject == watchObject)) {
+                    if (!watchedObjects.Exists(watchObject => currentGameObject.GetInstanceID() == watchObject.GetInstanceID())) {
                         objectsToRemove.Add(currentGameObject);
                     }
                 });
             } else {
-                
                 objectsToRemove.AddRange(lastObjects);
             }
             objectsToRemove.ForEach(trackedObject => {
-                trackedObject.OnGazeExit();
+                trackedObject.BroadcastMessage("OnGazeExit", SendMessageOptions.DontRequireReceiver);
             });
-            
+
             objectsToRemove.ForEach(trackObject => lastObjects.Remove(trackObject));
         }
     }
@@ -186,36 +178,27 @@ public abstract class RayCasterObject : MonoBehaviour
     /// </summary>
     /// <param name="objectToFind">the object to check against.</param>
     /// <returns>true if the object is watched. False otherwise</returns>
-    private bool CheckIfObjectIsWatched(TrackableObjectController objectToFind) {
-        return lastObjects.Exists(trackableObject => GameObject.ReferenceEquals(trackableObject, objectToFind));
+    private bool CheckIfObjectIsWatched(GameObject gameObject) {
+        return lastObjects.Exists(trackableObject => trackableObject.GetInstanceID() == gameObject.GetInstanceID());
     }
 
     /// <summary>
     /// Observes an object.
     /// </summary>
-    /// <param name="trackObject">the trackable object</param>
-    private void ObserveObject(TrackableObjectController trackObject) {
-        
-        if (!CheckIfObjectIsWatched(trackObject)) {
-            trackObject.OnGazeEnter();
-            lastObjects.Add(trackObject);
+    /// <param name="currentGameObject">the trackable object</param>
+    private void ObserveObject(GameObject currentGameObject) {
+
+        if (!CheckIfObjectIsWatched(currentGameObject)) {
+            currentGameObject.BroadcastMessage("OnGazeEnter", SendMessageOptions.DontRequireReceiver);
+            lastObjects.Add(currentGameObject);
         }
-        currentObjectsWatched.Add(trackObject);
+        currentObjectsWatched.Add(currentGameObject);
     }
 
-    /// <summary>
-    /// Visualizes the hitpoint in space.
-    /// </summary>
-    /// <param name="raycastHit">the first hit</param>
-    /// <param name="position">the starting position</param>
-    /// <param name="direction">the direction</param>
-    private void VisualizeHitpointAndDrawLine(RaycastHit[] raycastHit, Vector3 position, Vector3 direction) {
-        hitSpot.transform.position = raycastHit.Last().point;
-        Debug.DrawRay(position, direction * raycastHit.First().distance);
-    }
+    
 
     /// <inheritdoc/>
-    public void StartTracking(){
+    public void StartTracking() {
         if (!casting) {
             casting = true;
             MonoBehaviour.print("Starting eye tracking");
@@ -228,5 +211,100 @@ public abstract class RayCasterObject : MonoBehaviour
     {
         casting = false;
         UnwatchObjects();
+    }
+
+    /// <summary>
+    /// Gets the current objects watched.
+    /// </summary>
+    /// <returns>A list with all the current objects.</returns>
+    public List<GameObject> GetCurrentObjectsWatched() {
+        return currentObjectsWatched;
+    }
+
+    /// <summary>
+    /// Gets the last objects watched.
+    /// </summary>
+    /// <returns>the last objects</returns>
+    public List<GameObject> GetLastObjects() {
+        return lastObjects;
+    }
+
+    public void SetProperties(int frequency, float sphereSize, int range) {
+        CheckIfNumberIsAboveZero(frequency, "frequency");
+        CheckIfNumberIsAboveZeroAndUnderN(sphereSize, "sphere size", 0.5f);
+        CheckIfNumberIsAboveZeroAndUnderN(range, "range", 100);
+    }
+
+    /// <summary>
+    /// Checks if the number is above zero and under N.
+    /// </summary>
+    /// <param name="number">the number to check</param>
+    /// <param name="error">the value as a prefix</param>
+    /// <param name="maxValue">the max amount</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the number is negative or above the max limit.</exception>
+    private void CheckIfNumberIsAboveZeroAndUnderN(float number, string error, float maxValue) {
+        CheckIfNumberIsAboveZero(number, error);
+        if (number > maxValue) {
+            throw new IllegalArgumentException("Expected the " + error + " to be larger than " + maxValue + ".");
+        }
+    }
+
+    /// <summary>
+    /// Checks if a number is above zero.
+    /// </summary>
+    /// <param name="number">the number to check.</param>
+    /// <param name="error">the error prefix.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the number is negative.</exception>
+    private void CheckIfNumberIsAboveZero(float number, string error) {
+        if (number < 0) {
+            throw new IllegalArgumentException("The " + error + " must be above zero.");
+        }
+    }
+
+    /// <inheritdoc/>
+    public void AddObserver(RaycasterObserver observer)
+    {
+        CheckIfObjectIsNull(observer, "observer");
+        if (!raycasterObservers.Contains(observer)) {
+            raycasterObservers.Add(observer);
+        }
+        else {
+            throw new InvalidOperationException("The observer cannot be added since its already an observer.");
+        }
+    }
+
+    /// <summary>
+    /// Updates the observers with the new raycast hits.
+    /// </summary>
+    /// <param name="raycastHits">the raycast hits</param>
+    public void UpdateObservers(RaycastHit[] raycastHits) {
+        raycasterObservers.ForEach(observer => observer.ObservedObjects(raycastHits));
+    }
+
+    /// <inheritdoc/>
+    public void RemoveObserver(RaycasterObserver observer)
+    {
+        CheckIfObjectIsNull(observer, "observer");
+        if (raycasterObservers.Contains(observer))
+        {
+            raycasterObservers.Remove(observer);
+        }
+        else {
+            throw new InvalidOperationException("The observer is not in the list of observers");
+        }
+    }
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
+        }
     }
 }
