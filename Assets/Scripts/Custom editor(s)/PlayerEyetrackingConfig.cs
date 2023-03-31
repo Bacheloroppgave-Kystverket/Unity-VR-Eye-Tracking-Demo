@@ -27,10 +27,10 @@ public class PlayerEyetrackingConfig : MonoBehaviour {
 
     [Space(5), Header("Debugging lists")]
     [SerializeField, Tooltip("The current objects that are being watched.")]
-    private List<TrackableObjectController> currentTrackableObjects;
+    private List<GameObject> currentTrackableObjects;
 
     [SerializeField, Tooltip("The last objects that where viewed.")]
-    private List<TrackableObjectController> lastObjects;
+    private List<GameObject> lastObjects;
 
     private void Start() {
         CheckField("Eyecaster", eyeCaster);

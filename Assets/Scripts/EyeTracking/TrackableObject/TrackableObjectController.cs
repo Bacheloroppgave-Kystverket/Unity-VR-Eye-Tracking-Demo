@@ -6,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Represents a trackable object.
 /// </summary>
-public class TrackableObjectController : MonoBehaviour, Observable<TrackableObserver>
+public class TrackableObjectController : MonoBehaviour, Observable<TrackableObserver>, Trackable
 {
     [SerializeField, Tooltip("The trackable object")]
     private TrackableObject trackableObject;
@@ -124,7 +124,7 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     /// <summary>
     /// Sets the new location of the object.
     /// </summary>
-    public void SetBeingWatched() {
+    private void SetBeingWatched() {
         if (!beingWatched) {
             beingWatched = true;
             currentGaze.IncrementFixation();
@@ -139,7 +139,7 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     /// <summary>
     /// Sets the object to not be watched.
     /// </summary>
-    public void SetNotWatched() {
+    private void SetNotWatched() {
         beingWatched = false;
         if (changeColor) {
             gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 0);
@@ -233,5 +233,15 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
         {
             throw new IllegalArgumentException("The " + error + " cannot be null.");
         }
+    }
+
+    public void OnGazeEnter()
+    {
+        SetBeingWatched();
+    }
+
+    public void OnGazeExit()
+    {
+        SetNotWatched();
     }
 }
