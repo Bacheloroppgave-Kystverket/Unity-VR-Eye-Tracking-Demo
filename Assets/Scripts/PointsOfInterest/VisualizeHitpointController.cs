@@ -32,7 +32,7 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
     public void ObservedObjects(RaycastHit[] raycastHits)
     {
         CheckIfObjectIsNull(raycastHits, "raycast hits");
-        VisualizeHitpointAndDrawLine(raycastHits, raycaster.FindPosition(), raycaster.FindDirection());
+        VisualizeHitpointAndDrawLine(raycastHits,gameObject.transform.position, raycaster.FindDirection());
     }
 
     /// <summary>
@@ -43,11 +43,11 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
     /// <param name="direction">the direction</param>
     private void VisualizeHitpointAndDrawLine(RaycastHit[] raycastHit, Vector3 position, Vector3 direction)
     {
-        if (visualizeHitpoint) {
+        if (visualizeHitpoint && raycastHit.Any()) {
             Vector3 hitPos = raycastHit.Last().point;
             hitSpot.transform.position = hitPos;
         }
-        if (visualizeLine) {
+        if (visualizeLine && raycastHit.Any()) {
             Debug.DrawRay(position, direction * raycastHit.First().distance);
         }
     }

@@ -26,7 +26,7 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     private int range = 50;
 
     [SerializeField, Tooltip("The raycaster configuration of this raycater object")]
-    private RaycasterConfiguration raycasterConfiguration = new NormalRaycastConfig();
+    private RaycasterConfiguration raycasterConfiguration = new SphereCastConfig();
 
     [Space(5), Header("Debugging lists")]
     [SerializeField]
@@ -34,6 +34,12 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
 
     [SerializeField, Tooltip("The last objects that was looked at.")]
     private List<GameObject> lastObjects;
+
+    [SerializeField]
+    private List<GameObject> debugList;
+
+    [SerializeField]
+    private Vector3 position;
 
     [SerializeField, Tooltip("The raycast observers")]
     private List<RaycasterObserver> raycasterObservers = new List<RaycasterObserver>();
@@ -79,6 +85,7 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     /// <returns>the time to wait</returns>
     private IEnumerator StartEyeTracking() {
         RaycastHit[] raycastHits;
+        List<RaycastHit> newRaycasts = new List<RaycastHit>();
         Vector3 direction;
         Vector3 position;
         while (casting) {
@@ -87,12 +94,14 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
             
             direction = FindDirection();
             position = FindPosition();
+            
             raycastHits = shootMutliple ? ShootMultipleObjects(position, direction) : ShootSingleObject(position, direction);
             bool hitSolid = false;
             if (raycastHits.Any()) {
-                IEnumerator<RaycastHit> it = raycastHits.Reverse().GetEnumerator();
+                IEnumerator<RaycastHit> it = raycastHits.ToList().GetEnumerator();
                 while (it.MoveNext() && !hitSolid) {
                     hitSolid = WatchObject(it.Current);
+                    newRaycasts.Add(it.Current);
                 }
                 UnwatchObjects(currentObjectsWatched);
             }
@@ -101,7 +110,11 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
                 UnwatchObjects();
             }
             currentObjectsWatched.Clear();
-            UpdateObservers(raycastHits);
+            debugList.Clear();
+            raycastHits.ToList().ForEach(rayCast => debugList.Add(rayCast.collider.gameObject));
+            UpdateObservers(newRaycasts.ToArray());
+            this.position = position;
+            newRaycasts.Clear();
             yield return new WaitForSeconds(timeToWait);
         }
         MonoBehaviour.print("Eyetracking has stopped.");
@@ -120,8 +133,12 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
         if (currentGameObject != null)
         {
             ObserveObject(currentGameObject);
-            if (trackObject != null) {
+            if (trackObject != null)
+            {
                 isSolid = TrackableTypeMethods.IsTrackableSolid(trackObject.GetTrackableObject().GetTrackableType());
+            }
+            else {
+                isSolid = true;
             }
         }
         return isSolid;

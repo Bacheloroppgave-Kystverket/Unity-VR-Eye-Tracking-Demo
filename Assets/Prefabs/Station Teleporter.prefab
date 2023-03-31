@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4093784724469612026}
   - component: {fileID: 4093784724469612024}
   - component: {fileID: 4093784724469612027}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7588998243165539064}
   - component: {fileID: 7588998243165539066}
   - component: {fileID: 7588998243165539065}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 9, y: 2}
+  m_SizeDelta: {x: 1.5, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7588998243165539066
 CanvasRenderer:
@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 7588998243225042412}
   - component: {fileID: 7588998243225042411}
   - component: {fileID: 7588998243225042410}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 7588998243477228276}
   - component: {fileID: 7588998243477228275}
   - component: {fileID: 7588998243477228278}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -446,7 +446,8 @@ GameObject:
   - component: {fileID: 7588998243600914136}
   - component: {fileID: 7588998243600914137}
   - component: {fileID: 1520399506367648407}
-  m_Layer: 0
+  - component: {fileID: 1335072920}
+  m_Layer: 11
   m_Name: Station Teleporter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -460,7 +461,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7588998243600914149}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.156, y: 0.592, z: -0.5040338}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -555,7 +556,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_InteractionLayers:
-    m_Bits: 1
+    m_Bits: 4294967295
   m_SelectMode: 0
   m_CustomReticle: {fileID: 0}
   m_FirstHoverEntered:
@@ -728,6 +729,47 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textComponent: {fileID: 0}
+--- !u!114 &1335072920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7588998243600914149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e27950a2ac9753041a4dcbf82e40f25d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  referencePosition:
+    locationId: 0
+    locationName: 
+    positionConfiguration:
+      categoryConfigurations:
+      - trackableType: 0
+        threshold: 0.1
+      - trackableType: 1
+        threshold: 0.6
+      - trackableType: 2
+        threshold: 0.2
+      - trackableType: 3
+        threshold: 0.1
+  positionRecord:
+    referencePosition:
+      locationId: 0
+      locationName: 
+      positionConfiguration:
+        categoryConfigurations:
+        - trackableType: 0
+          threshold: 0.1
+        - trackableType: 1
+          threshold: 0.6
+        - trackableType: 2
+          threshold: 0.2
+        - trackableType: 3
+          threshold: 0.1
+    positionDuration: 0
+    adaptiveFeedbacks: []
 --- !u!1 &7588998244171187546
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,7 +782,7 @@ GameObject:
   - component: {fileID: 7588998244171187550}
   - component: {fileID: 7588998244171187549}
   - component: {fileID: 7588998244171187548}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

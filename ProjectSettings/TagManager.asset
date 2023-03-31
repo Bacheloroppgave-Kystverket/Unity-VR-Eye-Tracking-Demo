@@ -18,7 +18,7 @@ TagManager:
   - VROverlay
   - Visualization
   - VREyes
-  - 
+  - Seats
   - 
   - 
   - 
@@ -42,7 +42,4 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Visualization
-    uniqueID: 4211837609
     locked: 0
