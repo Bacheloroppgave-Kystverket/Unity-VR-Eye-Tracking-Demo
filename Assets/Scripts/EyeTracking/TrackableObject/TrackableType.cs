@@ -22,6 +22,17 @@ public enum TrackableType
     MIRROR,
 
     /// <summary>
+    /// Represents the radar
+    /// </summary>
+    RADAR,
+
+    /// <summary>
+    /// Represents pickupables.
+    /// </summary>
+    PICKUPABLES,
+
+
+    /// <summary>
     /// Represents other observable objects
     /// </summary>
     OTHER,

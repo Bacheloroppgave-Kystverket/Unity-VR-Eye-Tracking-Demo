@@ -22,6 +22,7 @@ public class TrackableObjectsManager : MonoBehaviour{
     
     private void Awake(){
         trackableObjects = GameObject.FindObjectsOfType<TrackableObjectController>().ToList();
+        
         CheckIfListIsValid("Trackable objects", trackableObjects.Any());
     }
 

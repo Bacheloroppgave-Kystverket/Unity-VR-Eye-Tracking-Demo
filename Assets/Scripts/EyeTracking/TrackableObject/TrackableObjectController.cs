@@ -15,7 +15,7 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     private TrackableRecord trackableRecord;
 
     [SerializeField, Tooltip("Set to true if the object is supposed to change color")]
-    private bool changeColor = true;
+    private bool changeColor = false;
 
     [Space(10), Header("Debug fields")]
     [SerializeField, Tooltip("The current object that is being watched.")]
@@ -131,7 +131,11 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
             UpdateObserversFixations();
             if (changeColor)
             {
-                gameObject.GetComponent<Renderer>().material.color = new Color(0, 255, 0);
+                Renderer renderer = gameObject.GetComponent<Renderer>();
+                if (renderer != null) { 
+                    renderer.material.color = new Color(0, 255, 0);
+                }
+                
             }
         }
     }
@@ -142,7 +146,10 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     private void SetNotWatched() {
         beingWatched = false;
         if (changeColor) {
-            gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 0);
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            if (renderer != null) { 
+                renderer.material.color = new Color(0, 0, 0);
+            }
         }
     }
 

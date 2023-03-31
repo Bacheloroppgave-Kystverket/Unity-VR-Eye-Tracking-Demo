@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 7746015807731111335}
   - component: {fileID: 7746015807731111320}
   - component: {fileID: 7746015807731111321}
-  - component: {fileID: 7746015807731111322}
   - component: {fileID: 7746015807731111334}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: PointOfInterest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,19 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7746015807731111322
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7746015807731111323}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7746015807731111334
 MonoBehaviour:
   m_ObjectHideFlags: 0

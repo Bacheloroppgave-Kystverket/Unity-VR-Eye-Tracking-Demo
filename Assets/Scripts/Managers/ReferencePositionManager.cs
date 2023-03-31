@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class ReferencePositionManager : MonoBehaviour
 {
-    [SerializeField, Tooltip("The player object")]
-    private GameObject playerObject;
 
     [SerializeField, Tooltip("Set to true if eyetracking is active. False otherwise.")]
     private bool currentlyTracking;
@@ -17,8 +15,8 @@ public class ReferencePositionManager : MonoBehaviour
     [SerializeField, Tooltip("The session manager")]
     private SessionManager sessionManager;
 
-    [SerializeField, Tooltip("Position")]
-    private int position;
+    [SerializeField, Tooltip("The current reference position")]
+    private ReferencePositionController currentReferencePositon;
 
     [SerializeField, Tooltip("The amount of seconds to wait when changing position")]
     private float secondsToWait = 2f;
@@ -26,7 +24,6 @@ public class ReferencePositionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CheckField("Player", playerObject);
         CheckField("Trackable Object Manager", trackableObjectsManager);
         trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetReferencePosition());
     }
@@ -64,7 +61,7 @@ public class ReferencePositionManager : MonoBehaviour
     /// </summary>
     /// <returns>the current reference position</returns>
     public ReferencePositionController GetCurrentReferencePosition() {
-        return sessionManager.GetSession().GetReferencePositions()[position];
+        return currentReferencePositon;
     }
 
 
@@ -83,11 +80,11 @@ public class ReferencePositionManager : MonoBehaviour
     /// <summary>
     /// Goes to the next reference position.
     /// </summary>
-    public void NextPosition(){
+    public void SetPosition(ReferencePositionController referencePositionController){
         sessionManager.PauseEyeTrackingForNSeconds(secondsToWait);
-        position = (position + 1) % sessionManager.GetSession().GetReferencePositions().Count;
-        playerObject.gameObject.transform.position = GetCurrentReferencePosition().gameObject.transform.position;
+        this.currentReferencePositon = referencePositionController;
         trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetReferencePosition());
+        
     }
 
     /// <inheritdoc/>

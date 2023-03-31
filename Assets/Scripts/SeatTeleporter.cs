@@ -113,6 +113,8 @@ public class SeatTeleporter : MonoBehaviour {
     /// </summary>
     public void TeleportToSeat() {
         SetSeatAvailability(false);
+        ///TODO: Add it to the reference position so that the seat changes. This can be done in the ReferencePositionManager.
+        ///TODO: The position itself should also be an component of this object and be sent to the reference managers "setPosition" method.
         player.transform.position = transform.position;
     }
 

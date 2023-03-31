@@ -44,6 +44,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fe837545392e041957ecd7dfe7ed37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  feedbackText: {fileID: 0}
+--- !u!1 &5878795655640942953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3531411774433127275}
+  - component: {fileID: 1698837812399625059}
+  m_Layer: 0
+  m_Name: PointOfInterestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3531411774433127275
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5878795655640942953}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -15.929799, y: -0.30613267, z: -14.971119}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6445882639794712667}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1698837812399625059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5878795655640942953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40032a02e996db740bd7a23a7b117253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointPlacer: {fileID: 0}
 --- !u!1 &6124589084617078563
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,10 +134,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d5e3c3ce42a4f43b1de7e6fb97a738, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  referencePositions: []
-  position: 0
   playerObject: {fileID: 0}
+  currentlyTracking: 0
   trackableObjectsManager: {fileID: 8436988269822594764}
+  sessionManager: {fileID: 0}
+  currentReferencePositon: {fileID: 0}
+  secondsToWait: 2
 --- !u!1 &6445882638833038917
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,11 +184,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0855d55871fb124b93e4f2f2a70cc5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userID: 1
-  sessionTime: 0
-  locationId: 0
+  sessionController: {fileID: 0}
+  rayCasterObject: {fileID: 0}
   referencePositionManager: {fileID: 6502238936827432791}
-  trackableObjectsManager: {fileID: 8436988269822594764}
+  feedbackManager: {fileID: 0}
 --- !u!1 &6445882639794712666
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,6 +221,7 @@ Transform:
   - {fileID: 6492721492539281540}
   - {fileID: 4433427903936566314}
   - {fileID: 7757003700759647698}
+  - {fileID: 3531411774433127275}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -221,32 +269,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc8539db73a27524389fd5fe365594e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sortedTrackableObjectsMap:
+    trackableTypes: 
   sessionManager: {fileID: 6445882638833038914}
-  feedbacks:
-  - feedbackName: Mirror
-    trackableObject: {fileID: 0}
-    feedbackText: 
-    threshold: 0.5
-  - feedbackName: Sphere
-    trackableObject: {fileID: 0}
-    feedbackText: 
-    threshold: 0.5
-  - feedbackName: Cube
-    trackableObject: {fileID: 0}
-    feedbackText: 
-    threshold: 0.5
-  - feedbackName: Long cude
-    trackableObject: {fileID: 0}
-    feedbackText: 
-    threshold: 0.5
-  - feedbackName: Window
-    trackableObject: {fileID: 0}
-    feedbackText: 
-    threshold: 0.5
-  - feedbackName: Window
-    trackableObject: {fileID: 0}
-    feedbackText: 
-    threshold: 0.5
+  referencePositionManager: {fileID: 0}
+  overlayManager: {fileID: 0}
+  visualizeKeysAndValues: 1
+  seconds: 10
+  activeAdaptiveTrainingSystem: 1
+  eyeTracking: 0
 --- !u!1 &7475055287830137453
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,4 +323,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackableObjects: []
+  sessionManager: {fileID: 0}
   referencePositionManager: {fileID: 6502238936827432791}
