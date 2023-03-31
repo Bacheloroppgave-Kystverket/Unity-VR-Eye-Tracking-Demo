@@ -6,6 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Represents a caster that looks at the result of a two component vecotr.
 /// </summary>
+ 
 public class EyeCaster : RayCasterObject
 {
     [Space(10), Header("Raycaster objects")]
