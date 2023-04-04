@@ -10,26 +10,20 @@ using UnityEngine;
 [RequireComponent(typeof(TrackableObjectController))]
 public class DisplayTrackable : MonoBehaviour, TrackableObserver
 {
-    [SerializeField]
+    [SerializeField, Tooltip("The current stat controller. Can be set to null if the stats should auto-deploy.")]
     private StatController statController;
 
-    [SerializeField]
+    [SerializeField, Tooltip("The prefab for the stats text.")]
     private GameObject prefab;
 
-    [SerializeField]
-    private bool deployPrefab;
-
-    [SerializeField, Tooltip("Set to true if the object has a predefined stat controller")]
-    private bool checkStatController = true;
+    [SerializeField, Tooltip("Set to true if the text is supposed to be on the right side.")]
+    private bool rightSide;
 
 
     // Start is called before the first frame update
     void Start(){
         gameObject.GetComponent<TrackableObjectController>().AddObserver(this);
         CheckField("prefab", prefab);
-        if (checkStatController) {
-            CheckField("stat controller", statController);
-        }
     }
 
     /// <summary>
@@ -50,41 +44,50 @@ public class DisplayTrackable : MonoBehaviour, TrackableObserver
     /// </inheritdoc>
     public void UpdateAverageFixationDuration(float averageFixationDuration){
         if (statController == null) {
-            statController = Instantiate(prefab, this.transform).GetComponent<StatController>();
-            statController.transform.localPosition = new Vector3(0, 0.3f, -0.3f);
+            statController.SetAverageFixationDurationText(Math.Round(averageFixationDuration, 1).ToString());
         }
-        statController.SetAverageFixationDurationText(Math.Round(averageFixationDuration, 1).ToString());        
+             
     }
 
     /// </inheritdoc>
     public void UpdateFixationDuration(float fixationDuration){
-        if (statController == null)
+        if (statController != null)
         {
-            statController = Instantiate(prefab, this.transform).GetComponent<StatController>();
-            statController.transform.localPosition = new Vector3(0, 0.3f, -0.3f);
+            statController.SetFixationDurationText(Math.Round(fixationDuration, 1).ToString());
         }
-        statController.SetFixationDurationText(Math.Round(fixationDuration, 1).ToString());
+        
     }
 
     /// </inheritdoc>
     public void UpdateFixations(int fixations) {
-        if (statController == null)
+        if (statController != null)
         {
-            statController = Instantiate(prefab, this.transform).GetComponent<StatController>();
-            statController.transform.localPosition = new Vector3(0, 0.3f, -0.3f);
+            statController.SetFixationsText(fixations.ToString());
         }
-        statController.SetFixationsText(fixations.ToString());
+        
     }
 
     /// <summary>
     /// Toggles the text between being visible and not
     /// </summary>
-    public void ToggleVisibleStats(){
+    /// <param name="playerTransform">the player transform</param>
+    public void ToggleVisibleStats(Transform playerTransform){
         if (statController == null)
         {
             statController = Instantiate(prefab, this.transform).GetComponent<StatController>();
-            statController.transform.localPosition = new Vector3(0, 0.3f, -0.3f);
+            float zScale = this.gameObject.transform.localScale.y;
+            float yScale = this.gameObject.transform.localScale.y;
+            if (!rightSide)
+            {
+                statController.transform.localPosition = new Vector3(0, 0, -zScale);
+            }
+            else
+            {
+                float xScale = this.gameObject.transform.localScale.x;
+                statController.transform.localPosition = new Vector3(xScale, 0, -zScale);
+            }
         }
         statController.ToggleVisibleStats();
+        statController.TurnText(playerTransform);
     }
 }

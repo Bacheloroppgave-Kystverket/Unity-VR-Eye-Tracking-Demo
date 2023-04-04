@@ -29,7 +29,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7480628301431080934}
-  - {fileID: 6218436809182782109}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -145,13 +144,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackableObject:
+    trackableObjectID: 0
     nameOfObject: 
     trackableType: 3
-    viewDistance: 0
+  trackableRecord:
+    trackableDataId: 0
+    trackableObject:
+      trackableObjectID: 0
+      nameOfObject: 
+      trackableType: 6
     gazeList: []
+    viewDistance: 0
   changeColor: 1
   currentGaze:
-    locationID: 
+    referencePosition:
+      locationId: 0
+      locationName: 
+      positionConfiguration:
+        categoryConfigurations:
+        - trackableType: 0
+          threshold: 0.1
+        - trackableType: 1
+          threshold: 0.6
+        - trackableType: 2
+          threshold: 0.2
+        - trackableType: 5
+          threshold: 0.1
     fixations: 0
     fixationDuration: 0
   beingWatched: 0
@@ -167,80 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b0c984c7bb29d743b7a48fea18eda56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statController: {fileID: 1231897801973220931}
+  statController: {fileID: 0}
   prefab: {fileID: 0}
   deployPrefab: 0
   checkStatController: 1
---- !u!1001 &6662676589236350334
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 7480628300333463155}
-    m_Modifications:
-    - target: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2257789756866718480, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-      propertyPath: m_Name
-      value: Stats
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
---- !u!114 &1231897801973220931 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5579398674612267837, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-  m_PrefabInstance: {fileID: 6662676589236350334}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b96fdc5c2fa82f247817b2d22fde224e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &6218436809182782109 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 737119580877737955, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
-  m_PrefabInstance: {fileID: 6662676589236350334}
-  m_PrefabAsset: {fileID: 0}

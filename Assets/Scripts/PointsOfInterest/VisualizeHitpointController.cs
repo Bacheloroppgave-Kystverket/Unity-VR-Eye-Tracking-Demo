@@ -17,13 +17,21 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
     [SerializeField, Tooltip("Set to true if the line to the hitpoint should be visualized.")]
     private bool visualizeLine;
 
+    [SerializeField, Tooltip("The hitspot prefab.")]
+    private GameObject hitspotPrefab;
+
     [SerializeField, Tooltip("The raycaster object.")]
     private RayCasterObject raycaster;
 
     ///<inheritdoc/>
     private void Start()
     {
-        CheckField("Hitspot", hitSpot);
+        if (visualizeHitpoint && hitSpot == null) {
+            GameObject newHitspot = Instantiate(hitspotPrefab);
+            hitspotPrefab.transform.position = Vector3.zero;
+            this.hitSpot = newHitspot;
+            newHitspot.tag = "hitspot";
+        }
         this.raycaster = GetComponent<RayCasterObject>();
         raycaster.AddObserver(this);
     }

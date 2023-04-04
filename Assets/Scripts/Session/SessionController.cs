@@ -9,6 +9,7 @@ using UnityEngine;
 /// Represents a sessionController that is done by a user. 
 /// Should be placed on an object that represents the main location that has all the reference positions.
 /// </summary>
+[ExecuteAlways]
 public class SessionController : MonoBehaviour {
 
     [SerializeField, Tooltip("The session")]
@@ -49,6 +50,10 @@ public class SessionController : MonoBehaviour {
         CheckIfListIsValid("Close trackable objects", closeTrackableObjects.Any());
         CheckIfListIsValid("Reference positions", referencePositions.Any());
         CheckField("Ray caster object", rayCasterObject);
+        SetSessionData();
+    }
+
+    public void SetSessionData() {
         List<ReferencePosition> references = new List<ReferencePosition>();
         referencePositions.ForEach(positionController => references.Add(positionController.GetReferencePosition()));
         session.AddReferencePositions(referencePositions);
@@ -57,6 +62,7 @@ public class SessionController : MonoBehaviour {
         AddAllTrackableObjectsToSession(closeTrackableObjects, ViewDistance.CLOSE);
         AddAllTrackableObjectsToSession(otherTrackableObjects, ViewDistance.FAR);
     }
+
     /// <summary>
     /// Adds all teh trackable objects to the sessionController.
     /// </summary>
@@ -72,6 +78,20 @@ public class SessionController : MonoBehaviour {
             simulationSetup.SetTrackableObjects(trackables);
         }
         session.AddTrackableObjects(objectsToAdd, viewDistance);
+    }
+
+    public void AddTrackableObejct(TrackableObjectController trackableObjectController) {
+        CheckIfObjectIsNull(trackableObjectController, "trackable object");
+        if (!closeTrackableObjects.Contains(trackableObjectController)) {
+            closeTrackableObjects.Add(trackableObjectController);
+        }
+    }
+
+    public void AddRefernecePosition(ReferencePositionController referencePositionController) {
+        CheckIfObjectIsNull(referencePositionController, "refernece position controller");
+        if (!referencePositions.Contains(referencePositionController)) { 
+            referencePositions.Add(referencePositionController);
+        }
     }
 
     public void SendSessionAndSimulationSetup() {
@@ -147,7 +167,7 @@ public class SessionController : MonoBehaviour {
     /// <param name="otherObjects">the list with the other objects</param>
     public void AddOtherObjects(List<TrackableObjectController> otherObjects) {
         foreach (TrackableObjectController otherObject in otherObjects) {
-            if (!closeTrackableObjects.Contains(otherObject) && !otherObjects.Contains(otherObject)){
+            if (!closeTrackableObjects.Contains(otherObject) && !otherObjects.Contains(otherObject)) {
                 otherObjects.Add(otherObject);
             }
         }
@@ -167,4 +187,20 @@ public class SessionController : MonoBehaviour {
     /// </summary>
     /// <returns>the trackable objects that are close</returns>
     public List<TrackableObjectController> GetCloseTrackableObjects() => closeTrackableObjects;
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
+        }
+    }
+
+
 }

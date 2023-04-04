@@ -7,6 +7,7 @@ using UnityEngine;
 /// <summary>
 /// Represents a position that a user can be in space. 
 /// </summary>
+[ExecuteAlways]
 public class ReferencePositionController : MonoBehaviour
 {
 
@@ -102,6 +103,29 @@ public class ReferencePositionController : MonoBehaviour
         if (number < 0)
         {
             throw new IllegalArgumentException(error + " cannot be below zero");
+        }
+    }
+
+    /// <summary>
+    /// Adds the reference position to the simulation setup manager.
+    /// </summary>
+    /// <param name="simulationSetupManager">the simulation setup manager</param>
+    public void AddPositionToSimulationSetup(SimulationSetupManager simulationSetupManager) {
+        CheckIfObjectIsNull(simulationSetupManager, "Simulation setup");
+        simulationSetupManager.AddReferencePosition(this);
+    }
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
         }
     }
 }

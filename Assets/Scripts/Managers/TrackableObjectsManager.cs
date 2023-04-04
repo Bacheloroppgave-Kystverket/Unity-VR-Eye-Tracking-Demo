@@ -19,10 +19,12 @@ public class TrackableObjectsManager : MonoBehaviour{
     [SerializeField, Tooltip("The reference position manager")]
     private ReferencePositionManager referencePositionManager;
 
-    
+    [SerializeField, Tooltip("The gameobject of the player.")]
+    private GameObject player;
+
     private void Awake(){
         trackableObjects = GameObject.FindObjectsOfType<TrackableObjectController>().ToList();
-        
+        CheckField("player", player);
         CheckIfListIsValid("Trackable objects", trackableObjects.Any());
     }
 
@@ -72,6 +74,6 @@ public class TrackableObjectsManager : MonoBehaviour{
 
     public void ToggleAllStats() {
         List<DisplayTrackable> displayTrackables = GameObject.FindObjectsOfType<DisplayTrackable>().ToList();
-        displayTrackables.ForEach(display => display.ToggleVisibleStats());
+        displayTrackables.ForEach(display => display.ToggleVisibleStats(player.transform));
     }
 }

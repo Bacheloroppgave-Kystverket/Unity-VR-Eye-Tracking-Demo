@@ -16,8 +16,7 @@ public class EyeCaster : RayCasterObject
     [SerializeField, Tooltip("The second raycaster object.")]
     private OVREyeGaze eyeTwo;
 
-    void Start()
-    {
+    void Start(){
         base.Start();
         CheckField("Eye one", eyeOne);
         CheckField("Eye two", eyeTwo);

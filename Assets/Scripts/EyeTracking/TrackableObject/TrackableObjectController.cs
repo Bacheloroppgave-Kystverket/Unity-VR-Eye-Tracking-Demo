@@ -6,6 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Represents a trackable object.
 /// </summary>
+[ExecuteAlways]
 public class TrackableObjectController : MonoBehaviour, Observable<TrackableObserver>, Trackable
 {
     [SerializeField, Tooltip("The trackable object")]
@@ -259,5 +260,9 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     public void OnGazeExit()
     {
         SetNotWatched();
+    }
+
+    private void AddTrackableToSimulationSetup(SimulationSetupManager simulationSetupManager) {
+        simulationSetupManager.AddTrackableObject(this);
     }
 }
