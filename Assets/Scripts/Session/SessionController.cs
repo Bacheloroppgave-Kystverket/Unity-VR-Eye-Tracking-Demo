@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -8,7 +9,7 @@ using UnityEngine;
 /// Represents a sessionController that is done by a user. 
 /// Should be placed on an object that represents the main location that has all the reference positions.
 /// </summary>
-public class SessionController : MonoBehaviour{
+public class SessionController : MonoBehaviour {
 
     [SerializeField, Tooltip("The session")]
     private Session session;
@@ -19,7 +20,7 @@ public class SessionController : MonoBehaviour{
     [SerializeField, Tooltip("The reference positions of this session.")]
     private List<ReferencePositionController> referencePositions = new List<ReferencePositionController>();
 
-    [Space(10),Header("Other")]
+    [Space(10), Header("Other")]
     [SerializeField, Tooltip("The list of all objects that are far away and has been observed.")]
     private List<TrackableObjectController> otherTrackableObjects = new List<TrackableObjectController>();
 
@@ -41,7 +42,7 @@ public class SessionController : MonoBehaviour{
     /// <returns>the raycaster object</returns>
     public RayCasterObject GetRayCasterObject() => rayCasterObject;
 
-    private void Start(){
+    private void Start() {
         sendData.SetData(session);
         //closeTrackableObjects = GetComponentsInChildren<TrackableObjectController>().ToList();
         //referencePositions = GetComponentsInChildren<ReferencePosition>().ToList();
@@ -50,7 +51,7 @@ public class SessionController : MonoBehaviour{
         CheckField("Ray caster object", rayCasterObject);
         List<ReferencePosition> references = new List<ReferencePosition>();
         referencePositions.ForEach(positionController => references.Add(positionController.GetReferencePosition()));
-        session.AddReferencePositions(references);
+        session.AddReferencePositions(referencePositions);
         simulationSetup.SetReferencePositions(references);
         session.SetSimulationSetup(simulationSetup);
         AddAllTrackableObjectsToSession(closeTrackableObjects, ViewDistance.CLOSE);
@@ -70,7 +71,17 @@ public class SessionController : MonoBehaviour{
         if (viewDistance == ViewDistance.CLOSE) {
             simulationSetup.SetTrackableObjects(trackables);
         }
-        session.AddTrackableObjects(trackables, viewDistance);
+        session.AddTrackableObjects(objectsToAdd, viewDistance);
+    }
+
+    public void SendSessionAndSimulationSetup() {
+        StartCoroutine(SendSessioonAndThenSimulationSetup());
+    }
+
+    private IEnumerator SendSessioonAndThenSimulationSetup() {
+        SendSimulationSetup();
+        yield return new WaitForSeconds(10);
+        SendSession();
     }
 
     /// <summary>
@@ -86,11 +97,13 @@ public class SessionController : MonoBehaviour{
 
         MonoBehaviour.print("oig");
         simulationSetupSend.SetData(simulationSetup);
-        StartCoroutine(simulationSetupSend.SendCurrentData());
+        StartCoroutine(SendAndUpdateSimulaitonSetup());
     }
 
-    public void UpdateSimulationSetup() {
-        //simulationSetup.UpdateSimulationSetup();
+    private IEnumerator SendAndUpdateSimulaitonSetup() {
+        StartCoroutine(simulationSetupSend.SendCurrentData());
+        yield return new WaitForSeconds(5);
+        StartCoroutine(simulationSetupSend.SendGetRequest());
     }
 
     /// <summary>

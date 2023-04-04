@@ -69,4 +69,9 @@ public class TrackableObjectsManager : MonoBehaviour{
     {
         trackableObjects.ForEach(trackableObject => trackableObject.CalculateCurrentAverageFixationDuration(referencePositionManager.GetCurrentReferencePosition().GetLocationName()));
     }
+
+    public void ToggleAllStats() {
+        List<DisplayTrackable> displayTrackables = GameObject.FindObjectsOfType<DisplayTrackable>().ToList();
+        displayTrackables.ForEach(display => display.ToggleVisibleStats());
+    }
 }

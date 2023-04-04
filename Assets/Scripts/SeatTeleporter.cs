@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Enables an object to be teleported to by the player.
 /// </summary>
+[RequireComponent(typeof(ReferencePositionController))]
 public class SeatTeleporter : MonoBehaviour {
     [SerializeField]
     [Tooltip("The collider that will be pointed at in order to teleport")]
@@ -13,6 +14,9 @@ public class SeatTeleporter : MonoBehaviour {
     [SerializeField]
     [Tooltip("The player that will be teleported on activation")]
     private GameObject player;
+
+    [SerializeField, Tooltip("The reference position manager")]
+    private ReferencePositionManager referencePositionManager;
 
     [SerializeField]
     [Tooltip("The canvas that will be displayed while aimed at")]
@@ -113,8 +117,7 @@ public class SeatTeleporter : MonoBehaviour {
     /// </summary>
     public void TeleportToSeat() {
         SetSeatAvailability(false);
-        ///TODO: Add it to the reference position so that the seat changes. This can be done in the ReferencePositionManager.
-        ///TODO: The position itself should also be an component of this object and be sent to the reference managers "setPosition" method.
+        referencePositionManager.SetPosition(GetComponent<ReferencePositionController>());
         player.transform.position = transform.position;
     }
 

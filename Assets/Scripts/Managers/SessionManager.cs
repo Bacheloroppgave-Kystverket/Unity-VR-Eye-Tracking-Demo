@@ -26,6 +26,9 @@ public class SessionManager : MonoBehaviour
 
     private bool isPaused;
 
+    [SerializeField]
+    private bool eyetracking = false;
+
     // Start is called before the first frame update
     void Start() {
         CheckField("Session", sessionController);
@@ -69,10 +72,21 @@ public class SessionManager : MonoBehaviour
         isPaused = false;
     }
 
+    public void ToggleEyeTracking() {
+        if (eyetracking)
+        {
+            StopEyeTracking();
+        }
+        else {
+            StartEyeTracking();
+        }
+    }
+
     /// <summary>
     /// Starts the eye tracking.
     /// </summary>
     public void StartEyeTracking() {
+        eyetracking = !eyetracking;
         referencePositionManager.StartEyeTracking();
         sessionController.GetRayCasterObject().StartTracking();
         feedbackManager.StartEyetracking();
@@ -82,6 +96,7 @@ public class SessionManager : MonoBehaviour
     /// Stops the eye tracking.
     /// </summary>
     public void StopEyeTracking() {
+        eyetracking = !eyetracking;
         referencePositionManager.StopEyeTracking();
         sessionController.GetRayCasterObject().StopEyeTracking();
         feedbackManager.StopEyeTracking();

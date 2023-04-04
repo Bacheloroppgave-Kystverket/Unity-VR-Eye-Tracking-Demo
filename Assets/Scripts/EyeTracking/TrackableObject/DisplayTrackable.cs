@@ -49,25 +49,42 @@ public class DisplayTrackable : MonoBehaviour, TrackableObserver
 
     /// </inheritdoc>
     public void UpdateAverageFixationDuration(float averageFixationDuration){
-        
+        if (statController == null) {
+            statController = Instantiate(prefab, this.transform).GetComponent<StatController>();
+            statController.transform.localPosition = new Vector3(0, 0.3f, -0.3f);
+        }
         statController.SetAverageFixationDurationText(Math.Round(averageFixationDuration, 1).ToString());        
     }
 
     /// </inheritdoc>
     public void UpdateFixationDuration(float fixationDuration){
+        if (statController == null)
+        {
+            statController = Instantiate(prefab, this.transform).GetComponent<StatController>();
+            statController.transform.localPosition = new Vector3(0, 0.3f, -0.3f);
+        }
         statController.SetFixationDurationText(Math.Round(fixationDuration, 1).ToString());
     }
 
     /// </inheritdoc>
     public void UpdateFixations(int fixations) {
+        if (statController == null)
+        {
+            statController = Instantiate(prefab, this.transform).GetComponent<StatController>();
+            statController.transform.localPosition = new Vector3(0, 0.3f, -0.3f);
+        }
         statController.SetFixationsText(fixations.ToString());
     }
 
     /// <summary>
     /// Toggles the text between being visible and not
     /// </summary>
-    public void ToggleVisibleStats()
-    {
+    public void ToggleVisibleStats(){
+        if (statController == null)
+        {
+            statController = Instantiate(prefab, this.transform).GetComponent<StatController>();
+            statController.transform.localPosition = new Vector3(0, 0.3f, -0.3f);
+        }
         statController.ToggleVisibleStats();
     }
 }

@@ -34,6 +34,7 @@ public class OverlayManager : MonoBehaviour
         feedbackText.text = feedback.GetFeedback();
     }
 
+
     /// <summary>
     /// Displays the least viewed object to the user based on their threshold.
     /// </summary>

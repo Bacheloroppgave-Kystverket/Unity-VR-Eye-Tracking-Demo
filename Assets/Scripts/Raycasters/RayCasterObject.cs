@@ -26,7 +26,7 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     private int range = 50;
 
     [SerializeField, Tooltip("The raycaster configuration of this raycater object")]
-    private RaycasterConfiguration raycasterConfiguration = new SphereCastConfig();
+    private RaycasterConfiguration raycasterConfiguration = new NormalRaycastConfig();
 
     [Space(5), Header("Debugging lists")]
     [SerializeField]
@@ -100,8 +100,11 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
             if (raycastHits.Any()) {
                 IEnumerator<RaycastHit> it = raycastHits.ToList().GetEnumerator();
                 while (it.MoveNext() && !hitSolid) {
-                    hitSolid = WatchObject(it.Current);
-                    newRaycasts.Add(it.Current);
+                    RaycastHit hit = it.Current;
+                    if (hit.collider != null) {
+                        hitSolid = WatchObject(hit);
+                        newRaycasts.Add(hit);
+                    }
                 }
                 UnwatchObjects(currentObjectsWatched);
             }
@@ -111,8 +114,16 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
             }
             currentObjectsWatched.Clear();
             debugList.Clear();
-            raycastHits.ToList().ForEach(rayCast => debugList.Add(rayCast.collider.gameObject));
-            UpdateObservers(newRaycasts.ToArray());
+            
+            if (newRaycasts.Count > 0 && raycastHits.Length > 0) {
+                raycastHits.ToList().ForEach(rayCast => {
+                    Collider collider = rayCast.collider;
+                    if (collider != null) {
+                        debugList.Add(collider.gameObject);
+                    }
+                });
+                UpdateObservers(newRaycasts.ToArray());
+            }
             this.position = position;
             newRaycasts.Clear();
             yield return new WaitForSeconds(timeToWait);
@@ -127,18 +138,23 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     /// <returns>true if the object is solid. False if the object is not solid</returns>
     private bool WatchObject(RaycastHit raycastHit) {
         bool isSolid = false;
-        TrackableObjectController trackObject = raycastHit.collider.gameObject.GetComponent<TrackableObjectController>();
-        GameObject currentGameObject = raycastHit.collider.gameObject;
-        
-        if (currentGameObject != null)
-        {
-            ObserveObject(currentGameObject);
-            if (trackObject != null)
+
+        if (raycastHit.collider != null) {
+            GameObject currentGameObject = raycastHit.collider.gameObject;
+
+
+            if (currentGameObject != null)
             {
-                isSolid = TrackableTypeMethods.IsTrackableSolid(trackObject.GetTrackableObject().GetTrackableType());
-            }
-            else {
-                isSolid = true;
+                TrackableObjectController trackObject = raycastHit.collider.gameObject.GetComponent<TrackableObjectController>();
+                ObserveObject(currentGameObject);
+                if (trackObject != null)
+                {
+                    isSolid = TrackableTypeMethods.IsTrackableSolid(trackObject.GetTrackableObject().GetTrackableType());
+                }
+                else
+                {
+                    isSolid = true;
+                }
             }
         }
         return isSolid;

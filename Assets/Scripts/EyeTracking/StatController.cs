@@ -19,7 +19,7 @@ public class StatController : MonoBehaviour
 
     private void Start()
     {
-        averageFixationDurationText.gameObject.SetActive(false);
+        ToggleVisibleStats();
         CheckField("Fixations text", fixationsText);
         CheckField("Fixations durations text", fixationDurationText);
         CheckField("Average fixation duration text", averageFixationDurationText);

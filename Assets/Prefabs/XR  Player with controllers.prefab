@@ -53,6 +53,8 @@ MonoBehaviour:
   range: 50
   currentObjectsWatched: []
   lastObjects: []
+  debugList: []
+  position: {x: 0, y: 0, z: 0}
   eyeOne: {fileID: 5008661246111698524}
   eyeTwo: {fileID: 5008661245412926643}
 --- !u!114 &1350411780

@@ -69,6 +69,12 @@ public class ServerRequest<T>{
             UnderstandPostRequest(request);
         }
         request.Dispose();
+        yield return new WaitForSeconds(1);
+    }
+
+    public IEnumerator SendGetRequest() {
+        this.webOption = WebOptions.GET;
+        return SendCurrentData();
     }
 
     /// <summary>

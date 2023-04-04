@@ -81,7 +81,10 @@ public class ReferencePositionManager : MonoBehaviour
     /// Goes to the next reference position.
     /// </summary>
     public void SetPosition(ReferencePositionController referencePositionController){
-        sessionManager.PauseEyeTrackingForNSeconds(secondsToWait);
+        if (currentlyTracking) {
+            sessionManager.PauseEyeTrackingForNSeconds(secondsToWait);
+        }
+       
         this.currentReferencePositon = referencePositionController;
         trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetReferencePosition());
         

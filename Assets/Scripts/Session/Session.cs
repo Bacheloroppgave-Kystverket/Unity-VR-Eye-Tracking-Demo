@@ -28,19 +28,19 @@ public class Session
     /// <summary>
     /// Adds all the trackable objects to this sessionController.
     /// </summary>
-    /// <param name="trackableObjects">the trackable objects</param>
-    public void AddTrackableObjects(List<TrackableObject> trackableObjects, ViewDistance viewDistance) {
+    /// <param name="trackableObjectsController">the trackable objects</param>
+    public void AddTrackableObjects(List<TrackableObjectController> trackableObjectsController, ViewDistance viewDistance) {
         //Todo: Here the data from the DB should be loaded.
         MonoBehaviour.print(currentDate);
-        if (trackableObjects != null){
-            trackableObjects.ForEach(trackableObject => {
-                if (!trackableRecords.Any(record => record.GetTrackableObject() == trackableObject)) {
-                    TrackableRecordBuilder trackableRecordBuilder = new TrackableRecordBuilder(trackableObject);
-                    trackableRecordBuilder = viewDistance == ViewDistance.CLOSE ? trackableRecordBuilder.SetAsCloseObject() : trackableRecordBuilder.SetAsFarObject();
-                    this.trackableRecords.Add(trackableRecordBuilder.build());
-                }
+        if (trackableObjectsController != null){
+            trackableObjectsController.ForEach(trackableObject => {
+                trackableRecords.Add(trackableObject.GetTrackableRecord());
             });
         }
+    }
+
+    public void UpdateTrackableRecords() { 
+
     }
 
     /// <summary>
@@ -56,14 +56,14 @@ public class Session
     /// Adds an list of reference positions to this sessison.
     /// </summary>
     /// <param name="referencePositions">the positions</param>
-    public void AddReferencePositions(List<ReferencePosition> referencePositions) {
+    public void AddReferencePositions(List<ReferencePositionController> referencePositions) {
         //Todo: Here the data from the DB should be loaded.
 
         if(referencePositions != null){
             referencePositions.ForEach(referencePosition =>{
-                if (!this.positionRecords.Any(record => record.GetReferencePosition() == referencePosition))
+                if (!this.positionRecords.Any(record => record == referencePosition.GetPositionRecord()))
                 {
-                    this.positionRecords.Add(new PositionRecord(referencePosition));
+                    this.positionRecords.Add(referencePosition.GetPositionRecord());
                 }
             });
         }

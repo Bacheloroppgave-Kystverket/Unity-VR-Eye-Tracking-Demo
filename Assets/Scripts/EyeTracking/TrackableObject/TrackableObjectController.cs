@@ -30,6 +30,7 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     // Start is called before the first frame update
     void Awake()
     {
+        this.trackableRecord = new TrackableRecordBuilder(trackableObject).build();
         trackableObject.SetGameObjectName(gameObject.name);
         currentGaze = null;
         gameObject.tag = typeof(TrackableObjectController).Name;
@@ -39,6 +40,8 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
         }
         CheckField("Object to track", gameObject);
     }
+
+  
 
     
 
@@ -176,6 +179,12 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     /// </summary>
     /// <returns>the trackable object</returns>
     public TrackableObject GetTrackableObject() => trackableObject;
+
+    /// <summary>
+    /// Gets the trackable record.
+    /// </summary>
+    /// <returns>the trackable record</returns>
+    public TrackableRecord GetTrackableRecord() => trackableRecord;
 
     /// </inheritdoc>
     public void AddObserver(TrackableObserver observer)
