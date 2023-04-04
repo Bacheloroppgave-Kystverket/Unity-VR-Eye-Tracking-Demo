@@ -80,12 +80,24 @@ public class ReferencePositionManager : MonoBehaviour
     /// <summary>
     /// Goes to the next reference position.
     /// </summary>
+    /// <param name="referencePositionController">the reference position controller</param>
     public void SetPosition(ReferencePositionController referencePositionController){
+        CheckIfObjectIsNull(referencePositionController, "reference position controller");
         if (currentlyTracking) {
             sessionManager.PauseEyeTrackingForNSeconds(secondsToWait);
         }
-       
+        if (currentReferencePositon != null) {
+            Collider collider = currentReferencePositon.gameObject.GetComponent<Collider>();
+            if (collider != null) {
+                collider.enabled = true;
+            }
+        }
         this.currentReferencePositon = referencePositionController;
+        Collider currentCollider = currentReferencePositon.GetComponent<Collider>();
+        if (currentCollider != null) { 
+            currentCollider.enabled = false;
+        }
+        
         trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetReferencePosition());
         
     }
@@ -99,5 +111,19 @@ public class ReferencePositionManager : MonoBehaviour
     /// <inheritdoc/>
     public void StopEyeTracking(){
         currentlyTracking = false;
+    }
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
+        }
     }
 }
