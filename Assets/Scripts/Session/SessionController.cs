@@ -9,7 +9,7 @@ using UnityEngine;
 /// Represents a sessionController that is done by a user. 
 /// Should be placed on an object that represents the main location that has all the reference positions.
 /// </summary>
-[ExecuteAlways]
+[RequireComponent(typeof(SimulationSetupController))]
 public class SessionController : MonoBehaviour {
 
     [SerializeField, Tooltip("The session")]
@@ -18,24 +18,14 @@ public class SessionController : MonoBehaviour {
     [SerializeField, Tooltip("The ray caster object")]
     private RayCasterObject rayCasterObject;
 
-    [SerializeField, Tooltip("The reference positions of this session.")]
-    private List<ReferencePositionController> referencePositions = new List<ReferencePositionController>();
-
     [Space(10), Header("Other")]
     [SerializeField, Tooltip("The list of all objects that are far away and has been observed.")]
     private List<TrackableObjectController> otherTrackableObjects = new List<TrackableObjectController>();
 
-    [SerializeField, Tooltip("The list of all the trackable objects that are close to this user.")]
-    private List<TrackableObjectController> closeTrackableObjects = new List<TrackableObjectController>();
-
-    [SerializeField, Tooltip("The simulation setup")]
-    private SimulationSetup simulationSetup;
-
     [SerializeField, Tooltip("The networking that sends the session")]
     private ServerRequest<Session> sendData;
 
-    [SerializeField, Tooltip("The simulation setup sender")]
-    private ServerRequest<SimulationSetup> simulationSetupSend;
+    
 
     /// <summary>
     /// Gets the raycaster object.
@@ -47,19 +37,17 @@ public class SessionController : MonoBehaviour {
         sendData.SetData(session);
         //closeTrackableObjects = GetComponentsInChildren<TrackableObjectController>().ToList();
         //referencePositions = GetComponentsInChildren<ReferencePosition>().ToList();
-        CheckIfListIsValid("Close trackable objects", closeTrackableObjects.Any());
-        CheckIfListIsValid("Reference positions", referencePositions.Any());
+        
         CheckField("Ray caster object", rayCasterObject);
-        SetSessionData();
+        //SetSessionData();
     }
 
     public void SetSessionData() {
         List<ReferencePosition> references = new List<ReferencePosition>();
-        referencePositions.ForEach(positionController => references.Add(positionController.GetReferencePosition()));
-        session.AddReferencePositions(referencePositions);
-        simulationSetup.SetReferencePositions(references);
-        session.SetSimulationSetup(simulationSetup);
-        AddAllTrackableObjectsToSession(closeTrackableObjects, ViewDistance.CLOSE);
+        SimulationSetupController simulationSetupController = GetComponent<SimulationSetupController>();
+        session.AddReferencePositions(simulationSetupController.GetReferencePositions());
+        session.SetSimulationSetup(simulationSetupController.GetSimulationSetup());
+        AddAllTrackableObjectsToSession(simulationSetupController.GetCloseTrackableObjects(), ViewDistance.CLOSE);
         AddAllTrackableObjectsToSession(otherTrackableObjects, ViewDistance.FAR);
     }
 
@@ -74,32 +62,21 @@ public class SessionController : MonoBehaviour {
             TrackableObject trackableObject = trackableObjectController.GetTrackableObject();
             trackables.Add(trackableObject);
         });
-        if (viewDistance == ViewDistance.CLOSE) {
-            simulationSetup.SetTrackableObjects(trackables);
-        }
         session.AddTrackableObjects(objectsToAdd, viewDistance);
     }
 
-    public void AddTrackableObejct(TrackableObjectController trackableObjectController) {
-        CheckIfObjectIsNull(trackableObjectController, "trackable object");
-        if (!closeTrackableObjects.Contains(trackableObjectController)) {
-            closeTrackableObjects.Add(trackableObjectController);
-        }
-    }
-
-    public void AddRefernecePosition(ReferencePositionController referencePositionController) {
-        CheckIfObjectIsNull(referencePositionController, "refernece position controller");
-        if (!referencePositions.Contains(referencePositionController)) { 
-            referencePositions.Add(referencePositionController);
-        }
-    }
+    
 
     public void SendSessionAndSimulationSetup() {
-        StartCoroutine(SendSessioonAndThenSimulationSetup());
+        StartCoroutine(SendSimulationSetupAndThenSession());
     }
 
-    private IEnumerator SendSessioonAndThenSimulationSetup() {
-        SendSimulationSetup();
+    /// <summary>
+    /// Sends the simulation setup and then the session.
+    /// </summary>
+    /// <returns>the enumerator</returns>
+    private IEnumerator SendSimulationSetupAndThenSession() {
+        GetComponent<SimulationSetupController>().SendSimulationSetup();
         yield return new WaitForSeconds(10);
         SendSession();
     }
@@ -112,25 +89,11 @@ public class SessionController : MonoBehaviour {
         StartCoroutine(sendData.SendCurrentData());
     }
 
-    public void SendSimulationSetup() {
-        simulationSetup.SetNameOfSetup(gameObject.name);
+    
 
-        MonoBehaviour.print("oig");
-        simulationSetupSend.SetData(simulationSetup);
-        StartCoroutine(SendAndUpdateSimulaitonSetup());
-    }
+    
 
-    private IEnumerator SendAndUpdateSimulaitonSetup() {
-        StartCoroutine(simulationSetupSend.SendCurrentData());
-        yield return new WaitForSeconds(5);
-        StartCoroutine(simulationSetupSend.SendGetRequest());
-    }
-
-    /// <summary>
-    /// Gets the reference positions.
-    /// </summary>
-    /// <returns>the reference positions</returns>
-    public List<ReferencePositionController> GetReferencePositions() => referencePositions;
+    
 
     /// <summary>
     /// Checks if the defined field is set in the editor.
@@ -147,18 +110,7 @@ public class SessionController : MonoBehaviour {
         return valid;
     }
 
-    /// <summary>
-    /// Checks if the list has any elements.
-    /// </summary>
-    /// <param name="error">the error to display</param>
-    /// <param name="hasAny">true if the list has any. False otherwise</param>
-    private void CheckIfListIsValid(string error, bool hasAny)
-    {
-        if (!hasAny)
-        {
-            Debug.Log("<color=red>Error:</color>" + error + " cannot be emtpy", gameObject);
-        }
-    }
+    
 
 
     /// <summary>
@@ -166,8 +118,9 @@ public class SessionController : MonoBehaviour {
     /// </summary>
     /// <param name="otherObjects">the list with the other objects</param>
     public void AddOtherObjects(List<TrackableObjectController> otherObjects) {
+        List<TrackableObjectController> closeObjects = GetComponent<SimulationSetupController>().GetCloseTrackableObjects();
         foreach (TrackableObjectController otherObject in otherObjects) {
-            if (!closeTrackableObjects.Contains(otherObject) && !otherObjects.Contains(otherObject)) {
+            if (!closeObjects.Contains(otherObject) && !otherObjects.Contains(otherObject)) {
                 otherObjects.Add(otherObject);
             }
         }
@@ -183,10 +136,15 @@ public class SessionController : MonoBehaviour {
     }
 
     /// <summary>
-    /// Gets all the trackable objects.
+    /// Gets the simulation setup component.
     /// </summary>
-    /// <returns>the trackable objects that are close</returns>
-    public List<TrackableObjectController> GetCloseTrackableObjects() => closeTrackableObjects;
+    /// <returns>the simulation setup controller</returns>
+    public SimulationSetupController GetSimulationSetupController()
+    {
+        return GetComponent<SimulationSetupController>();
+    }
+
+
 
     /// <summary>
     /// Checks if the object is null or not. Throws an exception if the object is null.
@@ -201,6 +159,4 @@ public class SessionController : MonoBehaviour {
             throw new IllegalArgumentException("The " + error + " cannot be null.");
         }
     }
-
-
 }

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9105947890162214381}
   - component: {fileID: 6834456475780419631}
   - component: {fileID: 8029136676021664461}
+  - component: {fileID: 7618090404930982849}
   m_Layer: 6
   m_Name: LongCube
   m_TagString: Untagged
@@ -154,8 +155,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statController: {fileID: 0}
-  prefab: {fileID: 0}
+  prefab: {fileID: 2257789756866718480, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
   rightSide: 0
+--- !u!114 &7618090404930982849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105947890162214382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cdcf72d234409547a3c9eae06e5e9ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9105947890819276356
 GameObject:
   m_ObjectHideFlags: 0

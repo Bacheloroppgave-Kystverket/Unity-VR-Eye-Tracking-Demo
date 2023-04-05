@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 9093971222243476937}
   - component: {fileID: 4320059627730456516}
   - component: {fileID: 6091070312945079694}
+  - component: {fileID: 8611873495141985313}
   m_Layer: 0
   m_Name: Short wall
   m_TagString: Untagged
@@ -187,5 +188,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statController: {fileID: 0}
-  prefab: {fileID: 0}
+  prefab: {fileID: 2257789756866718480, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
   rightSide: 0
+--- !u!114 &8611873495141985313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8836215417575327339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cdcf72d234409547a3c9eae06e5e9ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

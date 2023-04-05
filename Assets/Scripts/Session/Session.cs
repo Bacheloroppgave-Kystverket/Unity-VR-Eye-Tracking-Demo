@@ -39,10 +39,6 @@ public class Session
         }
     }
 
-    public void UpdateTrackableRecords() { 
-
-    }
-
     /// <summary>
     /// Sets the simulation settup.
     /// </summary>
