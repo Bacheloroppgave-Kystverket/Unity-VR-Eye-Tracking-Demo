@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ObjectBasedColorCoding : MonoBehaviour, TrackableObserver
 {
-    private 
-
 
     public void UpdateAverageFixationDuration(float averageFixationDuration)
     {
