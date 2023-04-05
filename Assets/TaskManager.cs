@@ -24,4 +24,17 @@ public class TaskManager : MonoBehaviour {
     public Task[] GetTaskList() {
         return tasks;
     }
+
+    public int GetRemainingTaskAmount()
+    {
+        int remainingTaskAmount = 0;
+        foreach (Task  task in tasks)
+        {
+            if(!task.IsCompleted())
+            {
+                remainingTaskAmount++;
+            }
+        }
+        return remainingTaskAmount;
+    }
 }
