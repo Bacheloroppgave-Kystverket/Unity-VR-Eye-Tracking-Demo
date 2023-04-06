@@ -43,21 +43,21 @@ public class StatController : MonoBehaviour
     /// <summary>
     /// Sets the amount of fixations.
     /// </summary>
-    /// <param name="fixationsText">the fixations text</param>
+    /// <param name="fixationsText">the fixations textMap</param>
     public void SetFixationsText(string fixationsText) { 
         this.fixationsText.text = fixationsText;
     }
 
     /// <summary>
-    /// Sets the fixation duration text.
+    /// Sets the fixation duration textMap.
     /// </summary>
-    /// <param name="fixationDuration">the fixation duration text</param>
+    /// <param name="fixationDuration">the fixation duration textMap</param>
     public void SetFixationDurationText(string fixationDuration) {
         this.fixationDurationText.text = fixationDuration;
     }
 
     /// <summary>
-    /// Sets the average fixation druation text.
+    /// Sets the average fixation druation textMap.
     /// </summary>
     /// <param name="averageFixationDuration">the average fixation duration</param>
     public void SetAverageFixationDurationText(string averageFixationDuration) {
@@ -66,7 +66,7 @@ public class StatController : MonoBehaviour
     }
 
     /// <summary>
-    /// Toggles the text between being visible and not
+    /// Toggles the textMap between being visible and not
     /// </summary>
     public void ToggleVisibleStats()
     {
@@ -77,7 +77,7 @@ public class StatController : MonoBehaviour
     }
 
     /// <summary>
-    /// Turns the text towards the current player.
+    /// Turns the textMap towards the current player.
     /// </summary>
     /// <param name="playerTransform">the current player</param>
     public void TurnText(Transform playerTransform) {

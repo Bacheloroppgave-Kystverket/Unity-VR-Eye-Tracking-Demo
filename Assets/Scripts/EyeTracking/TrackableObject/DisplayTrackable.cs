@@ -72,7 +72,7 @@ public class DisplayTrackable : MonoBehaviour, TrackableObserver
     }
 
     /// <summary>
-    /// Toggles the text between being visible and not
+    /// Toggles the textMap between being visible and not
     /// </summary>
     /// <param name="playerTransform">the player transform</param>
     public void ToggleVisibleStats(Transform playerTransform)

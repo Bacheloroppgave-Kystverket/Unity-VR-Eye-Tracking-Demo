@@ -23,7 +23,7 @@ public class BrushController : MonoBehaviour
         // also renders after transparent objects
         backgroundSphere.material.renderQueue = 3998;
         // the selective Passthrough shader renders at 4000 and higher, to render after other transparent objects
-        // (white ring and info text render after)
+        // (white ring and info textMap render after)
         backgroundSphere.transform.parent = null;
         backgroundSphere.enabled = false;
 
