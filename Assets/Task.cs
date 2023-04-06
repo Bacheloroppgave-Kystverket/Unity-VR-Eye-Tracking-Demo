@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 /// <summary>
 /// A task that needs to be performed by the user. Contains a boolean that turns true when the task conditions are met.
@@ -11,6 +12,7 @@ public class Task : MonoBehaviour {
     private string taskTitle;
     private GameObject checkbox;
     private bool isCompleted;
+    private UnityEvent taskCompleted = new UnityEvent();
     
     enum TaskType {
         GoToPosition,
@@ -18,21 +20,14 @@ public class Task : MonoBehaviour {
         EvaluateObject
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Start() {
     }
 
     public void CompleteTask() {
         isCompleted = true;
+        SendMessage("UpdateList");
         checkbox.GetComponent<Toggle>().isOn = true;
+        taskCompleted.Invoke();
     }
 
     public string GetTitle() {
@@ -53,4 +48,11 @@ public class Task : MonoBehaviour {
     {
         return isCompleted;
     }
+
+    public UnityEvent GetCompletedEvent() {
+        return this.taskCompleted;
+    }
+
+    public delegate void OnTaskCompletedDelegate(bool completed);
+    public event OnTaskCompletedDelegate OnTaskCompleted;
 }
