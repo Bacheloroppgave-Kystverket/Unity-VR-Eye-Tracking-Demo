@@ -13,16 +13,10 @@ public class Task : MonoBehaviour {
     private GameObject checkbox;
     private bool isCompleted;
     private UnityEvent taskCompleted = new UnityEvent();
-    
-    enum TaskType {
-        GoToPosition,
-        PickUpObject,
-        EvaluateObject
-    }
 
-    void Start() {
-    }
-
+    /// <summary>
+    /// Completed the task, and sends a message to CheckListProducers to update their info. 
+    /// </summary>
     public void CompleteTask() {
         isCompleted = true;
         SendMessage("UpdateList");
@@ -53,6 +47,10 @@ public class Task : MonoBehaviour {
         return this.taskCompleted;
     }
 
+    /// <summary>
+    /// Is thrown when the task is completed
+    /// </summary>
+    /// <param name="completed"></param>
     public delegate void OnTaskCompletedDelegate(bool completed);
     public event OnTaskCompletedDelegate OnTaskCompleted;
 }

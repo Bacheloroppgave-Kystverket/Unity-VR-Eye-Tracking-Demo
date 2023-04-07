@@ -4,15 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class TaskManager : MonoBehaviour {
-    [SerializeField]
+    [SerializeField] [Tooltip("A list of objects with the Task component.")]
     private List<Task> tasks;
-
-    private void Start() {
-    }
+    
     public List<Task> GetTaskList() {
         return tasks;
     }
-
+    /// <summary>
+    /// Returns the amount of tasks that are not yet completed
+    /// </summary>
+    /// <returns>The amount of remaining tasks as an integer</returns>
     public int GetRemainingTaskAmount()
     {
         int remainingTaskAmount = 0;

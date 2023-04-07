@@ -20,9 +20,6 @@ public class CheckListProducer : MonoBehaviour {
     [SerializeField]
     [Tooltip("The TaskManager the CheckListProducer will base its checklist on")]
     private TaskManager taskManager;
-
-    private GameObject[] checkboxList;
-   
     private List<Task> tasks;
 
     // Start is called before the first frame update
@@ -30,6 +27,9 @@ public class CheckListProducer : MonoBehaviour {
         UpdateList();
     }
 
+    /// <summary>
+    /// Updates the list so that it complies with the TaskManager's list. Completed tasks are checked off, new uncompleted tasks are added to the list. 
+    /// </summary>
     void UpdateList()
     {
         tasks = taskManager.GetTaskList();
@@ -46,6 +46,9 @@ public class CheckListProducer : MonoBehaviour {
         UpdateRemainingTaskAmount();
     }
 
+    /// <summary>
+    /// Updates the textfield displaying the amount of uncompleted tasks.
+    /// </summary>
     void UpdateRemainingTaskAmount() {
         amountRemainingDisplay.text = "Tasks left: " + taskManager.GetRemainingTaskAmount();
     }
