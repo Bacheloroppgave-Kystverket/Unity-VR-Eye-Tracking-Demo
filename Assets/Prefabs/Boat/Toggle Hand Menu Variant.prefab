@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3766450736543102878, guid: eda42a08d8d4c2045a12298845b19a43, type: 3}
       propertyPath: m_Name
-      value: Toggle
+      value: Toggle Hand Menu Variant
       objectReference: {fileID: 0}
     - target: {fileID: 7079166215371712752, guid: eda42a08d8d4c2045a12298845b19a43, type: 3}
       propertyPath: m_AnchorMax.y
@@ -65,15 +65,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8527969338426517077, guid: eda42a08d8d4c2045a12298845b19a43, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.111111134
+      value: 0.09259258
       objectReference: {fileID: 0}
     - target: {fileID: 8527969338426517077, guid: eda42a08d8d4c2045a12298845b19a43, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.111111134
+      value: 0.09259258
       objectReference: {fileID: 0}
     - target: {fileID: 8527969338426517077, guid: eda42a08d8d4c2045a12298845b19a43, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.111111134
+      value: 0.09259258
       objectReference: {fileID: 0}
     - target: {fileID: 8527969338426517077, guid: eda42a08d8d4c2045a12298845b19a43, type: 3}
       propertyPath: m_LocalPosition.x
@@ -137,6 +137,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604886819266049022, guid: eda42a08d8d4c2045a12298845b19a43, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8654263955838859353, guid: eda42a08d8d4c2045a12298845b19a43, type: 3}
+      propertyPath: m_Interactable
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
