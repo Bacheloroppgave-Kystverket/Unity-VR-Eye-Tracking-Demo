@@ -39,7 +39,7 @@ public class SessionController : MonoBehaviour {
         //referencePositions = GetComponentsInChildren<ReferencePosition>().ToList();
         
         CheckField("Ray caster object", rayCasterObject);
-        //SetSessionData();
+        SetSessionData();
     }
 
     public void SetSessionData() {

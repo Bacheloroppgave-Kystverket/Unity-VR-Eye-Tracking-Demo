@@ -8,23 +8,32 @@ using UnityEngine;
 public class PointPlacerController : MonoBehaviour, RaycasterObserver
 {
 
-    [SerializeField, Tooltip("The raycast hits of this object")]
-    private List<PointOfInterest> pointsOfInterest = new List<PointOfInterest>();
+    [SerializeField, Tooltip("The raycast hits of this object for the heatmap")]
+    private List<RecordedPoint> heatmapList = new List<RecordedPoint>();
+
+    [SerializeField, Tooltip("The points of interest")]
+    private List<PointOfInterest> pointOfInterests = new List<PointOfInterest>();
 
     [SerializeField, Tooltip("The point of interest controllers")]
-    private List<PointOfInterestController> pointOfInterestControllers= new List<PointOfInterestController>();
+    private List<PointOfInterestController> pointOfInterestControllers = new List<PointOfInterestController>();
 
     [SerializeField, Tooltip("The current point")]
     private int currentPoint = 1;
 
-    [SerializeField, Tooltip("The amount of samples per ")]
-    private int sampleSize;
+    [SerializeField, Tooltip("The amount of samples per second")]
+    private int heatmapFrequency;
 
     [SerializeField, Tooltip("The frequency of the tracker")]
     private int frequency;
 
     [SerializeField, Tooltip("The prefab that the points of interest should have")]
     private GameObject pointPrefab;
+
+    [SerializeField, Tooltip("The frequency of the heatmap.")]
+    private int pointOfInterestFrequency;
+
+    [SerializeField, Tooltip("The current order of the points of interest")]
+    private int orderID;
 
 
     private void Start()
@@ -38,16 +47,21 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     /// Adds an interest point to the list.
     /// </summary>
     /// <param name="raycastHit">the raycast hit</param>
-    private void AddInterestPoint(RaycastHit raycastHit) {
-        pointsOfInterest.Add(new PointOfInterest(currentPoint / (frequency/sampleSize), raycastHit));
+    private void AddHeatmapPoint(RaycastHit raycastHit) {
+        heatmapList.Add(new RecordedPoint(raycastHit));
     }
 
     ///<inheritdoc/>
-    public void ObservedObjects(RaycastHit[] raycastHits){
+    public void ObservedObjects(RaycastHit[] raycastHits) {
         CheckIfObjectIsNull(raycastHits, "raycast hits");
-        if (currentPoint % (frequency/sampleSize) == 0 && raycastHits.Length > 0)
+        RaycastHit raycastHit = raycastHits.Last();
+        if (currentPoint % (frequency / heatmapFrequency) == 0 && raycastHits.Length > 0)
         {
-            AddInterestPoint(raycastHits.Last());
+            AddHeatmapPoint(raycastHit);
+        }
+        if (currentPoint % (frequency / pointOfInterestFrequency) == 0 && raycastHits.Length > 0) {
+            pointOfInterests.Add(new PointOfInterest(orderID, raycastHit));
+            orderID++;
         }
         currentPoint += 1;
     }
@@ -63,11 +77,11 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     /// <summary>
     /// Shows the points of interest with a transparent membrane. 
     /// </summary>
-    public void ShowPointsOfInterestAsHeatmap() {
+    public void ShowPointsOfInterestAsHeatmap()
+    {
         AddNewestPointsOfInterest();
         pointOfInterestControllers.ForEach(pointController => pointController.ShowPointOfInterestAsHeatmap());
     }
-
     
     /// <summary>
     /// Hides the points of interest.
@@ -79,13 +93,12 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     /// <summary>
     /// Adds the newest points of interest. The old ones are not added again.
     /// </summary>
-    public void AddNewestPointsOfInterest()
-    {
+    public void AddNewestPointsOfInterest(){
         int nextPos = pointOfInterestControllers.Count();
-        int maxAmount = pointsOfInterest.Count();
+        int maxAmount = pointOfInterests.Count();
         while (nextPos < maxAmount)
         {
-            PointOfInterest pointOfInterest = pointsOfInterest[nextPos];
+            PointOfInterest pointOfInterest = pointOfInterests[nextPos];
             InstansiatePoint(pointOfInterest);
             nextPos += 1;
         }

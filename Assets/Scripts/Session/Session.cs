@@ -53,8 +53,6 @@ public class Session
     /// </summary>
     /// <param name="referencePositions">the positions</param>
     public void AddReferencePositions(List<ReferencePositionController> referencePositions) {
-        //Todo: Here the data from the DB should be loaded.
-
         if(referencePositions != null){
             referencePositions.ForEach(referencePosition =>{
                 if (!this.positionRecords.Any(record => record == referencePosition.GetPositionRecord()))
