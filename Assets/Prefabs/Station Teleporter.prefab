@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4093784724469612024}
   - component: {fileID: 4093784724469612027}
   m_Layer: 11
-  m_Name: Cylinder
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4093784724469612021}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.58, z: 0}
-  m_LocalScale: {x: 0.16, y: 0.43, z: 0.16}
+  m_LocalPosition: {x: 0, y: -0.639, z: 0}
+  m_LocalScale: {x: 0.16, y: 0.5, z: 0.16}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7588998243600914151}
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4b72e7576ea2a61459ea873c73eda06e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 7588998243225042411}
   - component: {fileID: 7588998243225042410}
   m_Layer: 11
-  m_Name: Cube (1)
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -280,7 +280,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4b72e7576ea2a61459ea873c73eda06e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 7588998243477228277}
   - component: {fileID: 7588998243477228276}
   - component: {fileID: 7588998243477228275}
-  - component: {fileID: 7588998243477228278}
+  - component: {fileID: 5886411879685991624}
   m_Layer: 11
   m_Name: Canvas
   m_TagString: Untagged
@@ -417,7 +417,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7588998243477228278
+--- !u!114 &5886411879685991624
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -426,11 +426,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7588998243477228273}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e416343365a0d340be803f69515deb0, type: 3}
+  m_Script: {fileID: 11500000, guid: 79e36ac7b1c3c6f4f9349375ab271695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toRotate: {fileID: 7588998243477228274}
-  _target: {fileID: 0}
 --- !u!1 &7588998243600914149
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,6 +445,7 @@ GameObject:
   - component: {fileID: 7588998243600914137}
   - component: {fileID: 1520399506367648407}
   - component: {fileID: 1335072920}
+  - component: {fileID: 3662706575944535197}
   m_Layer: 11
   m_Name: Station Teleporter
   m_TagString: Untagged
@@ -714,6 +713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seatCollider: {fileID: 7588998243600914150}
   player: {fileID: 0}
+  referencePositionManager: {fileID: 0}
   displayCanvas: {fileID: 7588998243477228277}
   maxAlpha: 0.6
 --- !u!114 &1520399506367648407
@@ -728,7 +728,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e16c7e1e8552bc54b80e2b946add3679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textComponent: {fileID: 0}
+  textComponent: {fileID: 7588998243165539065}
 --- !u!114 &1335072920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -770,6 +770,18 @@ MonoBehaviour:
           threshold: 0.1
     positionDuration: 0
     adaptiveFeedbacks: []
+--- !u!114 &3662706575944535197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7588998243600914149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3833f74cdfae84293349a75dc28b8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7588998244171187546
 GameObject:
   m_ObjectHideFlags: 0
@@ -783,7 +795,7 @@ GameObject:
   - component: {fileID: 7588998244171187549}
   - component: {fileID: 7588998244171187548}
   m_Layer: 11
-  m_Name: Cube
+  m_Name: Seat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -832,7 +844,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4b72e7576ea2a61459ea873c73eda06e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

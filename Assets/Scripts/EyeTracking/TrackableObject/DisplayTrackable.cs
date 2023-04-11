@@ -22,12 +22,20 @@ public class DisplayTrackable : MonoBehaviour, TrackableObserver
     [SerializeField, Tooltip("The objects renderer")]
     private Renderer objectRenderer;
 
+    private RectTransform rectTransform;
+
 
     // Start is called before the first frame update
     void Start(){
         gameObject.GetComponent<TrackableObjectController>().AddObserver(this);
         CheckField("prefab", prefab);
         this.objectRenderer = GetComponent<Renderer>();
+        if (objectRenderer == null) {
+            this.rectTransform = GetComponent<RectTransform>();
+        }
+        if (objectRenderer == null && rectTransform == null) {
+            Debug.Log("A renderer for the object is needed. Either a rect transform or object renderer.");
+        }
     }
 
     /// <summary>
@@ -77,21 +85,23 @@ public class DisplayTrackable : MonoBehaviour, TrackableObserver
     /// <param name="playerTransform">the player transform</param>
     public void ToggleVisibleStats(Transform playerTransform)
     {
-        if (statController == null)
+        if (statController == null && (objectRenderer != null || rectTransform != null))
         {
-            statController = Instantiate(prefab, transform.parent).GetComponent<StatController>();
-            float xScale = objectRenderer.bounds.size.x;
-            if (!rightSide)
-            {
-                statController.transform.localPosition = new Vector3((xScale / 2) - 0.5f, 0, -0.4f);
-            }
-            else
-            {
-
-                statController.transform.localPosition = new Vector3((xScale / 2) - 0.5f, 0, -0.4f);
+            statController = Instantiate(prefab).GetComponent<StatController>();
+            statController.transform.SetParent(transform, false);
+            statController.transform.position = transform.position + new Vector3(0, 0,-0.5f);
+            float xScale = objectRenderer == null ? rectTransform.rect.width : objectRenderer.bounds.size.x;
+            Vector3 newPos = new Vector3(); //transform.localPosition;
+            //statController.transform.localScale.Set(1 / transform.localScale.x, 1 / transform.localScale.y, 1 / transform.localScale.z);
+            if(rightSide){
+                //statController.transform.localPosition = (newPos + new Vector3((xScale / 2), 1f, 0.5f));
+            }else{
+                //statController.transform.localPosition = (newPos + new Vector3((xScale / 2), 1f, 0.5f));
             }
         }
-        statController.ToggleVisibleStats();
-        statController.TurnText(playerTransform);
+        if (statController != null) {
+            statController.ToggleVisibleStats();
+            statController.TurnText(playerTransform);
+        }
     }
 }

@@ -24,8 +24,13 @@ public class TrackableObjectsManager : MonoBehaviour{
 
     private void Awake(){
         trackableObjects = GameObject.FindObjectsOfType<TrackableObjectController>().ToList();
-        CheckField("player", player);
+        
         CheckIfListIsValid("Trackable objects", trackableObjects.Any());
+    }
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        CheckField("player", player);
     }
 
     /// <summary>

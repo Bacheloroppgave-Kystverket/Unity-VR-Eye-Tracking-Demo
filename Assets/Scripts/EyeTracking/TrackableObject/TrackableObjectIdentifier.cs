@@ -6,7 +6,6 @@ using UnityEngine;
 /// Represents a class that can identify the trackable objects in the project during edit.
 /// </summary>
 [ExecuteAlways]
-[RequireComponent(typeof(TrackableObjectController))]
 public class TrackableObjectIdentifier : MonoBehaviour
 {
     /// <summary>

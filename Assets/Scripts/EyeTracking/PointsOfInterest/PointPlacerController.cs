@@ -17,22 +17,22 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     [SerializeField, Tooltip("The point of interest controllers")]
     private List<PointOfInterestController> pointOfInterestControllers = new List<PointOfInterestController>();
 
-    [SerializeField, Tooltip("The current point")]
+    [SerializeField, Tooltip("The current point"), Min(1)]
     private int currentPoint = 1;
 
-    [SerializeField, Tooltip("The amount of samples per second")]
+    [SerializeField, Tooltip("The amount of samples per second"), Min(1)]
     private int heatmapFrequency;
 
-    [SerializeField, Tooltip("The frequency of the tracker")]
+    [SerializeField, Tooltip("The frequency of the tracker"), Min(1)]
     private int frequency;
 
     [SerializeField, Tooltip("The prefab that the points of interest should have")]
     private GameObject pointPrefab;
 
-    [SerializeField, Tooltip("The frequency of the heatmap.")]
+    [SerializeField, Tooltip("The frequency of the heatmap."), Min(1)]
     private int pointOfInterestFrequency;
 
-    [SerializeField, Tooltip("The current order of the points of interest")]
+    [SerializeField, Tooltip("The current order of the points of interest"), Min(1)]
     private int orderID;
 
 

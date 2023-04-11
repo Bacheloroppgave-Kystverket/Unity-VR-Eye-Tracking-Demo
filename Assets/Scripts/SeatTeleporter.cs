@@ -37,6 +37,8 @@ public class SeatTeleporter : MonoBehaviour {
     void Start()
     {
         HideCollider();
+        referencePositionManager = GameObject.FindObjectOfType<ReferencePositionManager>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     /// <summary>

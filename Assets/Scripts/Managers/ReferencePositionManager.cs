@@ -22,13 +22,13 @@ public class ReferencePositionManager : MonoBehaviour
     private float secondsToWait = 2f;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start(){
         CheckField("Trackable Object Manager", trackableObjectsManager);
-        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetReferencePosition());
+        
         if (currentReferencePositon == null) {
             SetPosition(sessionManager.GetSession().GetSimulationSetupController().GetReferencePositions().First());
         }
+        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetReferencePosition());
     }
 
     /// <summary>
