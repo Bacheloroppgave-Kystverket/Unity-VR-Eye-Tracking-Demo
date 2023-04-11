@@ -20,6 +20,9 @@ public class ReferencePositionController : MonoBehaviour
     private void Awake() {
         gameObject.tag = typeof(ReferencePositionController).Name;
         this.positionRecord = new PositionRecord(referencePosition);
+        if (this.referencePosition.GetLocationName() == "") {
+            this.referencePosition.SetLocationName(gameObject.name);
+        } ;
         CheckIfListIsValid("feedbackconfigurations", referencePosition.GetCategoryConfigurationsForPosition().Any());
     }
 

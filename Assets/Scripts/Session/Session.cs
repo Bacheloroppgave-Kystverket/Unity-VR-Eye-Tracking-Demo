@@ -25,17 +25,31 @@ public class Session
     [SerializeField, Tooltip("The simulation setup.")]
     private SimulationSetup simulationSetup;
 
+    public void ClearLists() { 
+        trackableRecords.Clear();
+        positionRecords.Clear();
+    }
+
     /// <summary>
-    /// Adds all the trackable objects to this sessionController.
+    /// Adds the trackable object
     /// </summary>
     /// <param name="trackableObjectsController">the trackable objects</param>
-    public void AddTrackableObjects(List<TrackableObjectController> trackableObjectsController, ViewDistance viewDistance) {
+    public void AddTrackableObject(TrackableObjectController trackableObjectsController, ViewDistance viewDistance) {
         //Todo: Here the data from the DB should be loaded.
-        MonoBehaviour.print(currentDate);
-        if (trackableObjectsController != null){
-            trackableObjectsController.ForEach(trackableObject => {
-                trackableRecords.Add(trackableObject.GetTrackableRecord());
-            });
+        if (trackableObjectsController != null && viewDistance == ViewDistance.CLOSE && trackableRecords.Find(record => record.GetTrackableObject() == trackableObjectsController.GetTrackableObject()) == null){
+            trackableRecords.Add(trackableObjectsController.GetTrackableRecord());
+        }
+    }
+
+    /// <summary>
+    /// Adds an list of reference positions to this sessison.
+    /// </summary>
+    /// <param name="referencePosition">the positions</param>
+    public void AddReferencePosition(ReferencePositionController referencePositionController)
+    {
+        if (referencePositionController != null && positionRecords.Find(record => record.GetReferencePosition() == referencePositionController.GetReferencePosition()) == null)
+        {
+            positionRecords.Add(referencePositionController.GetPositionRecord());
         }
     }
 
@@ -48,20 +62,7 @@ public class Session
         this.simulationSetup = simulationSetup;
     }
 
-    /// <summary>
-    /// Adds an list of reference positions to this sessison.
-    /// </summary>
-    /// <param name="referencePositions">the positions</param>
-    public void AddReferencePositions(List<ReferencePositionController> referencePositions) {
-        if(referencePositions != null){
-            referencePositions.ForEach(referencePosition =>{
-                if (!this.positionRecords.Any(record => record == referencePosition.GetPositionRecord()))
-                {
-                    this.positionRecords.Add(referencePosition.GetPositionRecord());
-                }
-            });
-        }
-    }
+    
 
     /// <summary>
     /// Gets the date and time.

@@ -32,7 +32,6 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     void Awake()
     {
         this.trackableRecord = new TrackableRecordBuilder(trackableObject).build();
-        trackableObject.SetGameObjectName(gameObject.name);
         currentGaze = null;
         gameObject.tag = typeof(TrackableObjectController).Name;
         gameObject.layer = (int)PrefixLayer.Eyetracking;

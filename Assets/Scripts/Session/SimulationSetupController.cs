@@ -7,14 +7,13 @@ using UnityEngine;
 /// <summary>
 /// Represents a simulation setup controller.
 /// </summary>
-[ExecuteAlways]
 [RequireComponent(typeof(SessionController))]
 public class SimulationSetupController : MonoBehaviour
 {
     [SerializeField, Tooltip("The simulation setup")]
     private SimulationSetup simulationSetup;
 
-    [SerializeField, Tooltip("The reference positions of this session.")]
+    [SerializeField, Tooltip("The reference positions of this session.")]   
     private List<ReferencePositionController> referencePositions = new List<ReferencePositionController>();
 
     [SerializeField, Tooltip("The list of all the trackable objects that are close to this user.")]
@@ -25,12 +24,9 @@ public class SimulationSetupController : MonoBehaviour
 
     private void Start()
     {
-        List<ReferencePosition> normalReferencePositons = new List<ReferencePosition>();
-        referencePositions.ForEach(pos => normalReferencePositons.Add(pos.GetReferencePosition()));
-        simulationSetup.SetReferencePositions(normalReferencePositons);
-        List<TrackableObject> trackableObjects = new List<TrackableObject>();
-        closeTrackableObjects.ForEach(trackable => trackableObjects.Add(trackable.GetTrackableObject()));
-        simulationSetup.SetTrackableObjects(trackableObjects);
+        closeTrackableObjects.Clear();
+        referencePositions.Clear();
+        simulationSetup.ClearLists();
     }
 
     /// <summary>
@@ -51,7 +47,9 @@ public class SimulationSetupController : MonoBehaviour
         if (!closeTrackableObjects.Contains(trackableObjectController))
         {
             closeTrackableObjects.Add(trackableObjectController);
+            simulationSetup.AddTrackableObject(trackableObjectController, ViewDistance.CLOSE);
         }
+        GetComponent<SessionController>().AddTrackableObject(trackableObjectController, ViewDistance.CLOSE);
     }
 
     public void AddRefernecePosition(ReferencePositionController referencePositionController)
@@ -60,7 +58,9 @@ public class SimulationSetupController : MonoBehaviour
         if (!referencePositions.Contains(referencePositionController))
         {
             referencePositions.Add(referencePositionController);
+            simulationSetup.AddReferencePosition(referencePositionController);
         }
+        GetComponent<SessionController>().AddReferencePosition(referencePositionController);
     }
 
     /// <summary>
@@ -70,7 +70,7 @@ public class SimulationSetupController : MonoBehaviour
     {
         simulationSetup.SetNameOfSetup(gameObject.name);
         simulationSetupSend.SetData(simulationSetup);
-        StartCoroutine(SendAndUpdateSimulaitonSetup());
+        StartCoroutine( SendAndUpdateSimulaitonSetup());
     }
 
     /// <summary>
@@ -79,9 +79,18 @@ public class SimulationSetupController : MonoBehaviour
     /// <returns>the enumerator</returns>
     private IEnumerator SendAndUpdateSimulaitonSetup()
     {
-        StartCoroutine(simulationSetupSend.SendCurrentData());
-        yield return new WaitForSeconds(5);
-        StartCoroutine(simulationSetupSend.SendGetRequest());
+        simulationSetupSend.SetPathVariable(simulationSetup.GetNameOfSetup());
+        yield return simulationSetupSend.SendGetRequest();
+        if (!simulationSetupSend.GetSuccessful()) {
+            simulationSetupSend.SetPost();
+            yield return simulationSetupSend.SendCurrentData();
+            yield return new WaitForSeconds(1);
+            
+            yield return simulationSetupSend.SendGetRequest();
+        }
+        GetComponent<SessionController>().SendSession();
+        
+        
     }
 
 

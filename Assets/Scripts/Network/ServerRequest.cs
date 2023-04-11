@@ -39,6 +39,18 @@ public class ServerRequest<T>{
     [SerializeField]
     private bool setValue = false;
 
+    [SerializeField, Tooltip("True if the process was a success")]
+    private bool successful;
+
+    public bool GetSuccessful() => successful;
+
+    public void SetPathVariable(string pathVariable) {
+        this.pathVariable = pathVariable;
+    }
+
+    public void SetPost() {
+        webOption = WebOptions.POST;
+    }
 
     /// <summary>
     /// Uploads the data to the address.
@@ -82,6 +94,7 @@ public class ServerRequest<T>{
     /// </summary>
     /// <param name="request">the request</param>
     private void UnderstandGetRequest(UnityWebRequest request) {
+        bool success = false;
         if (request.result != UnityWebRequest.Result.Success) {
             Debug.Log(request.error);
         } else {
@@ -89,7 +102,9 @@ public class ServerRequest<T>{
             if (value is SimulationSetup setup && data is SimulationSetup simulationSetup) {
                 setup.UpdateSimulationSetup(simulationSetup);
             }
+            success = true;
         }
+        this.successful = success;
     }
 
     /// <summary>

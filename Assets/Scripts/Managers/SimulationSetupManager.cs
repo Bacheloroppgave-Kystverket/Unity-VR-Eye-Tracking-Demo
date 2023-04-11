@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteAlways]
 public class SimulationSetupManager : MonoBehaviour
 {
     [SerializeField, Tooltip("Current simulation setup controller")]
@@ -14,6 +13,11 @@ public class SimulationSetupManager : MonoBehaviour
 
     public void Start()
     {
+        StartCoroutine(FindPositonsAndTrackableObjects());
+    }
+
+    private IEnumerator FindPositonsAndTrackableObjects() {
+        yield return new WaitForSeconds(0.5f);
         UpdateCurrentPositionsForSession();
         UpdateCurrentTrackableObjectsForSession();
     }

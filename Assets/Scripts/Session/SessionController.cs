@@ -25,8 +25,6 @@ public class SessionController : MonoBehaviour {
     [SerializeField, Tooltip("The networking that sends the session")]
     private ServerRequest<Session> sendData;
 
-    
-
     /// <summary>
     /// Gets the raycaster object.
     /// </summary>
@@ -34,51 +32,31 @@ public class SessionController : MonoBehaviour {
     public RayCasterObject GetRayCasterObject() => rayCasterObject;
 
     private void Start() {
+        session.ClearLists();
         sendData.SetData(session);
+        session.SetSimulationSetup(GetComponent<SimulationSetupController>().GetSimulationSetup());
         //closeTrackableObjects = GetComponentsInChildren<TrackableObjectController>().ToList();
         //referencePositions = GetComponentsInChildren<ReferencePosition>().ToList();
         
         CheckField("Ray caster object", rayCasterObject);
-        SetSessionData();
     }
 
-    public void SetSessionData() {
-        List<ReferencePosition> references = new List<ReferencePosition>();
-        SimulationSetupController simulationSetupController = GetComponent<SimulationSetupController>();
-        session.AddReferencePositions(simulationSetupController.GetReferencePositions());
-        session.SetSimulationSetup(simulationSetupController.GetSimulationSetup());
-        AddAllTrackableObjectsToSession(simulationSetupController.GetCloseTrackableObjects(), ViewDistance.CLOSE);
-        AddAllTrackableObjectsToSession(otherTrackableObjects, ViewDistance.FAR);
+    private void OnApplicationQuit()
+    {
+        session.ClearLists();
     }
 
     /// <summary>
-    /// Adds all teh trackable objects to the sessionController.
+    /// Adds the trackable object to the session.
     /// </summary>
-    /// <param name="objectsToAdd">the list of objects to add</param>
+    /// <param name="trackableObjectController">the trackable object controller</param>
     /// <param name="viewDistance">the distance to these objects.</param>
-    private void AddAllTrackableObjectsToSession(List<TrackableObjectController> objectsToAdd, ViewDistance viewDistance) {
-        List<TrackableObject> trackables = new List<TrackableObject>();
-        objectsToAdd.ForEach(trackableObjectController => {
-            TrackableObject trackableObject = trackableObjectController.GetTrackableObject();
-            trackables.Add(trackableObject);
-        });
-        session.AddTrackableObjects(objectsToAdd, viewDistance);
+    public void AddTrackableObject(TrackableObjectController trackableObjectController, ViewDistance viewDistance) {
+        session.AddTrackableObject(trackableObjectController, viewDistance);
     }
 
-    
-
-    public void SendSessionAndSimulationSetup() {
-        StartCoroutine(SendSimulationSetupAndThenSession());
-    }
-
-    /// <summary>
-    /// Sends the simulation setup and then the session.
-    /// </summary>
-    /// <returns>the enumerator</returns>
-    private IEnumerator SendSimulationSetupAndThenSession() {
-        GetComponent<SimulationSetupController>().SendSimulationSetup();
-        yield return new WaitForSeconds(10);
-        SendSession();
+    public void AddReferencePosition(ReferencePositionController referencePositionController) {
+        session.AddReferencePosition(referencePositionController);
     }
 
     /// <summary>

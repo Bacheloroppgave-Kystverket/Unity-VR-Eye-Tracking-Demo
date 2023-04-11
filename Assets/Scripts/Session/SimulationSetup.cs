@@ -27,23 +27,43 @@ public class SimulationSetup {
         this.nameOfSetup = nameOfSetup;
     }
 
-    /// <summary>
-    /// Sets the trackable objects for the setup.
-    /// </summary>
-    /// <param name="trackableObjects">the trackable objects</param>
-    public void SetTrackableObjects(List<TrackableObject> trackableObjects) {
-        CheckIfObjectIsNull(trackableObjects, "trackable objects");
-        this.closeTrackableObjects = trackableObjects;
+    public void ClearLists() {
+        referencePositionList.Clear();
+        closeTrackableObjects.Clear();
     }
 
     /// <summary>
-    /// Sets the reference postions.
+    /// Gets the name of the setup.
     /// </summary>
-    /// <param name="referencePositions">the reference positions</param>
-    public void SetReferencePositions(List<ReferencePosition> referencePositions) {
-        CheckIfObjectIsNull(referencePositions, "reference positions");
-        this.referencePositionList = referencePositions;
+    /// <returns>the name of the setup</returns>
+    public String GetNameOfSetup() => nameOfSetup;
+
+
+    /// <summary>
+    /// Adds the trackable object
+    /// </summary>
+    /// <param name="trackableObjectsController">the trackable objects</param>
+    public void AddTrackableObject(TrackableObjectController trackableObjectsController, ViewDistance viewDistance)
+    {
+        //Todo: Here the data from the DB should be loaded.
+        if (trackableObjectsController != null && viewDistance == ViewDistance.CLOSE && closeTrackableObjects.Find(trackableObject => trackableObject == trackableObjectsController.GetTrackableObject()) == null)
+        {
+            closeTrackableObjects.Add(trackableObjectsController.GetTrackableObject());
+        }
     }
+
+    /// <summary>
+    /// Adds an list of reference positions to this sessison.
+    /// </summary>
+    /// <param name="referencePosition">the positions</param>
+    public void AddReferencePosition(ReferencePositionController referencePositionController)
+    {
+        if (referencePositionController != null && referencePositionList.Find(referencePosition => referencePosition == referencePositionController.GetReferencePosition()) == null)
+        {
+            referencePositionList.Add(referencePositionController.GetReferencePosition());
+        }
+    }
+
 
     /// <summary>
     /// Updates this simulation setup to match the input simulation setup.

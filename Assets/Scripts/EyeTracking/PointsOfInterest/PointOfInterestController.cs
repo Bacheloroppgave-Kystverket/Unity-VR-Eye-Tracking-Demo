@@ -28,25 +28,11 @@ public class PointOfInterestController : MonoBehaviour
         CheckIfObjectIsNull(pointOfInterest, "point of interest");
         this.pointOfInterest = pointOfInterest;
         Transform parentTransform = pointOfInterest.GetParentTransform();
-        transform.SetParent(parentTransform, true);
+        transform.SetParent(parentTransform);
         transform.localPosition = pointOfInterest.GetLocalPosition();
-        Collider collider = parentTransform.GetComponent<Collider>();
-        if (collider is SphereCollider)
-        {
-            transform.LookAt(pointOfInterest.GetParentTransform());
-            transform.rotation.SetLookRotation(-transform.rotation.ToEuler());
-        }
-        else
-        {
-            //transform.rotation = pointOfInterest.GetParentTransform().GetWorldPose().rotation;
-        }
-        //StartCoroutine(SetSize());
-    }
+        transform.localScale = parentTransform.InverseTransformVector(new Vector3(1f,1f,1f));
+        transform.localRotation = Quaternion.Euler(0,0,0);
 
-    public IEnumerator SetSize() {
-        yield return new WaitForSeconds(0.5f);
-        MonoBehaviour.print(1f/pointOfInterest.GetParentTransform().localScale.x);
-        transform.localScale.Set(1f / pointOfInterest.GetParentTransform().localScale.x, 1f / pointOfInterest.GetParentTransform().localScale.y, 1f / pointOfInterest.GetParentTransform().localScale.z);
     }
 
     /// <summary>
@@ -60,7 +46,7 @@ public class PointOfInterestController : MonoBehaviour
         GetComponent<MeshRenderer>().material = defaultMaterial;
     }
 
-    /// <summary>
+    /// <summary>q
     /// Shows the point of interest as a heatmap.
     /// </summary>
     public void ShowPointOfInterestAsHeatmap() { 
