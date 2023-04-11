@@ -38,7 +38,7 @@ public class FeedbackManager : MonoBehaviour{
     void Start(){
         CheckField("Session manager", sessionManager);
         CheckField("Reference position manager", referencePositionManager);
-        sortedTrackableObjectsMap = new SortedTrackableObjectsMap(sessionManager.GetSession().GetCloseTrackableObjects(), visualizeKeysAndValues);
+        sortedTrackableObjectsMap = new SortedTrackableObjectsMap(sessionManager.GetSession().GetSimulationSetupController().GetCloseTrackableObjects(), visualizeKeysAndValues);
     }
 
 

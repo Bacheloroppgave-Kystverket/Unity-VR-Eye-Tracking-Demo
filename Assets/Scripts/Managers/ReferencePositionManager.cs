@@ -26,6 +26,9 @@ public class ReferencePositionManager : MonoBehaviour
     {
         CheckField("Trackable Object Manager", trackableObjectsManager);
         trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetReferencePosition());
+        if (currentReferencePositon == null) {
+            SetPosition(sessionManager.GetSession().GetSimulationSetupController().GetReferencePositions().First());
+        }
     }
 
     /// <summary>
@@ -66,7 +69,7 @@ public class ReferencePositionManager : MonoBehaviour
 
 
     public IEnumerator<ReferencePositionController> GetEnumeratorForReferencePositions() {
-        return sessionManager.GetSession().GetReferencePositions().GetEnumerator();
+        return sessionManager.GetSession().GetSimulationSetupController().GetReferencePositions().GetEnumerator();
     }
 
     // Update is called once per frame

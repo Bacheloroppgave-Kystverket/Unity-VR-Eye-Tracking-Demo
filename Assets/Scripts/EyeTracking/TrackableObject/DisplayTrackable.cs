@@ -19,11 +19,15 @@ public class DisplayTrackable : MonoBehaviour, TrackableObserver
     [SerializeField, Tooltip("Set to true if the text is supposed to be on the right side.")]
     private bool rightSide;
 
+    [SerializeField, Tooltip("The objects renderer")]
+    private Renderer objectRenderer;
+
 
     // Start is called before the first frame update
     void Start(){
         gameObject.GetComponent<TrackableObjectController>().AddObserver(this);
         CheckField("prefab", prefab);
+        this.objectRenderer = GetComponent<Renderer>();
     }
 
     /// <summary>
@@ -68,23 +72,23 @@ public class DisplayTrackable : MonoBehaviour, TrackableObserver
     }
 
     /// <summary>
-    /// Toggles the text between being visible and not
+    /// Toggles the textMap between being visible and not
     /// </summary>
     /// <param name="playerTransform">the player transform</param>
-    public void ToggleVisibleStats(Transform playerTransform){
+    public void ToggleVisibleStats(Transform playerTransform)
+    {
         if (statController == null)
         {
-            statController = Instantiate(prefab, this.transform).GetComponent<StatController>();
-            float zScale = this.gameObject.transform.localScale.y;
-            float yScale = this.gameObject.transform.localScale.y;
+            statController = Instantiate(prefab, transform.parent).GetComponent<StatController>();
+            float xScale = objectRenderer.bounds.size.x;
             if (!rightSide)
             {
-                statController.transform.localPosition = new Vector3(0, 0, -zScale);
+                statController.transform.localPosition = new Vector3((xScale / 2) - 0.5f, 0, -0.4f);
             }
             else
             {
-                float xScale = this.gameObject.transform.localScale.x;
-                statController.transform.localPosition = new Vector3(xScale, 0, -zScale);
+
+                statController.transform.localPosition = new Vector3((xScale / 2) - 0.5f, 0, -0.4f);
             }
         }
         statController.ToggleVisibleStats();

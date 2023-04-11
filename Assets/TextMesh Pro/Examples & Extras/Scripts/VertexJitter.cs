@@ -32,7 +32,7 @@ namespace TMPro.Examples
 
         void OnEnable()
         {
-            // Subscribe to event fired when text object has been regenerated.
+            // Subscribe to event fired when textMap object has been regenerated.
             TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
         }
 
@@ -61,8 +61,8 @@ namespace TMPro.Examples
         IEnumerator AnimateVertexColors()
         {
 
-            // We force an update of the text object since it would only be updated at the end of the frame. Ie. before this code is executed on the first frame.
-            // Alternatively, we could yield and wait until the end of the frame when the text object will be generated.
+            // We force an update of the textMap object since it would only be updated at the end of the frame. Ie. before this code is executed on the first frame.
+            // Alternatively, we could yield and wait until the end of the frame when the textMap object will be generated.
             m_TextComponent.ForceMeshUpdate();
 
             TMP_TextInfo textInfo = m_TextComponent.textInfo;
@@ -80,15 +80,15 @@ namespace TMPro.Examples
                 vertexAnim[i].speed = Random.Range(1f, 3f);
             }
 
-            // Cache the vertex data of the text object as the Jitter FX is applied to the original position of the characters.
+            // Cache the vertex data of the textMap object as the Jitter FX is applied to the original position of the characters.
             TMP_MeshInfo[] cachedMeshInfo = textInfo.CopyMeshInfoVertexData();
 
             while (true)
             {
-                // Get new copy of vertex data if the text has changed.
+                // Get new copy of vertex data if the textMap has changed.
                 if (hasTextChanged)
                 {
-                    // Update the copy of the vertex data for the text object.
+                    // Update the copy of the vertex data for the textMap object.
                     cachedMeshInfo = textInfo.CopyMeshInfoVertexData();
 
                     hasTextChanged = false;
@@ -96,7 +96,7 @@ namespace TMPro.Examples
 
                 int characterCount = textInfo.characterCount;
 
-                // If No Characters then just yield and wait for some text to be added
+                // If No Characters then just yield and wait for some textMap to be added
                 if (characterCount == 0)
                 {
                     yield return new WaitForSeconds(0.25f);
@@ -118,10 +118,10 @@ namespace TMPro.Examples
                     // Get the index of the material used by the current character.
                     int materialIndex = textInfo.characterInfo[i].materialReferenceIndex;
 
-                    // Get the index of the first vertex used by this text element.
+                    // Get the index of the first vertex used by this textMap element.
                     int vertexIndex = textInfo.characterInfo[i].vertexIndex;
 
-                    // Get the cached vertices of the mesh used by this text element (character or sprite).
+                    // Get the cached vertices of the mesh used by this textMap element (character or sprite).
                     Vector3[] sourceVertices = cachedMeshInfo[materialIndex].vertices;
 
                     // Determine the center point of each character at the baseline.
