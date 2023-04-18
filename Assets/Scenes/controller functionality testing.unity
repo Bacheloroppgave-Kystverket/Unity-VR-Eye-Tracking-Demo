@@ -1974,7 +1974,7 @@ GameObject:
   - component: {fileID: 771330727}
   - component: {fileID: 771330728}
   m_Layer: 0
-  m_Name: Sceneitems
+  m_Name: BridgeDemo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4451,6 +4451,30 @@ MonoBehaviour:
   prefab: {fileID: 2257789756866718480, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
   rightSide: 0
   objectRenderer: {fileID: 0}
+--- !u!1 &1771059312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2890931801154578373, guid: 6ac892ad02298604b8d740bd8dbcea14, type: 3}
+  m_PrefabInstance: {fileID: 1963546901}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1771059317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771059312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7951c64acb0fa62458bf30a60089fe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 0
+  m_CheckFor2DOcclusion: 0
+  m_CheckFor3DOcclusion: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RaycastTriggerInteraction: 1
 --- !u!1 &1782878888
 GameObject:
   m_ObjectHideFlags: 0
