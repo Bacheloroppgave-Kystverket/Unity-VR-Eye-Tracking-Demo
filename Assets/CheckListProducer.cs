@@ -21,6 +21,7 @@ public class CheckListProducer : MonoBehaviour {
     [Tooltip("The TaskManager the CheckListProducer will base its checklist on")]
     private TaskManager taskManager;
     private List<Task> tasks;
+    private string greenHexCode = "#5CFF5C";
 
     // Start is called before the first frame update
     void Start() {
@@ -40,6 +41,10 @@ public class CheckListProducer : MonoBehaviour {
                 taskBox.transform.parent = gameObject.transform;
                 Text textField = taskBox.GetComponentInChildren<Text>();
                 textField.text = task.GetTitle();
+                if (task.IsCompleted()) {
+                        ColourizeText(textField);
+                }
+
                 task.GetCompletedEvent().AddListener(UpdateList);
             }
         }
@@ -51,5 +56,10 @@ public class CheckListProducer : MonoBehaviour {
     /// </summary>
     void UpdateRemainingTaskAmount() {
         amountRemainingDisplay.text = "Tasks left: " + taskManager.GetRemainingTaskAmount();
+    }
+
+    void ColourizeText(Text textElement) {
+        //textElement.text = "color=" + greenHexCode + "<s>" + textElement.text + "</s>";
+        textElement.color = new Color(0.341f, 0.612f, 0.29f);
     }
 }
