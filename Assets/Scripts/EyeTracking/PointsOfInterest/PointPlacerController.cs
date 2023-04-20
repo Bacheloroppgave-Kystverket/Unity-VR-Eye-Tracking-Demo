@@ -21,7 +21,7 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     private int frequency = 1;
 
     [SerializeField, Tooltip("The frequency of the heatmap."), Min(1)]
-    private int pointOfInterestFrequency = 1 ;
+    private int pointOfInterestFrequency = 1;
 
     [SerializeField, Tooltip("The current order of the points of interest"), Min(1)]
     private int orderID;
