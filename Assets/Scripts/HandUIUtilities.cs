@@ -7,14 +7,17 @@ using UnityEngine;
 /// </summary>
 public class HandUIUtilities : MonoBehaviour
 {
-
-    private GameObject leftHand;
-    private GameObject rightHand;
+    [SerializeField]
+    private GameObject leftHandIconPosition, rightHandIconPosition;
 
     [SerializeField]
     private GameObject menu;
+    [SerializeField]
     private Vector3 openPosition;
+    [SerializeField]
     private Vector3 closedPosition;
+    [SerializeField]
+    private float toggleTime;
     private bool isOpen;
     // Start is called before the first frame update
     void Start()
@@ -30,25 +33,38 @@ public class HandUIUtilities : MonoBehaviour
 
     public void ToggleMenu() {
         if(isOpen) {
-            CloseMenu();
+            StartCoroutine(DisableAndCloseMenu());
         } else {
-            OpenMenu();
+            EnableMenu();
         }
     }
 
-    public void OpenMenu() {
+    public void EnableMenu() {
         Debug.Log("Opening hand menu.");
+        menu.transform.position = openPosition;
         isOpen = true;
         menu.SetActive(isOpen);
     }
 
-    public void CloseMenu() {
+    public void DisableMenu() {
         Debug.Log("Closing hand menu.");
         isOpen = false;
         menu.SetActive(isOpen);
     }
 
-    private void LerpToPosition() {
-        
+    IEnumerator DisableAndCloseMenu() {
+        StartCoroutine(LerpToPosition(leftHandIconPosition.transform.position, toggleTime));
+        yield return new WaitForSeconds(toggleTime);
+        DisableMenu();
+    }
+
+    IEnumerator LerpToPosition(Vector3 newPosition, float seconds) {
+        float timeElapsed = 0;
+        openPosition = menu.transform.position;
+        while (menu.transform.position != newPosition && timeElapsed <1) {
+            menu.transform.position = Vector3.Lerp(openPosition, newPosition, timeElapsed/seconds);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
     }
 }
