@@ -429,7 +429,7 @@ GameObject:
   m_Component:
   - component: {fileID: 493445222193538595}
   m_Layer: 0
-  m_Name: Rader overlay (2)
+  m_Name: Feedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -15,21 +15,35 @@ public class PointOfInterestManager : MonoBehaviour
 
 
     public void ShowInterestPoints() {
-        pointPlacer.ShowPointsOfInterestAsDefault();
+        VisualDotDeployer[] visualDotDeployers = GameObject.FindObjectsOfType<VisualDotDeployer>();
+        foreach (VisualDotDeployer visualDotDeployer in visualDotDeployers)
+        {
+            visualDotDeployer.RemoveVisualDots();
+            visualDotDeployer.ShowAllPointsOfInterest();
+        }
     }
 
     /// <summary>
     /// Shows the interest points as a heatmap with transparent color.
     /// </summary>
     public void ShowInterestPointsAsHeatmap() {
-        pointPlacer.ShowPointsOfInterestAsHeatmap();
+        VisualDotDeployer[] visualDotDeployers = GameObject.FindObjectsOfType<VisualDotDeployer>();
+        foreach (VisualDotDeployer visualDotDeployer in visualDotDeployers)
+        {
+            visualDotDeployer.RemoveVisualDots();
+            visualDotDeployer.ShowAllHeatmapPoints();
+        }
     }
 
     /// <summary>
     /// Hides the intrest points.
     /// </summary>
     public void HideInterestPoints(){
-        pointPlacer.HidePointsOfInterest();
+        VisualDotDeployer[] visualDotDeployers = GameObject.FindObjectsOfType<VisualDotDeployer>();
+        foreach (VisualDotDeployer visualDotDeployer in visualDotDeployers)
+        {
+            visualDotDeployer.RemoveVisualDots();
+        }
     }
 
     /// <summary>
