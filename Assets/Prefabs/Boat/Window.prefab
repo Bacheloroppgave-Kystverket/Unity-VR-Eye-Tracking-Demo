@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 381769517021182177}
   - component: {fileID: 4437771438121613330}
   - component: {fileID: 3800393471608605308}
+  - component: {fileID: 139785795747351301}
   m_Layer: 0
   m_Name: Window
   m_TagString: Untagged
@@ -141,3 +142,15 @@ MonoBehaviour:
     fixations: 0
     fixationDuration: 0
   beingWatched: 0
+--- !u!114 &139785795747351301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763156574056831969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cdcf72d234409547a3c9eae06e5e9ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

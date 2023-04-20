@@ -12,10 +12,10 @@ using UnityEngine;
 [Serializable]
 public class HashmapVisualiser<K, V>
 {
-    [Tooltip("Keys of the data")]
+    [Tooltip("Keys of the data"), SerializeField]
     private List<K> keys;
 
-    [Tooltip("Values of the data")]
+    [Tooltip("Values of the data"), SerializeField]
     private List<V> values;
 
     [SerializeField]

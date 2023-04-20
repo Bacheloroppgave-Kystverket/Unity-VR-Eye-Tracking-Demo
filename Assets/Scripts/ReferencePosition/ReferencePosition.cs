@@ -22,6 +22,10 @@ public class ReferencePosition
     /// <returns>the location name</returns>
     public string GetLocationName() => locationName;
 
+    public void SetLocationName(string locationName) { 
+       this.locationName = locationName;
+    }
+
     /// <summary>
     /// Gets all the category configurations.
     /// </summary>

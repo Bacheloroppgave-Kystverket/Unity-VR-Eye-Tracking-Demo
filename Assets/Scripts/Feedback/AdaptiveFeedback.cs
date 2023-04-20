@@ -46,7 +46,7 @@ public class AdaptiveFeedback : Feedback
             categoryOther.AddTime(time);
         }
         else {
-            categoryOther = new CategoryFeedback(TrackableType.OTHER, time);
+            categoryOther = new CategoryFeedback(TrackableType.OTHER, time > 0 ? time : 0);
             this.feedbackList.Add(categoryOther);
         }
     }

@@ -31,7 +31,9 @@ public class OverlayManager : MonoBehaviour
     /// </summary>
     /// <param name="feedback">the feedback</param>
     public void DisplayFeedback(AdaptiveFeedback feedback) {
-        feedbackText.text = feedback.GetFeedback();
+        if (feedbackText != null) {
+            feedbackText.text = feedback.GetFeedback();
+        }
     }
 
 

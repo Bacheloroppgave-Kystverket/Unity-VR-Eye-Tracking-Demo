@@ -103,7 +103,7 @@ namespace TMPro.Examples
         //    }
         //    else
         //    {
-        //        m_textMesh.text = m_frame.ToString();
+        //        m_textMesh.textMap = m_frame.ToString();
         //    }
         //    m_frame = (m_frame + 1) % 1000;
 
@@ -140,10 +140,10 @@ namespace TMPro.Examples
 
                 m_textMeshPro.color = new Color32(start_color.r, start_color.g, start_color.b, (byte)alpha);
 
-                // Move the floating text upward each update
+                // Move the floating textMap upward each update
                 m_floatingText_Transform.position += new Vector3(0, starting_Count * Time.deltaTime, 0);
 
-                // Align floating text perpendicular to Camera.
+                // Align floating textMap perpendicular to Camera.
                 if (!lastPOS.Compare(m_cameraTransform.position, 1000) || !lastRotation.Compare(m_cameraTransform.rotation, 1000))
                 {
                     lastPOS = m_cameraTransform.position;
@@ -195,10 +195,10 @@ namespace TMPro.Examples
 
                 m_textMesh.color = new Color32(start_color.r, start_color.g, start_color.b, (byte)alpha);
 
-                // Move the floating text upward each update
+                // Move the floating textMap upward each update
                 m_floatingText_Transform.position += new Vector3(0, starting_Count * Time.deltaTime, 0);
 
-                // Align floating text perpendicular to Camera.
+                // Align floating textMap perpendicular to Camera.
                 if (!lastPOS.Compare(m_cameraTransform.position, 1000) || !lastRotation.Compare(m_cameraTransform.rotation, 1000))
                 {
                     lastPOS = m_cameraTransform.position;

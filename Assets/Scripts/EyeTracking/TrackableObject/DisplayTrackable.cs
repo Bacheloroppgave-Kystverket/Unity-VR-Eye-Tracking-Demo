@@ -19,11 +19,23 @@ public class DisplayTrackable : MonoBehaviour, TrackableObserver
     [SerializeField, Tooltip("Set to true if the text is supposed to be on the right side.")]
     private bool rightSide;
 
+    [SerializeField, Tooltip("The objects renderer")]
+    private Renderer objectRenderer;
+
+    private RectTransform rectTransform;
+
 
     // Start is called before the first frame update
     void Start(){
         gameObject.GetComponent<TrackableObjectController>().AddObserver(this);
         CheckField("prefab", prefab);
+        this.objectRenderer = GetComponent<Renderer>();
+        if (objectRenderer == null) {
+            this.rectTransform = GetComponent<RectTransform>();
+        }
+        if (objectRenderer == null && rectTransform == null) {
+            Debug.Log("A renderer for the object is needed. Either a rect transform or object renderer.");
+        }
     }
 
     /// <summary>
@@ -68,26 +80,28 @@ public class DisplayTrackable : MonoBehaviour, TrackableObserver
     }
 
     /// <summary>
-    /// Toggles the text between being visible and not
+    /// Toggles the textMap between being visible and not
     /// </summary>
     /// <param name="playerTransform">the player transform</param>
-    public void ToggleVisibleStats(Transform playerTransform){
-        if (statController == null)
+    public void ToggleVisibleStats(Transform playerTransform)
+    {
+        if (statController == null && (objectRenderer != null || rectTransform != null))
         {
-            statController = Instantiate(prefab, this.transform).GetComponent<StatController>();
-            float zScale = this.gameObject.transform.localScale.y;
-            float yScale = this.gameObject.transform.localScale.y;
-            if (!rightSide)
-            {
-                statController.transform.localPosition = new Vector3(0, 0, -zScale);
-            }
-            else
-            {
-                float xScale = this.gameObject.transform.localScale.x;
-                statController.transform.localPosition = new Vector3(xScale, 0, -zScale);
+            statController = Instantiate(prefab).GetComponent<StatController>();
+            statController.transform.SetParent(transform, false);
+            statController.transform.position = transform.position + new Vector3(0, 0,-0.5f);
+            float xScale = objectRenderer == null ? rectTransform.rect.width : objectRenderer.bounds.size.x;
+            Vector3 newPos = new Vector3(); //transform.localPosition;
+            //statController.transform.localScale.Set(1 / transform.localScale.x, 1 / transform.localScale.y, 1 / transform.localScale.z);
+            if(rightSide){
+                //statController.transform.localPosition = (newPos + new Vector3((xScale / 2), 1f, 0.5f));
+            }else{
+                //statController.transform.localPosition = (newPos + new Vector3((xScale / 2), 1f, 0.5f));
             }
         }
-        statController.ToggleVisibleStats();
-        statController.TurnText(playerTransform);
+        if (statController != null) {
+            statController.ToggleVisibleStats();
+            statController.TurnText(playerTransform);
+        }
     }
 }

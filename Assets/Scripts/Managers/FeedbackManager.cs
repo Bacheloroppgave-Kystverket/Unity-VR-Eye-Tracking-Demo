@@ -33,16 +33,22 @@ public class FeedbackManager : MonoBehaviour{
     [SerializeField, Tooltip("Set to true if eyetracking is done.")]
     private bool eyeTracking = false;
 
+    private bool hasMadeMap;
+
 
     // Start is called before the first frame update
     void Start(){
         CheckField("Session manager", sessionManager);
         CheckField("Reference position manager", referencePositionManager);
-        sortedTrackableObjectsMap = new SortedTrackableObjectsMap(sessionManager.GetSession().GetCloseTrackableObjects(), visualizeKeysAndValues);
+
     }
 
 
     public void StartEyetracking() {
+        if (!hasMadeMap) {
+            sortedTrackableObjectsMap = new SortedTrackableObjectsMap(sessionManager.GetSession().GetSimulationSetupController().GetCloseTrackableObjects(), visualizeKeysAndValues);
+            hasMadeMap = true;
+        }
         if (!eyeTracking) {
             eyeTracking = true;
             StartCoroutine(StartAdaptiveTrainingSystem());

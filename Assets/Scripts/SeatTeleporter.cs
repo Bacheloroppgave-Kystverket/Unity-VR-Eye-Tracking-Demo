@@ -20,7 +20,7 @@ public class SeatTeleporter : MonoBehaviour {
 
     [SerializeField]
     [Tooltip("The canvas that will be displayed while aimed at")]
-    private Canvas displayCanvas;
+    private GameObject displayText;
 
     [SerializeField]
     [Tooltip("The maximum amount of opacity the collider will have on selection")]
@@ -37,6 +37,8 @@ public class SeatTeleporter : MonoBehaviour {
     void Start()
     {
         HideCollider();
+        referencePositionManager = GameObject.FindObjectOfType<ReferencePositionManager>();
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
     /// <summary>
@@ -48,7 +50,7 @@ public class SeatTeleporter : MonoBehaviour {
         if(aimedAtAmount > 0)
         {
             GetComponent<MeshRenderer>().enabled = true;
-            displayCanvas.enabled = true;
+            displayText.SetActive(true);
             StartCoroutine(GraduallyChangeColliderAlpha(maxAlpha, changeDuration));
         }
         //}
@@ -62,7 +64,7 @@ public class SeatTeleporter : MonoBehaviour {
         {
             StopAllCoroutines();
             StartCoroutine(FadeToDisabledCollider());
-            displayCanvas.enabled = false;
+            displayText.SetActive(false);
         }
     }
 

@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// Represents a position that a user can be in space. 
 /// </summary>
-[ExecuteAlways]
+[RequireComponent(typeof(ReferencePositionIdentifier))]
 public class ReferencePositionController : MonoBehaviour
 {
 
@@ -20,6 +20,9 @@ public class ReferencePositionController : MonoBehaviour
     private void Awake() {
         gameObject.tag = typeof(ReferencePositionController).Name;
         this.positionRecord = new PositionRecord(referencePosition);
+        if (this.referencePosition.GetLocationName() == "") {
+            this.referencePosition.SetLocationName(gameObject.name);
+        } ;
         CheckIfListIsValid("feedbackconfigurations", referencePosition.GetCategoryConfigurationsForPosition().Any());
     }
 
@@ -104,15 +107,6 @@ public class ReferencePositionController : MonoBehaviour
         {
             throw new IllegalArgumentException(error + " cannot be below zero");
         }
-    }
-
-    /// <summary>
-    /// Adds the reference position to the simulation setup manager.
-    /// </summary>
-    /// <param name="simulationSetupManager">the simulation setup manager</param>
-    public void AddPositionToSimulationSetup(SimulationSetupManager simulationSetupManager) {
-        CheckIfObjectIsNull(simulationSetupManager, "Simulation setup");
-        simulationSetupManager.AddReferencePosition(this);
     }
 
     /// <summary>

@@ -8,7 +8,7 @@ public class SetGUINameToObjectNameOnStart : MonoBehaviour
     private GameObject parent;
     [SerializeField]
     [Tooltip("The textcomponent which will change its text to the name of the gameobject. If blank, the component will try finding text in the child objects")]
-    private TextMeshProUGUI textComponent;
+    private TextMeshPro textComponent;
     private string parentName;
 
 
@@ -19,7 +19,7 @@ public class SetGUINameToObjectNameOnStart : MonoBehaviour
         parentName = parent.name;
         if (textComponent == null)
         {
-            GetComponentInChildren<TextMeshProUGUI>().SetText(parentName);
+            GetComponentInChildren<TextMeshPro>().SetText(parentName);
 
         }
         else
