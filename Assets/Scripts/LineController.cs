@@ -27,6 +27,25 @@ public class LineController : MonoBehaviour
     
     }
 
+    public void ClearLineList() {
+        transforms.Clear();
+        HideLine();
+    }
+
+    public void HideLine() {
+        lineRenderer.enabled = false;
+    }
+
+    public void SetTransforms(List<Transform> transforms) {
+        CheckIfObjectIsNull(transforms, "transforms");
+        this.transforms = transforms;
+    }
+
+    public void UpdateLines() {
+        lineRenderer.SetPositions(new List<Vector3>().ToArray());
+        DrawLine();
+    }
+
     public void DrawLine() {
         
         if (transforms.Count > 2) {
@@ -48,19 +67,30 @@ public class LineController : MonoBehaviour
                 
                 lineRenderer.SetPosition(i, end);
                 i++;
+                /*
                 TextMeshPro text = Instantiate(prefab, this.transform);
                 
                 text.transform.position = middle;
+                */
                 //textMap.Add(oldTransform.gameObject.GetInstanceID(), text);
                 oldTransform = newTransform;
                 oldPos = end;
             }
+            lineRenderer.enabled = true;
         }
-        
-        
-        
-        
-        
     }
 
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
+        }
+    }
 }

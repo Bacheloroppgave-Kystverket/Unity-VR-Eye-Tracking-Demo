@@ -16,9 +16,6 @@ public class PointOfInterestController : MonoBehaviour
     [SerializeField, Tooltip("The heatmap material that is transparent")]
     private Material heatMapMaterial;
 
-    [SerializeField, Tooltip("The visual effect")]
-    private VisualEffect visualEffect;
-
     /// <summary>
     /// Sets the position of the intrest point. Also sets is as a child of that ibhect and
     /// </summary>
@@ -30,7 +27,7 @@ public class PointOfInterestController : MonoBehaviour
         Transform parentTransform = pointOfInterest.GetParentTransform();
         transform.SetParent(parentTransform);
         transform.localPosition = pointOfInterest.GetLocalPosition();
-        transform.localScale = parentTransform.InverseTransformVector(new Vector3(1f,1f,1f));
+        transform.localScale = parentTransform.InverseTransformVector(new Vector3(0.03f,0.03f,0.03f));
         transform.localRotation = Quaternion.Euler(0,0,0);
 
     }
@@ -40,9 +37,6 @@ public class PointOfInterestController : MonoBehaviour
     /// </summary>
     public void ShowPointOfInterest() { 
         gameObject.SetActive(true);
-        visualEffect.Reinit();
-        visualEffect.SetBool("Heatmap", false);
-        visualEffect.Play();
         GetComponent<MeshRenderer>().material = defaultMaterial;
     }
 
@@ -51,9 +45,6 @@ public class PointOfInterestController : MonoBehaviour
     /// </summary>
     public void ShowPointOfInterestAsHeatmap() { 
         gameObject.SetActive(true);
-        visualEffect.Reinit();
-        visualEffect.SetBool("Heatmap", true);
-        visualEffect.Play();
         GetComponent<MeshRenderer>().material = heatMapMaterial;
     }
 

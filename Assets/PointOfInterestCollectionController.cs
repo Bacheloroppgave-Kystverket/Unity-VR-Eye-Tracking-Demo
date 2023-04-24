@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -27,8 +25,14 @@ public class PointOfInterestCollectionController : MonoBehaviour
     [SerializeField, Tooltip("The current heatpoint that has been synced.")]
     private int currentHeatPoint = 0;
 
-    [SerializeField, Tooltip("The amount of diffrent point controllers that can be moved around.")]
-    private int amountOfPointControllers;
+    [SerializeField]
+    private int startPos = 0;
+
+    [SerializeField, Tooltip("The amount of diffrent point controllers that can be moved around."), Range(10, 50)]
+    private int amountOfPointControllers = 10;
+
+    [SerializeField]
+    private LineController lineController;
 
     // Start is called before the first frame update
     void Start()
@@ -45,9 +49,46 @@ public class PointOfInterestCollectionController : MonoBehaviour
         recordedPoints.Add(recordedPoint);
     }
 
-    public void ShowPointsOfInterest() { 
-    
+    public void ShowPointsOfInterest() {
+        UpdateAmountOfPoints();
+        List<Transform> transforms = new List<Transform>();
+        pointOfInterestControllers.ForEach(controller => {
+            controller.gameObject.SetActive(true);
+            transforms.Add(controller.transform);
+        });
+        
     }
+
+    private void UpdateAmountOfPoints() {
+        List<Transform> transforms = new List<Transform>();
+        for (int i = pointOfInterestControllers.Count; i < amountOfPointControllers; i++) {
+            PointOfInterestController pointOfInterestController = Instantiate(pointPrefab).GetComponent<PointOfInterestController>();
+            pointOfInterestControllers.Add(pointOfInterestController);
+            transforms.Add(pointOfInterestController.transform);
+        }
+        lineController.SetTransforms(transforms);
+    }
+
+    public void UpdateOrderOfPointsOfInterest(int startValue) {
+        CheckIfStartNumberIsValid(startValue);
+        this.startPos = startValue;
+        int index = startPos;
+        IEnumerator<PointOfInterestController> it = pointOfInterestControllers.GetEnumerator();
+        while (index < pointOfInterests.Count && it.MoveNext()) { 
+            PointOfInterestController controller = it.Current;
+            controller.SetPointOfInterest(pointOfInterests[index]);
+            index++;
+        }
+        lineController.UpdateLines();
+    }
+
+    private void CheckIfStartNumberIsValid(int value) {
+        if (value < 0 && value > pointOfInterests.Count) {
+            throw new IllegalArgumentException("The start value must be larger than zero and lower than " + pointOfInterests.Count);
+        }
+    }
+
+
 
     public void ShowHeatmapPoints() {
         SyncHeatmap();
@@ -56,6 +97,10 @@ public class PointOfInterestCollectionController : MonoBehaviour
 
     public void HideHeatmapPoints() {
         visualDotDeployers.ForEach(visualDotDeployer => visualDotDeployer.RemoveVisualDots());
+    }
+
+    public void HidePointsOfInterest() {
+        pointOfInterestControllers.ForEach(pointController => pointController.HidePointOfInterest());
     }
 
     /// <summary>

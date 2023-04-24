@@ -12,7 +12,7 @@ public class LineControllerEditor : Editor
         DrawDefaultInspector();
         if (GUILayout.Button("Show line"))
         {
-            lineController.DrawLine();
+            //lineController.DrawLine();
         }
     }
 }
