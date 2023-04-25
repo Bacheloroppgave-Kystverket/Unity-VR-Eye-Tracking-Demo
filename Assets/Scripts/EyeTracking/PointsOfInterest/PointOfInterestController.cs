@@ -8,7 +8,7 @@ using UnityEngine.VFX;
 public class PointOfInterestController : MonoBehaviour
 {
     [SerializeField, Tooltip("The point of interest that this object represents.")]
-    private RecordedPoint pointOfInterest;
+    private List<RecordedPoint> points = new List<RecordedPoint>();
 
     [SerializeField, Tooltip("The default material to show the normal data.")]
     private Material defaultMaterial;
@@ -23,7 +23,7 @@ public class PointOfInterestController : MonoBehaviour
     /// <param name="trackableObjectController"></param>
     public void SetPointOfInterest(PointOfInterest pointOfInterest) {
         CheckIfObjectIsNull(pointOfInterest, "point of interest");
-        this.pointOfInterest = pointOfInterest;
+        points.Add(pointOfInterest);
         Transform parentTransform = pointOfInterest.GetParentTransform();
         transform.SetParent(parentTransform);
         transform.localPosition = pointOfInterest.GetLocalPosition();
@@ -38,6 +38,15 @@ public class PointOfInterestController : MonoBehaviour
     public void ShowPointOfInterest() { 
         gameObject.SetActive(true);
         GetComponent<MeshRenderer>().material = defaultMaterial;
+    }
+
+    /// <summary>
+    /// Adds a recorded point to this point of interest controller.
+    /// </summary>
+    /// <param name="recordedPoint">the recorded point</param>
+    public void AddRecordedPoint(RecordedPoint recordedPoint) {
+        CheckIfObjectIsNull(recordedPoint, "recorded point");
+        this.points.Add(recordedPoint);
     }
 
     /// <summary>q

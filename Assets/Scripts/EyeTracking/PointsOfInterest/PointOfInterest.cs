@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
 public class PointOfInterest : RecordedPoint
 {
     [SerializeField, Tooltip("The point of interest.")]
-    private int order;
+    private List<int> orderIds = new List<int>();
 
     /// <summary>
     /// Represents a point of interest.
@@ -17,14 +18,23 @@ public class PointOfInterest : RecordedPoint
     public PointOfInterest(int pointOfInterestOrder, RaycastHit hit) : base(hit)
     {
         CheckIfNumberIsAboveZero(pointOfInterestOrder, "point of interest order");
-        this.order = pointOfInterestOrder;
+        this.orderIds.Add(pointOfInterestOrder);
+    }
+
+    /// <summary>
+    /// Adds an order id.
+    /// </summary>
+    /// <param name="pointOfInterest">the point of interest</param>
+    public void AddOrderId(PointOfInterest pointOfInterest) {
+        CheckIfObjectIsNull(pointOfInterest, "point of interest");
+        this.orderIds.Add(pointOfInterest.GetPointOfInterestOrder());
     }
 
     /// <summary>
     /// Gets the point of interest order.
     /// </summary>
     /// <returns></returns>
-    public int GetPointOfInterestOrder() => order;
+    public int GetPointOfInterestOrder() => this.orderIds.First();
 
     /// <summary>
     /// Checks if the number is above zero.

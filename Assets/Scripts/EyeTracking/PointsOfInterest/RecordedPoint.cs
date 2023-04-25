@@ -52,7 +52,7 @@ public class RecordedPoint
     /// <param name="objecToCheck">the object to check</param>
     /// <param name="error">the error to be in the string.</param>
     /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
-    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    protected void CheckIfObjectIsNull(object objecToCheck, string error)
     {
         if (objecToCheck == null)
         {

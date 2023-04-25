@@ -1,4 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Unity.Jobs;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -34,6 +37,10 @@ public class PointOfInterestCollectionController : MonoBehaviour
     [SerializeField]
     private LineController lineController;
 
+    private int result;
+
+    private JobHandle jobHandle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,35 +58,40 @@ public class PointOfInterestCollectionController : MonoBehaviour
 
     public void ShowPointsOfInterest() {
         UpdateAmountOfPoints();
-        List<Transform> transforms = new List<Transform>();
+        StartJob();
         pointOfInterestControllers.ForEach(controller => {
             controller.gameObject.SetActive(true);
-            transforms.Add(controller.transform);
         });
-        
+        lineController.DrawLine();
     }
 
     private void UpdateAmountOfPoints() {
-        List<Transform> transforms = new List<Transform>();
+        lineController.ClearLineList();
         for (int i = pointOfInterestControllers.Count; i < amountOfPointControllers; i++) {
             PointOfInterestController pointOfInterestController = Instantiate(pointPrefab).GetComponent<PointOfInterestController>();
             pointOfInterestControllers.Add(pointOfInterestController);
-            transforms.Add(pointOfInterestController.transform);
+            lineController.AddTransform(pointOfInterestController.transform);
         }
-        lineController.SetTransforms(transforms);
+        lineController.DrawLine();
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="startValue"></param>
     public void UpdateOrderOfPointsOfInterest(int startValue) {
         CheckIfStartNumberIsValid(startValue);
         this.startPos = startValue;
         int index = startPos;
+        lineController.ClearLineList();
         IEnumerator<PointOfInterestController> it = pointOfInterestControllers.GetEnumerator();
         while (index < pointOfInterests.Count && it.MoveNext()) { 
             PointOfInterestController controller = it.Current;
             controller.SetPointOfInterest(pointOfInterests[index]);
             index++;
+            lineController.AddTransform(controller.transform);
         }
-        lineController.UpdateLines();
+        lineController.DrawLine();
     }
 
     private void CheckIfStartNumberIsValid(int value) {
@@ -158,6 +170,26 @@ public class PointOfInterestCollectionController : MonoBehaviour
     {
         pointOfInterests.Add(pointOfInterest);
         
+    }
+
+    public void StartJob() {
+        if (jobHandle.IsCompleted) {
+            SortPointsOfInterestJob.SetData(pointOfInterests);
+            SortPointsOfInterestJob.SortPoints();
+            MonoBehaviour.print(SortPointsOfInterestJob.result);
+        }
+    }
+
+    public IEnumerator WaitForJob() {
+        yield return new WaitForSeconds(4);
+        while (!jobHandle.IsCompleted) {
+            yield return new WaitForSeconds(1);
+        }
+        MonoBehaviour.print(result);
+    }
+
+    public static void SortPoints() { 
+
     }
     /*
      VisualDotDeployer visualDotDeployer = raycastHit.collider.GetComponent<VisualDotDeployer>();
