@@ -3319,9 +3319,9 @@ MonoBehaviour:
   - {fileID: 442595538}
   - {fileID: 1431084604}
   simulationSetupSend:
-    path: 
-    port: 0
-    endPath: 
+    path: http://localhost
+    port: 8080
+    endPath: simulationSetup
     pathVariable: 
     value:
       simulationSetupId: 0
