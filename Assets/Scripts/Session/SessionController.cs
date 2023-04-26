@@ -15,8 +15,8 @@ public class SessionController : MonoBehaviour {
     [SerializeField, Tooltip("The session")]
     private Session session;
 
-    [SerializeField, Tooltip("The ray caster object")]
-    private RayCasterObject rayCasterObject;
+    [SerializeField, Tooltip("The player")]
+    private EyetrackingPlayer player;
 
     [Space(10), Header("Other")]
     [SerializeField, Tooltip("The list of all objects that are far away and has been observed.")]
@@ -29,7 +29,7 @@ public class SessionController : MonoBehaviour {
     /// Gets the raycaster object.
     /// </summary>
     /// <returns>the raycaster object</returns>
-    public RayCasterObject GetRayCasterObject() => rayCasterObject;
+    public RayCasterObject GetRayCasterObject() => player.GetRaycaster();
 
     private void Start() {
         session.ClearLists();
@@ -38,7 +38,7 @@ public class SessionController : MonoBehaviour {
         //closeTrackableObjects = GetComponentsInChildren<TrackableObjectController>().ToList();
         //referencePositions = GetComponentsInChildren<ReferencePosition>().ToList();
         
-        CheckField("Ray caster object", rayCasterObject);
+        CheckField("Player", player);
     }
 
     private void OnApplicationQuit()

@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-[RequireComponent(typeof(RayCasterObject))]
+[RequireComponent(typeof(EyetrackingPlayer))]
 public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
 {
 
@@ -32,7 +32,7 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
             this.hitSpot = newHitspot;
             newHitspot.tag = "hitspot";
         }
-        this.raycaster = GetComponent<RayCasterObject>();
+        this.raycaster = GetComponent<EyetrackingPlayer>().GetRaycaster();
         raycaster.AddObserver(this);
     }
 

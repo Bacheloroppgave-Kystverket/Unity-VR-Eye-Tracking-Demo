@@ -5,7 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent(typeof(EyeCaster))]
+[RequireComponent(typeof(EyetrackingPlayer))]
 public class PointPlacerController : MonoBehaviour, RaycasterObserver
 {
     [Header("Configure object")]
@@ -32,10 +32,10 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
 
     private void Start()
     {
-        RayCasterObject rayCasterObject = gameObject.GetComponent<RayCasterObject>();
+        RayCasterObject rayCasterObject = GetComponent<EyetrackingPlayer>().GetRaycaster();
         this.frequency = rayCasterObject.GetFrequency();
         rayCasterObject.AddObserver(this);
-        pointOfInterestCollectionController = GameObject.FindGameObjectWithTag("Player").GetComponent<PointOfInterestCollectionController>();
+        pointOfInterestCollectionController = GetComponent<PointOfInterestCollectionController>();
     }
 
     /// <summary>
