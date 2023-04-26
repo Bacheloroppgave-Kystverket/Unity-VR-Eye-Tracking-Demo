@@ -8,23 +8,26 @@ using UnityEngine;
 [RequireComponent(typeof(EyeCaster))]
 public class PointPlacerController : MonoBehaviour, RaycasterObserver
 {
+    [Header("Configure object")]
     [SerializeField, Tooltip("The point of interest collection controller")]
     private PointOfInterestCollectionController pointOfInterestCollectionController;
 
-    [SerializeField, Tooltip("The current point"), Min(1)]
-    private int currentPoint = 1;
+    [Header("Frequencies of diffrent parameters")]
+    [SerializeField, Tooltip("The frequency of the tracker"), Min(1)]
+    private int frequency = 1;
 
     [SerializeField, Tooltip("The amount of samples per second"), Min(1)]
     private int heatmapFrequency = 1;
 
-    [SerializeField, Tooltip("The frequency of the tracker"), Min(1)]
-    private int frequency = 1;
-
     [SerializeField, Tooltip("The frequency of the heatmap."), Min(1)]
     private int pointOfInterestFrequency = 1;
 
+    [Header("Other fields")]
     [SerializeField, Tooltip("The current order of the points of interest"), Min(1)]
     private int orderID;
+
+    [SerializeField, Tooltip("The current point"), Min(1)]
+    private int currentPoint = 1;
 
 
     private void Start()

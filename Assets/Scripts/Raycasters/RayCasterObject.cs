@@ -26,7 +26,7 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     private int range = 50;
 
     [SerializeField, Tooltip("The raycaster configuration of this raycater object")]
-    private RaycasterConfiguration raycasterConfiguration = new NormalRaycastConfig();
+    private RaycasterConfiguration raycasterConfiguration = new SphereCastConfig();
 
     [Space(5), Header("Debugging lists")]
     [SerializeField]
@@ -36,10 +36,7 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     private List<GameObject> lastObjects;
 
     [SerializeField]
-    private List<GameObject> debugList;
-
-    [SerializeField]
-    private Vector3 position;
+    private List<GameObject> debugHits = new List<GameObject>();
 
     [SerializeField, Tooltip("The raycast observers")]
     private List<RaycasterObserver> raycasterObservers = new List<RaycasterObserver>();
@@ -113,18 +110,16 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
                 UnwatchObjects();
             }
             currentObjectsWatched.Clear();
-            debugList.Clear();
-            
-            if (newRaycasts.Count > 0 && raycastHits.Length > 0) {
-                raycastHits.ToList().ForEach(rayCast => {
-                    Collider collider = rayCast.collider;
-                    if (collider != null) {
-                        debugList.Add(collider.gameObject);
-                    }
-                });
-                UpdateObservers(newRaycasts.ToArray());
-            }
-            this.position = position;
+            debugHits.Clear();
+            raycastHits.ToList().ForEach(hit =>
+            {
+                if (hit.collider != null)
+                {
+                    debugHits.Add(hit.collider.gameObject);
+                }
+            });
+
+            UpdateObservers(newRaycasts.ToArray());
             newRaycasts.Clear();
             yield return new WaitForSeconds(timeToWait);
         }
@@ -141,8 +136,6 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
 
         if (raycastHit.collider != null) {
             GameObject currentGameObject = raycastHit.collider.gameObject;
-
-
             if (currentGameObject != null)
             {
                 TrackableObjectController trackObject = raycastHit.collider.gameObject.GetComponent<TrackableObjectController>();
@@ -168,7 +161,28 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     /// <returns>gets the raycast hits</returns>
     private RaycastHit[] ShootMultipleObjects(Vector3 position, Vector3 direction) {
         //Shoots ray
-        return raycasterConfiguration.ShootMultipleObjectsConfiguration(position, direction, range);
+        RaycastHit[] hits = raycasterConfiguration.ShootMultipleObjectsConfiguration(position, direction, range);
+        return SortRaycastHits(position, hits);
+    }
+
+    /// <summary>
+    /// Sorts the raycast hits based on their distance to the raycasting object.
+    /// </summary>
+    /// <param name="startPos">the start pos.</param>
+    /// <param name="hits">the hits</param>
+    /// <returns>the sorted raycast hits.</returns>
+    public RaycastHit[] SortRaycastHits(Vector3 startPos, RaycastHit[] hits)
+    {
+        SortedList<float, RaycastHit> sortedList = new SortedList<float, RaycastHit>();
+        if (hits.Length > 0)
+        {
+            foreach (RaycastHit raycastHit in hits)
+            {
+                Vector3 postion = raycastHit.point;
+                sortedList.Add(Vector3.Distance(startPos, postion), raycastHit);
+            }
+        }
+        return sortedList.Values.ToArray();
     }
 
     /// <summary>

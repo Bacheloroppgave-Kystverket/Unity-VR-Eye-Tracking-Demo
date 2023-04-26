@@ -949,19 +949,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a066e192e73bb0547ac3d4ddce7a37ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeColor: 0
   trackableObject:
-    trackableObjectID: 0
     nameOfObject: HUGE CUBE
     trackableType: 0
+    trackableObjectID: 0
   trackableRecord:
     trackableDataId: 0
     trackableObject:
-      trackableObjectID: 0
       nameOfObject: HUGE CUBE
       trackableType: 0
+      trackableObjectID: 0
     gazeList: []
     viewDistance: 1
-  changeColor: 0
   currentGaze:
     referencePosition:
       locationId: 0
@@ -1082,7 +1082,7 @@ GameObject:
   - component: {fileID: 930574490}
   - component: {fileID: 930574489}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Cube 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3228,42 +3228,42 @@ MonoBehaviour:
     simulationSetupId: 0
     nameOfSetup: 
     closeTrackableObjects:
-    - trackableObjectID: 0
-      nameOfObject: 
+    - nameOfObject: 
       trackableType: 5
-    - trackableObjectID: 0
-      nameOfObject: 
+      trackableObjectID: 0
+    - nameOfObject: 
       trackableType: 2
-    - trackableObjectID: 0
-      nameOfObject: 
+      trackableObjectID: 0
+    - nameOfObject: 
       trackableType: 3
-    - trackableObjectID: 0
-      nameOfObject: 
+      trackableObjectID: 0
+    - nameOfObject: 
       trackableType: 4
-    - trackableObjectID: 0
-      nameOfObject: Window
+      trackableObjectID: 0
+    - nameOfObject: Window
       trackableType: 0
-    - trackableObjectID: 0
-      nameOfObject: 
+      trackableObjectID: 0
+    - nameOfObject: 
       trackableType: 0
-    - trackableObjectID: 0
-      nameOfObject: 
+      trackableObjectID: 0
+    - nameOfObject: 
       trackableType: 0
-    - trackableObjectID: 0
-      nameOfObject: 
+      trackableObjectID: 0
+    - nameOfObject: 
       trackableType: 0
-    - trackableObjectID: 0
-      nameOfObject: 
+      trackableObjectID: 0
+    - nameOfObject: 
       trackableType: 0
-    - trackableObjectID: 0
-      nameOfObject: 
+      trackableObjectID: 0
+    - nameOfObject: 
       trackableType: 0
-    - trackableObjectID: 0
-      nameOfObject: 
+      trackableObjectID: 0
+    - nameOfObject: 
       trackableType: 0
-    - trackableObjectID: 0
-      nameOfObject: 
+      trackableObjectID: 0
+    - nameOfObject: 
       trackableType: 0
+      trackableObjectID: 0
     referencePositionList:
     - locationId: 0
       locationName: Spot 1

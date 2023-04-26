@@ -7,14 +7,9 @@ using UnityEngine.VFX;
 
 public class PointOfInterestController : MonoBehaviour
 {
+    [Header("List of values")]
     [SerializeField, Tooltip("The point of interest that this object represents.")]
     private List<RecordedPoint> points = new List<RecordedPoint>();
-
-    [SerializeField, Tooltip("The default material to show the normal data.")]
-    private Material defaultMaterial;
-
-    [SerializeField, Tooltip("The heatmap material that is transparent")]
-    private Material heatMapMaterial;
 
     /// <summary>
     /// Sets the position of the intrest point. Also sets is as a child of that ibhect and
@@ -37,7 +32,6 @@ public class PointOfInterestController : MonoBehaviour
     /// </summary>
     public void ShowPointOfInterest() { 
         gameObject.SetActive(true);
-        GetComponent<MeshRenderer>().material = defaultMaterial;
     }
 
     /// <summary>
@@ -54,7 +48,6 @@ public class PointOfInterestController : MonoBehaviour
     /// </summary>
     public void ShowPointOfInterestAsHeatmap() { 
         gameObject.SetActive(true);
-        GetComponent<MeshRenderer>().material = heatMapMaterial;
     }
 
     /// <summary>

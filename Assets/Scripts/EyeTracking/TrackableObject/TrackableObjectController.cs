@@ -9,14 +9,16 @@ using UnityEngine;
 [RequireComponent(typeof(TrackableObjectIdentifier))]
 public class TrackableObjectController : MonoBehaviour, Observable<TrackableObserver>, Trackable
 {
+    [Header("Configure object")]
+    [SerializeField, Tooltip("Set to true if the object is supposed to change color")]
+    private bool changeColor = false;
+
+    [Header("Gameobject data")]
     [SerializeField, Tooltip("The trackable object")]
     private TrackableObject trackableObject;
 
     [SerializeField, Tooltip("The trackable record")]
     private TrackableRecord trackableRecord;
-
-    [SerializeField, Tooltip("Set to true if the object is supposed to change color")]
-    private bool changeColor = false;
 
     [Space(10), Header("Debug fields")]
     [SerializeField, Tooltip("The current object that is being watched.")]

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -15,16 +16,22 @@ public class SphereCastConfig : RaycasterConfiguration
     /// <inheritdoc/>
     public RaycastHit[] ShootMultipleObjectsConfiguration(Vector3 position, Vector3 direction, int range)
     {
-        RaycastHit[] hits = Physics.SphereCastAll(position, sphereSize, direction, range); //Physics.RaycastAll(position, direction, range);
+        int layerMask = 1 << 11;
+        layerMask = ~layerMask;
+        RaycastHit[] hits = Physics.SphereCastAll(position, sphereSize, direction, range, layerMask); //Physics.RaycastAll(position, direction, range);
         return hits;
     }
 
     /// <inheritdoc/>
     public RaycastHit[] ShootSingleConfiguration(Vector3 position, Vector3 direction, int range)
     {
+        int layerMask = 1 << 11;
+        layerMask = ~layerMask;
         RaycastHit raycastHit;
-        Physics.SphereCast(position, sphereSize, direction, out raycastHit, range);
+        Physics.SphereCast(position, sphereSize, direction, out raycastHit, range, layerMask);
         RaycastHit[] hits = { raycastHit };
         return hits;
     }
+
+    
 }

@@ -9,6 +9,7 @@ using UnityEngine;
 [Serializable]
 public class RecordedPoint
 {
+    [Header("Fields values")]
     [SerializeField, Tooltip("The local position as a vector")]
     private Vector3 localPosition;
 

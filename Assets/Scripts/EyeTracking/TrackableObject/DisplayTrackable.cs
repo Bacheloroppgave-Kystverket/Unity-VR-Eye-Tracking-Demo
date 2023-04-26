@@ -10,6 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof(TrackableObjectController))]
 public class DisplayTrackable : MonoBehaviour, TrackableObserver
 {
+    [Header("Configure object")]
     [SerializeField, Tooltip("The current stat controller. Can be set to null if the stats should auto-deploy.")]
     private StatController statController;
 
@@ -19,6 +20,7 @@ public class DisplayTrackable : MonoBehaviour, TrackableObserver
     [SerializeField, Tooltip("Set to true if the text is supposed to be on the right side.")]
     private bool rightSide;
 
+    [Header("Other fields")]
     [SerializeField, Tooltip("The objects renderer")]
     private Renderer objectRenderer;
 

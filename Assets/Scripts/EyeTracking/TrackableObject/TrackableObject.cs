@@ -5,15 +5,16 @@ using UnityEngine;
 [System.Serializable]
 public class TrackableObject
 {
-    [SerializeField]
-    private long trackableObjectID;
-
     [Header("Configure object")]
     [SerializeField, Tooltip("The name of the object")]
     private string nameOfObject;
 
     [SerializeField, Tooltip("Defines the type of object that we are looking at.")]
     private TrackableType trackableType = TrackableType.UNDEFINED;
+
+    [Header("Other values")]
+    [SerializeField, Tooltip("The unique id of this trackable object.")]
+    private long trackableObjectID;
 
     /// <summary>
     /// Sets the name of the object.
