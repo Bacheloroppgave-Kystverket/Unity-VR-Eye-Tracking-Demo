@@ -1273,7 +1273,7 @@ PrefabInstance:
     - target: {fileID: 576222622, guid: 07bb9ee3933a1b64d91299f2de35b758, type: 3}
       propertyPath: taskManager
       value: 
-      objectReference: {fileID: 1429393944}
+      objectReference: {fileID: 1997741188}
     - target: {fileID: 1905144079, guid: 07bb9ee3933a1b64d91299f2de35b758, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3512,8 +3512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8c459e838a4454faffa7be48492c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tasks:
-  - {fileID: 2122353975}
+  tasks: []
 --- !u!4 &1997741189
 Transform:
   m_ObjectHideFlags: 0

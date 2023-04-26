@@ -16,6 +16,7 @@ public class TaskManager : MonoBehaviour {
     }
 
     public List<Task> GetTaskList() {
+        UpdateTaskList();
         return tasks;
     }
 
@@ -48,19 +49,22 @@ public class TaskManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// TODO: Functionality
+    /// Sorts the list with completed tasks on the bottom
     /// </summary>
-    public void SendCompletedTasksToEndOfList()
-    {
-        foreach (Task task in tasks)
-        {
-            int i = 0;
-            if (task.IsCompleted())
-            {
-                tasks.Remove(task);
+    public void SendCompletedTasksToEndOfList() {
+        List<Task> sortedTasks = new List<Task>();
+        foreach (Task task in tasks) {
+            if (!task.IsCompleted()) {
+                sortedTasks.Add(task);
             }
-            i++;
         }
+
+        foreach (Task task in tasks) {
+            if(task.IsCompleted()) {
+                sortedTasks.Add(task);
+            }
+        }
+        tasks = sortedTasks;
     }
 
     /// <summary>
@@ -68,6 +72,7 @@ public class TaskManager : MonoBehaviour {
     /// </summary>
     public void UpdateTaskList() {
         tasks = GameObject.FindObjectsOfType<Task>().ToList();
+        SendCompletedTasksToEndOfList();
         foreach(Task task in tasks) {
             task.GetUpdateCall().AddListener(UpdateTaskList);
         }

@@ -34,18 +34,17 @@ public class CheckListProducer : MonoBehaviour {
     {
         tasks = taskManager.GetTaskList();
         foreach (Task task in tasks) {
-            if (task.GetCheckbox() == null) {
-                GameObject taskBox = Instantiate(checkboxPrefab, gameObject.transform);
-                task.SetCheckbox(taskBox);
-                taskBox.transform.parent = gameObject.transform;
-                Text textField = taskBox.GetComponentInChildren<Text>();
-                textField.text = task.GetTitle();
-                if (task.IsCompleted()) {
-                        ColourizeText(textField);
-                        task.GetCheckbox().GetComponent<UnityEngine.UI.Toggle>().isOn = true;
-                }
-                task.GetUpdateCall().AddListener(UpdateList);
+            Destroy(task.GetCheckbox());
+            task.SetCheckbox(null);
+            GameObject taskBox = Instantiate(checkboxPrefab, gameObject.transform);
+            task.SetCheckbox(taskBox);
+            taskBox.transform.parent = gameObject.transform;    Text textField = taskBox.GetComponentInChildren<Text>();
+            textField.text = task.GetTitle();
+            if (task.IsCompleted()) {
+                ColourizeText(textField);
+                task.GetCheckbox().GetComponent<UnityEngine.UI.Toggle>().isOn = true;
             }
+            task.GetUpdateCall().AddListener(UpdateList);
         }
         UpdateRemainingTaskAmount();
     }

@@ -31,10 +31,11 @@ public class Task : MonoBehaviour {
     /// Completed the task, and sends a message to CheckListProducers to update their info. 
     /// </summary>
     public void CompleteTask() {
-        isCompleted = true;
-        SendMessage("UpdateList");
-        checkbox.GetComponent<Toggle>().isOn = true;
-        this.taskUpdateCall.Invoke();
+        if(!isCompleted) {
+            isCompleted = true;
+            checkbox.GetComponent<Toggle>().isOn = true;
+            this.taskUpdateCall.Invoke();
+        }
     }
 
     public string GetTitle() {
