@@ -26,20 +26,6 @@ public class VisualDotDeployer : MonoBehaviour
         this.visualEffect = visualEffectObject.GetComponent<VisualEffect>();
     }
 
-    public void StartPoints() {
-        StartCoroutine(ShowPointsInOrder());
-    }
-
-    public IEnumerator ShowPointsInOrder() {
-        yield return new WaitForSeconds(3);
-        ShowAllHeatmapPoints();
-        yield return new WaitForSeconds(10);
-        RemoveVisualDots();
-        yield return new WaitForSeconds(1);
-        ShowAllPointsOfInterest();
-        yield return new WaitForSeconds(10);
-    }
-
     /// <summary>
     /// Adds an heatmap point to the list.
     /// </summary>
@@ -79,10 +65,12 @@ public class VisualDotDeployer : MonoBehaviour
         }
     }
 
-
-
-    public void ShowAllHeatmapPoints() {
-        StartCoroutine(ShowHeatmap());
+    /// <summary>
+    /// Shows all the heatmap points.
+    /// </summary>
+    /// <param name="showAsSolid">true if the heatmap points should be solid</param>
+    public void ShowAllHeatmapPoints(bool showAsSolid) {
+        StartCoroutine(ShowHeatmap(showAsSolid));
     }
 
     /// <summary>
@@ -95,11 +83,12 @@ public class VisualDotDeployer : MonoBehaviour
     /// <summary>
     /// Shows the heatmap
     /// </summary>
+    /// <param name="showAsSolid">true if the heatmap should be solid color</param>
     /// <returns></returns>
-    public IEnumerator ShowHeatmap() {
+    public IEnumerator ShowHeatmap(bool showAsSolid) {
         IEnumerator<RecordedPoint> it =  heatmapPoints.GetEnumerator();
         visualEffect.SetBool("ShowParticle", true);
-        visualEffect.SetBool("Heatmap", true);
+        visualEffect.SetBool("Heatmap", !showAsSolid);
         while (it.MoveNext()) {
             yield return new WaitForFixedUpdate();
             ShowDot(it.Current, FindVectorOfDot(it.Current));

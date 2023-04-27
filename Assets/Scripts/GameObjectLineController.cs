@@ -30,11 +30,13 @@ public class GameObjectLineController : MonoBehaviour
     /// <param name="fromTransform">the from transform</param>
     /// <param name="toTransform">the to transform.</param>
     /// <param name="textToShow">the text to show between the lines</param>
-    public void SetNewPositonsAndUpdateLine(Transform fromTransform, Transform toTransform, string textToShow) {
+    /// <param name="showText">true if the line text should show. False otherwise</param>
+    public void SetNewPositonsAndUpdateLine(Transform fromTransform, Transform toTransform, string textToShow, bool showText) {
         SetFromTransform(fromTransform);
         SetToTransform(toTransform);
         SetDisplayText(textToShow);
         UpdateLinePosition();
+        textOfLine.gameObject.SetActive(showText);
     }
 
     /// <summary>
@@ -60,7 +62,7 @@ public class GameObjectLineController : MonoBehaviour
         if (!zeroDistance)
         {
             Vector3 scale = lineCube.transform.localScale;
-            lineCube.transform.localScale = new Vector3(scale.x, scale.y, distance);
+            lineCube.transform.localScale = new Vector3(scale.x, scale.y, distance - 0.015f);
         }
         else {
             gameObject.SetActive(false);

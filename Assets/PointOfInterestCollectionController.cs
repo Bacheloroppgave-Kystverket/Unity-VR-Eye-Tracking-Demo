@@ -35,16 +35,27 @@ public class PointOfInterestCollectionController : MonoBehaviour
     [SerializeField, Tooltip("The amount of diffrent point controllers that can be moved around."), Range(10, 50)]
     private int amountOfPointControllers = 10;
 
-    [SerializeField]
+    [SerializeField, Tooltip("The line controller")]
     private LineController lineController;
 
-    private int result;
+    private bool showPointText;
 
+    private bool showPointsAsSolid;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    /// <summary>
+    /// Sets the show points as solid property.
+    /// </summary>
+    /// <param name="value">true if the point cloud should be solid. False otherwise.</param>
+    public void SetShowPointsAsSolid(bool value) {
+        this.showPointsAsSolid = value;
+    }
 
+    /// <summary>
+    /// Sets the show point text property.
+    /// </summary>
+    /// <param name="showPointText">true if the gaze points should show their text. False otherwise.</param>
+    public void SetShowPointText(bool showPointText) {
+        this.showPointText = showPointText;
     }
 
     /// <summary>
@@ -73,6 +84,12 @@ public class PointOfInterestCollectionController : MonoBehaviour
         }
         lineController.DrawLine();
     }
+
+    /// <summary>
+    /// Gets the line controller.
+    /// </summary>
+    /// <returns>the line controller</returns>
+    public LineController GetLineController() => lineController;
 
     /// <summary>
     /// 
@@ -104,7 +121,7 @@ public class PointOfInterestCollectionController : MonoBehaviour
     /// </summary>
     public void ShowHeatmapPoints() {
         SyncHeatmap();
-        visualDotDeployers.ForEach(visualDotDeployer => visualDotDeployer.ShowAllHeatmapPoints());
+        visualDotDeployers.ForEach(visualDotDeployer => visualDotDeployer.ShowAllHeatmapPoints(showPointsAsSolid));
     }
 
     /// <summary>
@@ -119,6 +136,7 @@ public class PointOfInterestCollectionController : MonoBehaviour
     /// </summary>
     public void HidePointsOfInterest() {
         pointOfInterestControllers.ForEach(pointController => pointController.HidePointOfInterest());
+        lineController.HideLine();
     }
 
     /// <summary>

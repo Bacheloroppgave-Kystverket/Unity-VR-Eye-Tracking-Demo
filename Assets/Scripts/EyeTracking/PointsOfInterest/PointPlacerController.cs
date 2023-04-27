@@ -68,22 +68,25 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     ///<inheritdoc/>
     public void ObservedObjects(RaycastHit[] raycastHits, Vector3 lookPosition) {
         CheckIfObjectIsNull(raycastHits, "raycast hits");
-        RaycastHit raycastHit = raycastHits.Last();
-        bool addPointOfInterest = currentPoint % (frequency / pointOfInterestFrequency) == 0 && raycastHits.Length > 0;
-        if (addPointOfInterest && lookPosition != Vector3.negativeInfinity)
-        {
-            PointOfInterest pointOfInterest = pointOfInterestCollectionController.GetLastPointOfInterest();
-            if (pointOfInterest != null && lookPosition.Equals(pointOfInterest.GetWorldPosition()))
+        if (raycastHits != null && raycastHits.Length > 0) {
+            RaycastHit raycastHit = raycastHits.Last();
+            bool addPointOfInterest = currentPoint % (frequency / pointOfInterestFrequency) == 0 && raycastHits.Length > 0;
+            if (addPointOfInterest && lookPosition != Vector3.negativeInfinity)
             {
-                IncrementPointOfInterest();
+                PointOfInterest pointOfInterest = pointOfInterestCollectionController.GetLastPointOfInterest();
+                if (pointOfInterest != null && lookPosition.Equals(pointOfInterest.GetWorldPosition()))
+                {
+                    IncrementPointOfInterest();
+                }
+                else
+                {
+                    AddPointOfInterest(raycastHit);
+                }
             }
-            else {
-                AddPointOfInterest(raycastHit);
+            if (currentPoint % (frequency / heatmapFrequency) == 0 && raycastHits.Length > 0 && lookPosition != null)
+            {
+                AddHeatmapPoint(raycastHit);
             }
-        }
-        if (currentPoint % (frequency / heatmapFrequency) == 0 && raycastHits.Length > 0 && lookPosition != null)
-        {
-            AddHeatmapPoint(raycastHit);
         }
         currentPoint += 1;
     }

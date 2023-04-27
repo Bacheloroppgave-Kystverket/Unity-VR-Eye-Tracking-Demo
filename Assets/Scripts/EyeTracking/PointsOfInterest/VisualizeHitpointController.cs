@@ -9,7 +9,7 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
 {
 
     [SerializeField, Tooltip("The object to visualize where the user looks")]
-    private GameObject hitSpot;
+    private HitpointController hitSpot;
 
     [SerializeField, Tooltip("Set to true if the hitpoint should be visualized.")]
     private bool visualizeHitpoint;
@@ -18,7 +18,7 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
     private bool visualizeLine;
 
     [SerializeField, Tooltip("The hitspot prefab.")]
-    private GameObject hitspotPrefab;
+    private HitpointController hitspotPrefab;
 
     [SerializeField, Tooltip("The raycaster object.")]
     private RayCasterObject raycaster;
@@ -30,7 +30,7 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
     private void Start()
     {
         if (visualizeHitpoint && hitSpot == null) {
-            GameObject newHitspot = Instantiate(hitspotPrefab);
+            HitpointController newHitspot = Instantiate(hitspotPrefab);
             hitspotPrefab.transform.position = Vector3.zero;
             this.hitSpot = newHitspot;
             newHitspot.tag = "hitspot";
@@ -43,7 +43,8 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
     public void ObservedObjects(RaycastHit[] raycastHits, Vector3 lookPosition)
     {
         CheckIfObjectIsNull(raycastHits, "raycast hits");
-        VisualizeHitpointAndDrawLine(gameObject.transform.position, raycaster.FindDirection(), lookPosition);
+        Vector3 hitPoint = raycastHits != null && raycastHits.Length > 0 ? raycastHits[0].point : Vector3.zero;
+        VisualizeHitpointAndDrawLine(gameObject.transform.position, raycaster.FindDirection(), lookPosition, hitPoint);
     }
 
     /// <summary>
@@ -52,17 +53,18 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
     /// <param name="position">the starting position</param>
     /// <param name="direction">the direction</param>
     /// <param name="lookPosition">the look position right now</param>
-    private void VisualizeHitpointAndDrawLine(Vector3 position, Vector3 direction, Vector3 lookPosition)
+    /// <param name="hitPoint">the vector where the first object was hit</param>
+    private void VisualizeHitpointAndDrawLine(Vector3 position, Vector3 direction, Vector3 lookPosition, Vector3 hitPoint)
     {
         if (visualizeHitpoint) {
             if (!lookPosition.Equals(Vector3.negativeInfinity))
             {
-                Vector3 hitPos = lookPosition;
-                hitSpot.transform.position = hitPos;
-                hitSpot.SetActive(true);
+                hitSpot.transform.position = lookPosition;
+                hitSpot.SetHitpointPosition(hitPoint);
+                hitSpot.SetHitpointActive(true);
             }
             else { 
-                hitSpot.SetActive(false); 
+                hitSpot.SetHitpointActive(false); 
             }
             
         }

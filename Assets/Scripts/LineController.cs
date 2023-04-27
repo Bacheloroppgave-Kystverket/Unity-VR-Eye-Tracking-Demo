@@ -21,6 +21,10 @@ public class LineController : MonoBehaviour
     [SerializeField, Tooltip("The gameobject line controllers")]
     private List<GameObjectLineController> gameObjectLineControllers = new List<GameObjectLineController>();
 
+    private bool showLine;
+
+    private bool showLineText;
+
     public void ClearLineList() {
         transforms.Clear();
         HideLine();
@@ -29,10 +33,27 @@ public class LineController : MonoBehaviour
     /// <summary>
     /// Hides the lines.
     /// </summary>
-    public void HideLine()
-    {
+    public void HideLine() {
         gameObjectLineControllers.ForEach(lineController => lineController.HideLine());
     }
+
+    /// <summary>
+    /// Sets the show line property.
+    /// </summary>
+    /// <param name="showLine">true if the line is supposed to be visible. False otherwise</param>
+    public void SetShowLine(bool showLine)
+    {
+        this.showLine = showLine;
+    }
+
+    /// <summary>
+    /// Sets the show line text property.
+    /// </summary>
+    /// <param name="lineText">true if the linetext is supposed to show. False otherwise</param>
+    public void SetShowLineText(bool lineText) { 
+        this.showLineText = lineText;
+    }
+
 
     /// <summary>
     /// Adds a transform to the line controller.
@@ -47,16 +68,20 @@ public class LineController : MonoBehaviour
     /// Draws the line from the first transform to the last.
     /// </summary>
     public void DrawLine() {
-        int index = 0;
-        IEnumerator<Transform> it = transforms.GetEnumerator();
-        Transform oldTrans = null;
-        while (it.MoveNext()) {
-            Transform currentTrans = it.Current;
-            if (oldTrans != null) {
-                SetLine(index, oldTrans, currentTrans);
-                index++;
+        if (showLine) {
+            int index = 0;
+            IEnumerator<Transform> it = transforms.GetEnumerator();
+            Transform oldTrans = null;
+            while (it.MoveNext())
+            {
+                Transform currentTrans = it.Current;
+                if (oldTrans != null)
+                {
+                    SetLine(index, oldTrans, currentTrans);
+                    index++;
+                }
+                oldTrans = currentTrans;
             }
-            oldTrans = currentTrans;
         }
     }
 
@@ -77,7 +102,7 @@ public class LineController : MonoBehaviour
         else {
             lineController = gameObjectLineControllers[index];
         }
-        lineController.SetNewPositonsAndUpdateLine(fromTransform, toTransform, displayLineText ? (index + 1).ToString() : "");
+        lineController.SetNewPositonsAndUpdateLine(fromTransform, toTransform, displayLineText ? (index + 1).ToString() : "", showLineText);
     }
 
     /// <summary>

@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PointOfInterestManager : MonoBehaviour
 {
 
+    [Header("Configuration of point manager")]
     [SerializeField, Tooltip("The default point placer")]
     private PointPlacerController pointPlacer;
 
@@ -13,6 +15,21 @@ public class PointOfInterestManager : MonoBehaviour
 
     [SerializeField, Tooltip("The point start to show.")]
     private int pointStart = 0;
+
+    [SerializeField, Tooltip("Set to true if the line for gazeplots should be shown.")]
+    private bool showLine = true;
+
+    [SerializeField, Tooltip("Set to true if the line text for gazeplots should be shown.")]
+    private bool showLineText = true;
+
+    [SerializeField, Tooltip("Set to true if the point text should be shown.")]
+    private bool showPointText = true;
+
+    [SerializeField, Tooltip("Set to true if the point cloud or heatmap should have solid color.")]
+    private bool showPointsAsSolid = false;
+
+    [SerializeField, Tooltip("All the toggles of showPointLine, showPointLineText, showPointText and showPointsAsSolid in that order.")]
+    private List<Toggle> toggles = new List<Toggle>();
 
     private bool showHeatmap;
 
@@ -23,53 +40,84 @@ public class PointOfInterestManager : MonoBehaviour
         CheckField("point placer", pointPlacer);
         pointOfInterestCollectionController = GameObject.FindGameObjectWithTag("Player").GetComponent<PointOfInterestCollectionController>();
         CheckField("point of interest collection controller", pointOfInterestCollectionController);
+        
     }
 
+    private void Awake()
+    {
+        showLine = !showLine;
+        ToggleLine();
+        showLineText = !showLineText;
+        ToggleLineText();
+        showPointText = !showPointText;
+        TogglePointText();
+        showPointsAsSolid = !showPointsAsSolid;
+        TogglePointCouldMode();
+        toggles[0].enabled = showLine;
+        toggles[1].enabled = showLineText;
+        toggles[2].enabled = showPointText;
+        toggles[2].enabled = showPointsAsSolid;
+    }
+
+ 
+
+    public void TogglePointCouldMode() { 
+        pointOfInterestCollectionController.SetShowPointsAsSolid(showPointsAsSolid);
+        showPointsAsSolid = !showPointsAsSolid;
+    }
+
+    /// <summary>
+    /// Toggles the heatmap and if it should be on or not.
+    /// </summary>
     public void ToggleHeatmap() {
         showHeatmap = !showHeatmap;
         if (showHeatmap)
         {
-            ShowHeatmap();
+            pointOfInterestCollectionController.ShowHeatmapPoints();
         }
         else {
-            HideHeatmap();
+            pointOfInterestCollectionController.HideHeatmapPoints();
         }
     }
 
+    /// <summary>
+    /// Toggles the points or gazeplot
+    /// </summary>
     public void TogglePoints()
     {
         showPoints = !showPoints;
         if (showPoints)
         {
-            ShowInterestPoints();
+            pointOfInterestCollectionController.ShowPointsOfInterest();
+            pointOfInterestCollectionController.UpdateOrderOfPointsOfInterest(pointStart);
         }
         else {
-            HidePointsOfInterest();
+            pointOfInterestCollectionController.HidePointsOfInterest();
         }  
     }
 
-
-    public void ShowInterestPoints() {
-        pointOfInterestCollectionController.ShowPointsOfInterest();
-        pointOfInterestCollectionController.UpdateOrderOfPointsOfInterest(pointStart);
-    }
-
-    public void HidePointsOfInterest() {
-        pointOfInterestCollectionController.HidePointsOfInterest();
+    /// <summary>
+    /// Toggles the line of the gazeplots.
+    /// </summary>
+    public void ToggleLine() { 
+        showLine = !showLine;
+        pointOfInterestCollectionController.GetLineController().SetShowLine(showLine);
     }
 
     /// <summary>
-    /// Shows the interest points as a heatmap with transparent color.
+    /// Toggles the text of the points.
     /// </summary>
-    public void ShowHeatmap() {
-        pointOfInterestCollectionController.ShowHeatmapPoints();
+    public void TogglePointText() {
+        showPointText = !showPointText;
+        pointOfInterestCollectionController.SetShowPointText(showPointText);
     }
 
     /// <summary>
-    /// Hides the intrest points.
+    /// Toggles the text of the line.
     /// </summary>
-    public void HideHeatmap(){
-        pointOfInterestCollectionController.HideHeatmapPoints();
+    public void ToggleLineText() {
+        showLineText = !showLineText;
+        pointOfInterestCollectionController.GetLineController().SetShowLineText(showLineText);
     }
 
     /// <summary>

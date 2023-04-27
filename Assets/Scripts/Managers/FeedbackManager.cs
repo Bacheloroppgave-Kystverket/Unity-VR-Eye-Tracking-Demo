@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 /// <summary>
@@ -60,15 +62,15 @@ public class FeedbackManager : MonoBehaviour{
     }
 
 
-
     /// <summary>
     /// Starts the adaptive training system.
     /// </summary>
     /// <returns>the wait time</returns>
     private IEnumerator StartAdaptiveTrainingSystem() {
+        yield return new WaitForSeconds(seconds);
         while (activeAdaptiveTrainingSystem && eyeTracking) {
-            yield return new WaitForSeconds(seconds);
             CalculateAndDisplayProsentageFeedback();
+            yield return new WaitForSeconds(seconds);
         }
     }
 
