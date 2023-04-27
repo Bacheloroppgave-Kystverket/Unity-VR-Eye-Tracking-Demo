@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VisualizationManager : MonoBehaviour
 {
+    private bool activeHitspotRaw;
 
     /// <summary>
     /// Toggles the active state for the hitspot.
@@ -12,6 +13,18 @@ public class VisualizationManager : MonoBehaviour
         GameObject hitspot = GetHitspot();
         if (hitspot != null) {
             hitspot.SetActive(!hitspot.activeSelf);
+        }
+    }
+
+    /// <summary>
+    /// Toggles if the raw position should be shown.
+    /// </summary>
+    public void ToggleRawPosition() {
+        GameObject hitspot = GetHitspot();
+        if (hitspot != null)
+        {
+            activeHitspotRaw = !activeHitspotRaw;
+            hitspot.GetComponent<HitpointController>().SetRawHitpointActive(activeHitspotRaw);
         }
     }
 

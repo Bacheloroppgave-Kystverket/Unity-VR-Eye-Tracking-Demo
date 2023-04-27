@@ -9,5 +9,7 @@ public interface RaycasterObserver
     /// Gets called when the raycaster has observed objects.
     /// </summary>
     /// <param name="raycastHits">the raycast hits</param>
-    void ObservedObjects(RaycastHit[] raycastHits);
+    /// <param name="lookPosition">the look position</param>
+    void ObservedObjects(RaycastHit[] raycastHits, Vector3 lookPosition);
+
 }

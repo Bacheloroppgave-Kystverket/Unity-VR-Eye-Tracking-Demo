@@ -7,17 +7,9 @@ using UnityEngine.VFX;
 
 public class PointOfInterestController : MonoBehaviour
 {
+    [Header("List of values")]
     [SerializeField, Tooltip("The point of interest that this object represents.")]
-    private RecordedPoint pointOfInterest;
-
-    [SerializeField, Tooltip("The default material to show the normal data.")]
-    private Material defaultMaterial;
-
-    [SerializeField, Tooltip("The heatmap material that is transparent")]
-    private Material heatMapMaterial;
-
-    [SerializeField, Tooltip("The visual effect")]
-    private VisualEffect visualEffect;
+    private List<RecordedPoint> points = new List<RecordedPoint>();
 
     /// <summary>
     /// Sets the position of the intrest point. Also sets is as a child of that ibhect and
@@ -26,11 +18,11 @@ public class PointOfInterestController : MonoBehaviour
     /// <param name="trackableObjectController"></param>
     public void SetPointOfInterest(PointOfInterest pointOfInterest) {
         CheckIfObjectIsNull(pointOfInterest, "point of interest");
-        this.pointOfInterest = pointOfInterest;
+        points.Add(pointOfInterest);
         Transform parentTransform = pointOfInterest.GetParentTransform();
         transform.SetParent(parentTransform);
         transform.localPosition = pointOfInterest.GetLocalPosition();
-        transform.localScale = parentTransform.InverseTransformVector(new Vector3(1f,1f,1f));
+        transform.localScale = parentTransform.InverseTransformVector(new Vector3(0.03f,0.03f,0.03f));
         transform.localRotation = Quaternion.Euler(0,0,0);
 
     }
@@ -40,10 +32,15 @@ public class PointOfInterestController : MonoBehaviour
     /// </summary>
     public void ShowPointOfInterest() { 
         gameObject.SetActive(true);
-        visualEffect.Reinit();
-        visualEffect.SetBool("Heatmap", false);
-        visualEffect.Play();
-        GetComponent<MeshRenderer>().material = defaultMaterial;
+    }
+
+    /// <summary>
+    /// Adds a recorded point to this point of interest controller.
+    /// </summary>
+    /// <param name="recordedPoint">the recorded point</param>
+    public void AddRecordedPoint(RecordedPoint recordedPoint) {
+        CheckIfObjectIsNull(recordedPoint, "recorded point");
+        this.points.Add(recordedPoint);
     }
 
     /// <summary>q
@@ -51,10 +48,6 @@ public class PointOfInterestController : MonoBehaviour
     /// </summary>
     public void ShowPointOfInterestAsHeatmap() { 
         gameObject.SetActive(true);
-        visualEffect.Reinit();
-        visualEffect.SetBool("Heatmap", true);
-        visualEffect.Play();
-        GetComponent<MeshRenderer>().material = heatMapMaterial;
     }
 
     /// <summary>

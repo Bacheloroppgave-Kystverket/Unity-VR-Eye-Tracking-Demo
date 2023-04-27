@@ -9,14 +9,16 @@ using UnityEngine;
 [RequireComponent(typeof(TrackableObjectIdentifier))]
 public class TrackableObjectController : MonoBehaviour, Observable<TrackableObserver>, Trackable
 {
+    [Header("Configure object")]
+    [SerializeField, Tooltip("Set to true if the object is supposed to change color")]
+    private bool changeColor = false;
+
+    [Header("Gameobject data")]
     [SerializeField, Tooltip("The trackable object")]
     private TrackableObject trackableObject;
 
     [SerializeField, Tooltip("The trackable record")]
     private TrackableRecord trackableRecord;
-
-    [SerializeField, Tooltip("Set to true if the object is supposed to change color")]
-    private bool changeColor = false;
 
     [Space(10), Header("Debug fields")]
     [SerializeField, Tooltip("The current object that is being watched.")]
@@ -39,6 +41,7 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
             Debug.Log("<color=red>Error:</color>" + "Type of object must be defined for " + gameObject.name, gameObject);
         }
         CheckField("Object to track", gameObject);
+        CheckField("Trackable object name", trackableObject.GetNameOfObject());
     }
 
   
@@ -53,6 +56,10 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     private bool CheckField(string error, object fieldToCheck)
     {
         bool valid = fieldToCheck == null;
+        if (fieldToCheck is string) { 
+            string value = (string)fieldToCheck;
+            valid = value.Length == 0;
+        }
         if (valid){
             Debug.Log("<color=red>Error:</color>" + error + " must be set.", gameObject);
         }

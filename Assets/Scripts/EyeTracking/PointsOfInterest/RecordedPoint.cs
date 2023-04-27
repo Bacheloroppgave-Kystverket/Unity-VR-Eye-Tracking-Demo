@@ -9,6 +9,7 @@ using UnityEngine;
 [Serializable]
 public class RecordedPoint
 {
+    [Header("Fields values")]
     [SerializeField, Tooltip("The local position as a vector")]
     private Vector3 localPosition;
 
@@ -44,6 +45,11 @@ public class RecordedPoint
     /// <returns>the point of interest</returns>
     public Vector3 GetLocalPosition() => localPosition;
 
+    /// <summary>
+    /// Gets the world position.
+    /// </summary>
+    /// <returns>the world position</returns>
+    public Vector3 GetWorldPosition() => worldPosition;
     
 
     /// <summary>
@@ -52,7 +58,7 @@ public class RecordedPoint
     /// <param name="objecToCheck">the object to check</param>
     /// <param name="error">the error to be in the string.</param>
     /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
-    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    protected void CheckIfObjectIsNull(object objecToCheck, string error)
     {
         if (objecToCheck == null)
         {

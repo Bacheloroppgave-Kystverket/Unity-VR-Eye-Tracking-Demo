@@ -2,19 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class StatController : MonoBehaviour
 {
-    [SerializeField]
+    [Header("Configure object")]
+    [SerializeField, Tooltip("The fixations text")]
     private TextMeshPro fixationsText;
 
-    [SerializeField]
+    [SerializeField, Tooltip("The fixations duration text.")]
     private TextMeshPro fixationDurationText;
 
-    [SerializeField]
+    [SerializeField, Tooltip("The average fixation duration text.")]
     private TextMeshPro averageFixationDurationText;
 
-    [SerializeField]
+    [SerializeField, Tooltip("Set to true if the text is active. False otherwise")]
     private bool activeText = true;
 
     private void Start()

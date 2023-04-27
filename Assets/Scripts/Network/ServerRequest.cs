@@ -1,5 +1,7 @@
+using Facebook.WitAi;
 using Oculus.Installer.ThirdParty.TinyJson;
 using Oculus.Platform;
+using OpenCover.Framework.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,8 +18,7 @@ using UnityEngine.Networking;
 [Serializable]
 public class ServerRequest<T>{
 
-    private UnityWebRequest webRequest;
-
+    [Header("Configuration fields")]
     [SerializeField, Tooltip("The web path")]
     private string path;
 
@@ -27,6 +28,7 @@ public class ServerRequest<T>{
     [SerializeField, Tooltip("The /sessions or other values.")]
     private string endPath;
 
+    [Header("Debug fields")]
     [SerializeField, Tooltip("The path variable for the request")]
     private string pathVariable;
 
@@ -36,20 +38,35 @@ public class ServerRequest<T>{
     [SerializeField, Tooltip("The type of the server request.")]
     private WebOptions webOption;
 
-    [SerializeField]
-    private bool setValue = false;
-
     [SerializeField, Tooltip("True if the process was a success")]
     private bool successful;
 
+    /// <summary>
+    /// Gets if the server reuqest is done successful.
+    /// </summary>
+    /// <returns></returns>
     public bool GetSuccessful() => successful;
 
+    /// <summary>
+    /// Sets the path variable
+    /// </summary>
+    /// <param name="pathVariable"></param>
     public void SetPathVariable(string pathVariable) {
         this.pathVariable = pathVariable;
     }
 
+    /// <summary>
+    /// Sets it to a post request.
+    /// </summary>
     public void SetPost() {
         webOption = WebOptions.POST;
+    }
+
+    /// <summary>
+    /// Sets it to a get request.
+    /// </summary>
+    public void SetGet() {
+        webOption = WebOptions.GET;
     }
 
     /// <summary>
@@ -57,21 +74,26 @@ public class ServerRequest<T>{
     /// </summary>
     /// <returns>Enumerator that waits for the result</returns>
     public IEnumerator SendCurrentData() {
-        yield return new WaitForSeconds(1);
-        string pathVariable = "";
-        if (webOption == WebOptions.GET && this.pathVariable != null && this.pathVariable.Trim().Length > 0) {
-            pathVariable = "/" + this.pathVariable;
-        }
-        string finalPath = path + ":" + port + "/" + endPath + pathVariable;
-        Debug.Log(finalPath);
+
+        string finalPath = GetPath();
         UnityWebRequest request;
         DownloadHandler downloadHandler = new DownloadHandlerBuffer();
         if (webOption == WebOptions.POST) {
-            UploadHandler uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonUtility.ToJson(value)));
+            string toEncode = value == null ? "" : JsonUtility.ToJson(value);
+            UploadHandler uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(toEncode));
             request = new UnityWebRequest(finalPath, "POST", downloadHandler, uploadHandler);
         } else {
             request = new UnityWebRequest(finalPath, "GET", downloadHandler, null);
         }
+        string token = AuthenticationRequest.GetToken();
+        if (token != "")
+        {
+            request.SetRequestHeader("Authorization", "Bearer " + token);
+        }
+        else {
+            throw new IllegalArgumentException("The token cannot be empty");
+        }
+        
         
         yield return request.SendWebRequest();
 
@@ -84,8 +106,33 @@ public class ServerRequest<T>{
         yield return new WaitForSeconds(1);
     }
 
+    /// <summary>
+    /// Constructs the path of the request.
+    /// </summary>
+    /// <returns>the path</returns>
+    private string GetPath() {
+        string pathVariable = "";
+        if (webOption == WebOptions.GET && this.pathVariable != null && this.pathVariable.Trim().Length > 0)
+        {
+            pathVariable = "/" + this.pathVariable;
+        }
+        return path + ":" + port + "/" + endPath + pathVariable;
+    }
+
+    /// <summary>
+    /// Gets the value of the server request
+    /// </summary>
+    /// <returns>the value</returns>
+    protected T GetValue() { 
+        return value;
+    }
+
+    /// <summary>
+    /// Sends the get request.
+    /// </summary>
+    /// <returns>the enumerator</returns>
     public IEnumerator SendGetRequest() {
-        this.webOption = WebOptions.GET;
+        SetGet();
         return SendCurrentData();
     }
 
@@ -95,16 +142,24 @@ public class ServerRequest<T>{
     /// <param name="request">the request</param>
     private void UnderstandGetRequest(UnityWebRequest request) {
         bool success = false;
-        if (request.result != UnityWebRequest.Result.Success) {
+        if (request.result != UnityWebRequest.Result.Success)
+        {
             Debug.Log(request.error);
-        } else {
-            T data = JsonUtility.FromJson<T>(request.downloadHandler.text);
-            if (value is SimulationSetup setup && data is SimulationSetup simulationSetup) {
-                setup.UpdateSimulationSetup(simulationSetup);
-            }
+        }
+        else
+        {
+            HandleData(request);
             success = true;
         }
         this.successful = success;
+    }
+
+    /// <summary>
+    /// Handles the incoming data.
+    /// </summary>
+    /// <param name="unityWebRequest">the unity web request</param>
+    protected virtual void HandleData(UnityWebRequest unityWebRequest) {
+
     }
 
     /// <summary>
@@ -122,9 +177,21 @@ public class ServerRequest<T>{
     /// </summary>
     /// <param name="value">the data to be sent</param>
     public void SetData(T value) {
-        if (!setValue) {
-            this.value = value;
-            this.setValue = true;
+        CheckIfObjectIsNull(value, "value");
+        this.value = value;
+    }
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
         }
     }
 }

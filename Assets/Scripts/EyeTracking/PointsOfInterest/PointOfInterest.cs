@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
 public class PointOfInterest : RecordedPoint
 {
     [SerializeField, Tooltip("The point of interest.")]
-    private int order;
+    private List<int> orderIds = new List<int>();
 
     /// <summary>
     /// Represents a point of interest.
@@ -17,14 +18,31 @@ public class PointOfInterest : RecordedPoint
     public PointOfInterest(int pointOfInterestOrder, RaycastHit hit) : base(hit)
     {
         CheckIfNumberIsAboveZero(pointOfInterestOrder, "point of interest order");
-        this.order = pointOfInterestOrder;
+        this.orderIds.Add(pointOfInterestOrder);
+    }
+
+    /// <summary>
+    /// Adds an order id.
+    /// </summary>
+    /// <param name="orderId">the new order id</param>
+    public void AddOrderId(int orderId) {
+        if (orderId < 0) {
+            throw new IllegalArgumentException("The order id must be larger than zero.");
+        }
+        this.orderIds.Add(orderId);
     }
 
     /// <summary>
     /// Gets the point of interest order.
     /// </summary>
     /// <returns></returns>
-    public int GetPointOfInterestOrder() => order;
+    public int GetPointOfInterestOrder() => this.orderIds.First();
+
+    /// <summary>
+    /// Gets all the order ids.
+    /// </summary>
+    /// <returns>all of the order ids</returns>
+    public List<int> GetAllOrderIds() => this.orderIds;
 
     /// <summary>
     /// Checks if the number is above zero.

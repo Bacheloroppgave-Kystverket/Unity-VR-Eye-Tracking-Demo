@@ -3,12 +3,21 @@ using UnityEngine;
 
 public class OverlayManager : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Tooltip("The feedback text in VR")]
     private TextMeshProUGUI feedbackText;
+
+    [SerializeField, Tooltip("The dev overlay controller")]
+    private DevOverlayController controller;
+
+    [SerializeField, Tooltip("The menus amount text")]
+    private TextMeshProUGUI menuAmountText;
+
+    private int feedbackAmount;
 
     private void Start()
     {
         CheckField("Feedback text", feedbackText);
+        CheckField("Dev controller", controller);
     }
 
     /// <summary>
@@ -32,7 +41,10 @@ public class OverlayManager : MonoBehaviour
     /// <param name="feedback">the feedback</param>
     public void DisplayFeedback(AdaptiveFeedback feedback) {
         if (feedbackText != null) {
+            feedbackAmount += 1;
             feedbackText.text = feedback.GetFeedback();
+            controller.SetFeedback(feedback.GetFeedback());
+            menuAmountText.text = "Amount: " + feedbackAmount.ToString();
         }
     }
 
