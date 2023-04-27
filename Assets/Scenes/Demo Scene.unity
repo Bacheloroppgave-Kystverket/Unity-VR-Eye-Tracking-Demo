@@ -1219,37 +1219,17 @@ PrefabInstance:
       propertyPath: lineController
       value: 
       objectReference: {fileID: 238427292}
-    - target: {fileID: 2131997589, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: hitspotPrefab
-      value: 
-      objectReference: {fileID: 7057566438213042136, guid: 0bfae6cef36f78149802dbe6be84b78b, type: 3}
-    - target: {fileID: 2131997590, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: heatmapFrequency
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 2131997590, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: pointOfInterestCollectionController
-      value: 
-      objectReference: {fileID: 2131997591}
     - target: {fileID: 6249843505674548754, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 1171591753}
-    - target: {fileID: 6249843505674548755, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Id
-      value: cc1d7553-5c8d-4d68-a86f-7eabd229c10e
-      objectReference: {fileID: 0}
-    - target: {fileID: 6249843505674548755, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_DirectionalAnchorRotationAction.m_Action.m_Name
-      value: Directional Anchor Rotation
-      objectReference: {fileID: 0}
     - target: {fileID: 6249843506086648064, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
       propertyPath: m_Name
       value: XR  Player with controllers
       objectReference: {fileID: 0}
     - target: {fileID: 6249843506086648071, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6249843506086648071, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1295,18 +1275,6 @@ PrefabInstance:
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 1171591753}
-    - target: {fileID: 6252690226015627669, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.4094
-      objectReference: {fileID: 0}
-    - target: {fileID: 6252690226015627669, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6253362228231483157, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.1631
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
 --- !u!114 &1295958796 stripped
