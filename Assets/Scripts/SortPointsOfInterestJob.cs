@@ -13,23 +13,14 @@ public class SortPointsOfInterestJob
 
     public static List<PointState> pointStates = new List<PointState>();
 
-    
-    public SortPointsOfInterestJob(List<PointOfInterest> pointOfInterests, float distance, int result) {
-        
-    }
-
-    public static void SetData(List<PointOfInterest> newPoints) {
-        pointOfInterests = newPoints;
-        result = 0;
-        pointStates.Clear();
-
-    }
 
     public static void MakePointStates() {
+        pointStates.Clear();
         pointOfInterests.ForEach(point => pointStates.Add(new PointState(point)));
     }
 
-    public static void SortPoints() {
+    public static List<PointOfInterest> SortPoints(List<PointOfInterest> newPoints) {
+        pointOfInterests = newPoints;
         MakePointStates();
         List<PointOfInterest> newAddedPoints = new List<PointOfInterest>();
         for (int x = 0; x < pointStates.Count; x++)
@@ -57,7 +48,7 @@ public class SortPointsOfInterestJob
                                 {
                                     pointStateToCompare.SetSorted();
                                     result += 1;
-                                    pointOfInterest.AddOrderId(pointOfInterestToCompare);
+                                    pointOfInterestToCompare.GetAllOrderIds().ForEach(id => pointOfInterest.AddOrderId(id));
                                 }
                             }
                         }
@@ -68,6 +59,7 @@ public class SortPointsOfInterestJob
         }
         result = newAddedPoints.Count;
         isDone = true;
+        return newAddedPoints;
     }
 
     /// <summary>

@@ -23,6 +23,9 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
     [SerializeField, Tooltip("The raycaster object.")]
     private RayCasterObject raycaster;
 
+    [SerializeField, Tooltip("")]
+    private Vector3 oldPos;
+
     ///<inheritdoc/>
     private void Start()
     {
@@ -37,26 +40,39 @@ public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
     }
 
     ///<inheritdoc/>
-    public void ObservedObjects(RaycastHit[] raycastHits)
+    public void ObservedObjects(RaycastHit[] raycastHits, Vector3 lookPosition)
     {
         CheckIfObjectIsNull(raycastHits, "raycast hits");
-        VisualizeHitpointAndDrawLine(raycastHits,gameObject.transform.position, raycaster.FindDirection());
+        VisualizeHitpointAndDrawLine(gameObject.transform.position, raycaster.FindDirection(), lookPosition);
     }
 
     /// <summary>
     /// Visualizes the hitpoint in space.
     /// </summary>
-    /// <param name="raycastHit">the first hit</param>
     /// <param name="position">the starting position</param>
     /// <param name="direction">the direction</param>
-    private void VisualizeHitpointAndDrawLine(RaycastHit[] raycastHit, Vector3 position, Vector3 direction)
+    /// <param name="lookPosition">the look position right now</param>
+    private void VisualizeHitpointAndDrawLine(Vector3 position, Vector3 direction, Vector3 lookPosition)
     {
-        if (visualizeHitpoint && raycastHit.Any()) {
-            Vector3 hitPos = raycastHit.Last().point;
-            hitSpot.transform.position = hitPos;
+        if (visualizeHitpoint) {
+            if (!lookPosition.Equals(Vector3.negativeInfinity))
+            {
+                Vector3 hitPos = lookPosition;
+                hitSpot.transform.position = hitPos;
+                hitSpot.SetActive(true);
+            }
+            else { 
+                hitSpot.SetActive(false); 
+            }
+            
         }
-        if (visualizeLine && raycastHit.Any()) {
-            Debug.DrawRay(position, direction * raycastHit.First().distance);
+        if (visualizeLine) {
+            if (!lookPosition.Equals(Vector3.negativeInfinity)) {
+                Debug.DrawRay(position, direction * Vector3.Distance(position, lookPosition));
+            }
+            else {
+                Debug.DrawRay(Vector3.zero, Vector3.zero);
+            }
         }
     }
 

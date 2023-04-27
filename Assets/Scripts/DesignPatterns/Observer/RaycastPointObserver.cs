@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RecordedPointController : MonoBehaviour
+public class RaycastPointObserver : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

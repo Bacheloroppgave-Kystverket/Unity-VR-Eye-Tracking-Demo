@@ -1,3 +1,4 @@
+using Oculus.Installer.ThirdParty.TinyJson;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,18 +6,23 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [Serializable]
-public class SimulationSetupServerRequest : ServerRequest<SimulationSetup>{
-
+public class UserServerRequest : ServerRequest<User>
+{
     /// <summary>
     /// Handles the incoming data.
     /// </summary>
     /// <param name="unityWebRequest">the unity web request</param>
     protected override void HandleData(UnityWebRequest unityWebRequest)
     {
-        SimulationSetup value = JsonUtility.FromJson<SimulationSetup>(unityWebRequest.downloadHandler.text);
-        if (value != null) {
-            SimulationSetup sim = GetValue();
-            sim.UpdateSimulationSetup(value);
-        }
+        SetData(JsonUtility.FromJson<User>(unityWebRequest.downloadHandler.text));
     }
+
+    /// <summary>
+    /// Gets the user.
+    /// </summary>
+    /// <returns>the user</returns>
+    public User GetUser() {
+        return GetValue();
+    }
+
 }

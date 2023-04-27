@@ -11,7 +11,7 @@ public class User
     private long userId;
 
     [SerializeField, Tooltip("The username")]
-    private string username;
+    private string userName;
 
     [SerializeField, PasswordPropertyText]
     private string password = " ";
@@ -22,7 +22,7 @@ public class User
     /// <param name="username">the new username</param>
     public void setUsername(string username) {
         CheckIfStringIsValid(username, "username");
-        this.username = username;
+        this.userName = username;
     }
 
     /// <summary>

@@ -74,21 +74,26 @@ public class ServerRequest<T>{
     /// </summary>
     /// <returns>Enumerator that waits for the result</returns>
     public IEnumerator SendCurrentData() {
-        yield return new WaitForSeconds(1);
-        string pathVariable = "";
-        if (webOption == WebOptions.GET && this.pathVariable != null && this.pathVariable.Trim().Length > 0) {
-            pathVariable = "/" + this.pathVariable;
-        }
-        string finalPath = path + ":" + port + "/" + endPath + pathVariable;
-        Debug.Log(finalPath);
+
+        string finalPath = GetPath();
         UnityWebRequest request;
         DownloadHandler downloadHandler = new DownloadHandlerBuffer();
         if (webOption == WebOptions.POST) {
-            UploadHandler uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonUtility.ToJson(value)));
+            string toEncode = value == null ? "" : JsonUtility.ToJson(value);
+            UploadHandler uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(toEncode));
             request = new UnityWebRequest(finalPath, "POST", downloadHandler, uploadHandler);
         } else {
             request = new UnityWebRequest(finalPath, "GET", downloadHandler, null);
         }
+        string token = AuthenticationRequest.GetToken();
+        if (token != "")
+        {
+            request.SetRequestHeader("Authorization", "Bearer " + token);
+        }
+        else {
+            throw new IllegalArgumentException("The token cannot be empty");
+        }
+        
         
         yield return request.SendWebRequest();
 
@@ -99,6 +104,19 @@ public class ServerRequest<T>{
         }
         request.Dispose();
         yield return new WaitForSeconds(1);
+    }
+
+    /// <summary>
+    /// Constructs the path of the request.
+    /// </summary>
+    /// <returns>the path</returns>
+    private string GetPath() {
+        string pathVariable = "";
+        if (webOption == WebOptions.GET && this.pathVariable != null && this.pathVariable.Trim().Length > 0)
+        {
+            pathVariable = "/" + this.pathVariable;
+        }
+        return path + ":" + port + "/" + endPath + pathVariable;
     }
 
     /// <summary>
@@ -141,7 +159,7 @@ public class ServerRequest<T>{
     /// </summary>
     /// <param name="unityWebRequest">the unity web request</param>
     protected virtual void HandleData(UnityWebRequest unityWebRequest) {
-        
+
     }
 
     /// <summary>

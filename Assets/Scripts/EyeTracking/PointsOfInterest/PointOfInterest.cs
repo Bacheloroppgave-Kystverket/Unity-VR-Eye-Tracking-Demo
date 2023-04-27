@@ -24,10 +24,12 @@ public class PointOfInterest : RecordedPoint
     /// <summary>
     /// Adds an order id.
     /// </summary>
-    /// <param name="pointOfInterest">the point of interest</param>
-    public void AddOrderId(PointOfInterest pointOfInterest) {
-        CheckIfObjectIsNull(pointOfInterest, "point of interest");
-        this.orderIds.Add(pointOfInterest.GetPointOfInterestOrder());
+    /// <param name="orderId">the new order id</param>
+    public void AddOrderId(int orderId) {
+        if (orderId < 0) {
+            throw new IllegalArgumentException("The order id must be larger than zero.");
+        }
+        this.orderIds.Add(orderId);
     }
 
     /// <summary>
@@ -35,6 +37,12 @@ public class PointOfInterest : RecordedPoint
     /// </summary>
     /// <returns></returns>
     public int GetPointOfInterestOrder() => this.orderIds.First();
+
+    /// <summary>
+    /// Gets all the order ids.
+    /// </summary>
+    /// <returns>all of the order ids</returns>
+    public List<int> GetAllOrderIds() => this.orderIds;
 
     /// <summary>
     /// Checks if the number is above zero.

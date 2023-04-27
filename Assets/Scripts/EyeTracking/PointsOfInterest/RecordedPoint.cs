@@ -45,6 +45,11 @@ public class RecordedPoint
     /// <returns>the point of interest</returns>
     public Vector3 GetLocalPosition() => localPosition;
 
+    /// <summary>
+    /// Gets the world position.
+    /// </summary>
+    /// <returns>the world position</returns>
+    public Vector3 GetWorldPosition() => worldPosition;
     
 
     /// <summary>

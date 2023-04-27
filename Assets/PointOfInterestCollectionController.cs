@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Unity.Jobs;
 using Unity.VisualScripting;
@@ -39,7 +40,6 @@ public class PointOfInterestCollectionController : MonoBehaviour
 
     private int result;
 
-    private JobHandle jobHandle;
 
     // Start is called before the first frame update
     void Start()
@@ -58,7 +58,6 @@ public class PointOfInterestCollectionController : MonoBehaviour
 
     public void ShowPointsOfInterest() {
         UpdateAmountOfPoints();
-        StartJob();
         pointOfInterestControllers.ForEach(controller => {
             controller.gameObject.SetActive(true);
         });
@@ -100,17 +99,24 @@ public class PointOfInterestCollectionController : MonoBehaviour
         }
     }
 
-
-
+    /// <summary>
+    /// Shows the heatmap points.
+    /// </summary>
     public void ShowHeatmapPoints() {
         SyncHeatmap();
         visualDotDeployers.ForEach(visualDotDeployer => visualDotDeployer.ShowAllHeatmapPoints());
     }
 
+    /// <summary>
+    /// Hides the heatmap points.
+    /// </summary>
     public void HideHeatmapPoints() {
         visualDotDeployers.ForEach(visualDotDeployer => visualDotDeployer.RemoveVisualDots());
     }
 
+    /// <summary>
+    /// Hides the points of interests.
+    /// </summary>
     public void HidePointsOfInterest() {
         pointOfInterestControllers.ForEach(pointController => pointController.HidePointOfInterest());
     }
@@ -135,22 +141,7 @@ public class PointOfInterestCollectionController : MonoBehaviour
         currentHeatPoint = recordedPoints.Count;
     }
 
-    /// <summary>
-    /// Adds the newest points of interest. The old ones are not added again.
-    /// </summary>
-    public void AddNewestPointsOfInterest()
-    {
-        /*
-         int nextPos = pointOfInterestControllers.Count();
-        int maxAmount = pointOfInterests.Count();
-        while (nextPos < maxAmount)
-        {
-            PointOfInterest pointOfInterest = pointOfInterests[nextPos];
-            InstansiatePoint(pointOfInterest);
-            nextPos += 1;
-        }*/
-    }
-
+    
     /// <summary>
     /// Instansiates the point of interest and sets the location.
     /// </summary>
@@ -172,32 +163,23 @@ public class PointOfInterestCollectionController : MonoBehaviour
         
     }
 
-    public void StartJob() {
-        if (jobHandle.IsCompleted) {
-            SortPointsOfInterestJob.SetData(pointOfInterests);
-            SortPointsOfInterestJob.SortPoints();
-            MonoBehaviour.print(SortPointsOfInterestJob.result);
+    /// <summary>
+    /// Adds an order id to the last point of interest.
+    /// </summary>
+    /// <param name="orderId">the new order id</param>
+    public bool AddOrderIdToLastPoint(int orderId) {
+        bool valid = this.pointOfInterests.Count > 0;
+        if (valid) {
+            pointOfInterests.Last().AddOrderId(orderId);
         }
+        return valid;
     }
 
-    public IEnumerator WaitForJob() {
-        yield return new WaitForSeconds(4);
-        while (!jobHandle.IsCompleted) {
-            yield return new WaitForSeconds(1);
-        }
-        MonoBehaviour.print(result);
+    /// <summary>
+    /// Gets the last point of interest. Returns null if the last point is not made.
+    /// </summary>
+    /// <returns>the point of interest or null</returns>
+    public PointOfInterest GetLastPointOfInterest() { 
+        return pointOfInterests.Count > 0 ? pointOfInterests.Last() : null;
     }
-
-    public static void SortPoints() { 
-
-    }
-    /*
-     VisualDotDeployer visualDotDeployer = raycastHit.collider.GetComponent<VisualDotDeployer>();
-        if (visualDotDeployer == null)
-        {
-            visualDotDeployer = raycastHit.collider.AddComponent<VisualDotDeployer>();
-            visualDotDeployer.SetupVisualDot();
-        }
-        visualDotDeployer.AddPointOfInterest(pointOfInterest);
-    */
 }

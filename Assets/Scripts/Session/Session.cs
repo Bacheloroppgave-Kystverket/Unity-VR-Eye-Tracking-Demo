@@ -93,6 +93,15 @@ public class Session
     }
 
     /// <summary>
+    /// Sets the user.
+    /// </summary>
+    /// <param name="user">the new user</param>
+    public void SetUser(User user) {
+        CheckIfObjectIsNull(user, "user");
+        this.user = user;
+    }
+
+    /// <summary>
     /// Checks if the object is null or not. Throws an exception if the object is null.
     /// </summary>
     /// <param name="objecToCheck">the object to check</param>

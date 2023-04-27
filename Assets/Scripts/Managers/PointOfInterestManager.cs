@@ -14,11 +14,38 @@ public class PointOfInterestManager : MonoBehaviour
     [SerializeField, Tooltip("The point start to show.")]
     private int pointStart = 0;
 
+    private bool showHeatmap;
+
+    private bool showPoints;
+
     private void Start()
     {
         CheckField("point placer", pointPlacer);
         pointOfInterestCollectionController = GameObject.FindGameObjectWithTag("Player").GetComponent<PointOfInterestCollectionController>();
         CheckField("point of interest collection controller", pointOfInterestCollectionController);
+    }
+
+    public void ToggleHeatmap() {
+        showHeatmap = !showHeatmap;
+        if (showHeatmap)
+        {
+            ShowHeatmap();
+        }
+        else {
+            HideHeatmap();
+        }
+    }
+
+    public void TogglePoints()
+    {
+        showPoints = !showPoints;
+        if (showPoints)
+        {
+            ShowInterestPoints();
+        }
+        else {
+            HidePointsOfInterest();
+        }  
     }
 
 
@@ -27,17 +54,21 @@ public class PointOfInterestManager : MonoBehaviour
         pointOfInterestCollectionController.UpdateOrderOfPointsOfInterest(pointStart);
     }
 
+    public void HidePointsOfInterest() {
+        pointOfInterestCollectionController.HidePointsOfInterest();
+    }
+
     /// <summary>
     /// Shows the interest points as a heatmap with transparent color.
     /// </summary>
-    public void ShowInterestPointsAsHeatmap() {
+    public void ShowHeatmap() {
         pointOfInterestCollectionController.ShowHeatmapPoints();
     }
 
     /// <summary>
     /// Hides the intrest points.
     /// </summary>
-    public void HideInterestPoints(){
+    public void HideHeatmap(){
         pointOfInterestCollectionController.HideHeatmapPoints();
     }
 

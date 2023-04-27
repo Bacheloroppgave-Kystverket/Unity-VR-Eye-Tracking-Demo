@@ -41,6 +41,7 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
             Debug.Log("<color=red>Error:</color>" + "Type of object must be defined for " + gameObject.name, gameObject);
         }
         CheckField("Object to track", gameObject);
+        CheckField("Trackable object name", trackableObject.GetNameOfObject());
     }
 
   
@@ -55,6 +56,10 @@ public class TrackableObjectController : MonoBehaviour, Observable<TrackableObse
     private bool CheckField(string error, object fieldToCheck)
     {
         bool valid = fieldToCheck == null;
+        if (fieldToCheck is string) { 
+            string value = (string)fieldToCheck;
+            valid = value.Length == 0;
+        }
         if (valid){
             Debug.Log("<color=red>Error:</color>" + error + " must be set.", gameObject);
         }

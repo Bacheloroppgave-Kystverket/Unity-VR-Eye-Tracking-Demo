@@ -25,6 +25,9 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     [SerializeField, Range(1, 100), Tooltip("The range that the ray should be shot")]
     private int range = 50;
 
+    [SerializeField, Tooltip("The max distance of the position to change vectors.")]
+    private float maxDistance = 0.03f;
+
     [SerializeField, Tooltip("The raycaster configuration of this raycater object")]
     private RaycasterConfiguration raycasterConfiguration = new SphereCastConfig();
 
@@ -40,6 +43,9 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
 
     [SerializeField, Tooltip("The raycast observers")]
     private List<RaycasterObserver> raycasterObservers = new List<RaycasterObserver>();
+
+    [SerializeField, Tooltip("The old area that the eyes where looking at")]
+    private Vector3 oldArea;
 
     protected void Start() {
         currentObjectsWatched = new List<GameObject>();
@@ -103,21 +109,26 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
                         newRaycasts.Add(hit);
                     }
                 }
+                Vector3 newPos = raycastHits.First().point;
                 UnwatchObjects(currentObjectsWatched);
+                if (oldArea.Equals(Vector3.negativeInfinity)) {
+                    oldArea = newPos;
+                }
+                else {
+                    float distance = Vector3.Distance(raycastHits.First().point, oldArea);
+                    if (distance > maxDistance)
+                    {
+                        oldArea = newPos;
+                    }
+                }
             }
             else
             {
+                oldArea = Vector3.negativeInfinity;
                 UnwatchObjects();
             }
             currentObjectsWatched.Clear();
-            debugHits.Clear();
-            raycastHits.ToList().ForEach(hit =>
-            {
-                if (hit.collider != null)
-                {
-                    debugHits.Add(hit.collider.gameObject);
-                }
-            });
+            
 
             UpdateObservers(newRaycasts.ToArray());
             newRaycasts.Clear();
@@ -325,7 +336,7 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     /// </summary>
     /// <param name="raycastHits">the raycast hits</param>
     public void UpdateObservers(RaycastHit[] raycastHits) {
-        raycasterObservers.ForEach(observer => observer.ObservedObjects(raycastHits));
+        raycasterObservers.ForEach(observer => observer.ObservedObjects(raycastHits, oldArea));
     }
 
     /// <inheritdoc/>

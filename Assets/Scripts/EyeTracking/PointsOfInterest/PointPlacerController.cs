@@ -29,7 +29,6 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     [SerializeField, Tooltip("The current point"), Min(1)]
     private int currentPoint = 1;
 
-
     private void Start()
     {
         RayCasterObject rayCasterObject = GetComponent<EyetrackingPlayer>().GetRaycaster();
@@ -54,19 +53,37 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     private void AddPointOfInterest(RaycastHit raycastHit) {
         PointOfInterest pointOfInterest = new PointOfInterest(orderID, raycastHit);
         pointOfInterestCollectionController.AddPointOfInterest(pointOfInterest);
+        orderID++;
+    }
+
+    /// <summary>
+    /// Increments the point of interest that was added lately.
+    /// </summary>
+    private void IncrementPointOfInterest() {
+        if (pointOfInterestCollectionController.AddOrderIdToLastPoint(orderID)) {
+            orderID++;
+        }
     }
 
     ///<inheritdoc/>
-    public void ObservedObjects(RaycastHit[] raycastHits) {
+    public void ObservedObjects(RaycastHit[] raycastHits, Vector3 lookPosition) {
         CheckIfObjectIsNull(raycastHits, "raycast hits");
         RaycastHit raycastHit = raycastHits.Last();
-        if (currentPoint % (frequency / heatmapFrequency) == 0 && raycastHits.Length > 0)
+        bool addPointOfInterest = currentPoint % (frequency / pointOfInterestFrequency) == 0 && raycastHits.Length > 0;
+        if (addPointOfInterest && lookPosition != Vector3.negativeInfinity)
+        {
+            PointOfInterest pointOfInterest = pointOfInterestCollectionController.GetLastPointOfInterest();
+            if (pointOfInterest != null && lookPosition.Equals(pointOfInterest.GetWorldPosition()))
+            {
+                IncrementPointOfInterest();
+            }
+            else {
+                AddPointOfInterest(raycastHit);
+            }
+        }
+        if (currentPoint % (frequency / heatmapFrequency) == 0 && raycastHits.Length > 0 && lookPosition != null)
         {
             AddHeatmapPoint(raycastHit);
-        }
-        if (currentPoint % (frequency / pointOfInterestFrequency) == 0 && raycastHits.Length > 0) {
-            AddPointOfInterest(raycastHit);
-            orderID++;
         }
         currentPoint += 1;
     }

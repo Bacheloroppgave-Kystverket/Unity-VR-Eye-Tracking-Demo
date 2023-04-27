@@ -20,7 +20,7 @@ public class SimulationSetupController : MonoBehaviour
     private List<TrackableObjectController> closeTrackableObjects = new List<TrackableObjectController>();
 
     [SerializeField, Tooltip("The simulation setup sender")]
-    private ServerRequest<SimulationSetup> simulationSetupSend;
+    private SimulationSetupServerRequest simulationSetupSend;
 
     private void Start()
     {
@@ -89,8 +89,6 @@ public class SimulationSetupController : MonoBehaviour
             yield return simulationSetupSend.SendGetRequest();
         }
         GetComponent<SessionController>().SendSession();
-        
-        
     }
 
 
