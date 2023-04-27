@@ -9,6 +9,7 @@ TagManager:
   - hitspot
   - RoomLight
   - SamplesInfoPanel
+  - Task
   layers:
   - Default
   - TransparentFX

@@ -30,18 +30,21 @@ public class CheckListProducer : MonoBehaviour {
     /// <summary>
     /// Updates the list so that it complies with the TaskManager's list. Completed tasks are checked off, new uncompleted tasks are added to the list. 
     /// </summary>
-    void UpdateList()
+    public void UpdateList()
     {
         tasks = taskManager.GetTaskList();
         foreach (Task task in tasks) {
-            if (task.GetCheckbox() == null) {
-                GameObject taskBox = Instantiate(checkboxPrefab, gameObject.transform);
-                task.SetCheckbox(taskBox);
-                taskBox.transform.parent = gameObject.transform;
-                Text textField = taskBox.GetComponentInChildren<Text>();
-                textField.text = task.GetTitle();
-                task.GetCompletedEvent().AddListener(UpdateList);
+            Destroy(task.GetCheckbox());
+            task.SetCheckbox(null);
+            GameObject taskBox = Instantiate(checkboxPrefab, gameObject.transform);
+            task.SetCheckbox(taskBox);
+            taskBox.transform.parent = gameObject.transform;    Text textField = taskBox.GetComponentInChildren<Text>();
+            textField.text = task.GetTitle();
+            if (task.IsCompleted()) {
+                ColourizeText(textField);
+                task.GetCheckbox().GetComponent<UnityEngine.UI.Toggle>().isOn = true;
             }
+            task.GetUpdateCall().AddListener(UpdateList);
         }
         UpdateRemainingTaskAmount();
     }
@@ -51,5 +54,9 @@ public class CheckListProducer : MonoBehaviour {
     /// </summary>
     void UpdateRemainingTaskAmount() {
         amountRemainingDisplay.text = "Tasks left: " + taskManager.GetRemainingTaskAmount();
+    }
+
+    void ColourizeText(Text textElement) {
+        textElement.color = new Color(0.341f, 0.612f, 0.29f);
     }
 }
