@@ -12,16 +12,30 @@ public class Task : MonoBehaviour {
     private string taskTitle;
     private GameObject checkbox;
     private bool isCompleted;
-    private UnityEvent taskCompleted = new UnityEvent();
+    [SerializeField]
+    private UnityEvent taskUpdateCall = new UnityEvent();
+
+    private void Start() {
+        this.taskUpdateCall.Invoke();
+    }
+
+    private void OnEnable() {
+        this.taskUpdateCall.Invoke();
+    }
+
+    private void OnDisable() {
+        this.taskUpdateCall.Invoke();
+    }
 
     /// <summary>
     /// Completed the task, and sends a message to CheckListProducers to update their info. 
     /// </summary>
     public void CompleteTask() {
-        isCompleted = true;
-        SendMessage("UpdateList");
-        checkbox.GetComponent<Toggle>().isOn = true;
-        taskCompleted.Invoke();
+        if(!isCompleted) {
+            isCompleted = true;
+            checkbox.GetComponent<Toggle>().isOn = true;
+            this.taskUpdateCall.Invoke();
+        }
     }
 
     public string GetTitle() {
@@ -38,19 +52,18 @@ public class Task : MonoBehaviour {
         return this.checkbox;
     }
 
-    public bool IsCompleted()
-    {
+    public bool IsCompleted() {
         return isCompleted;
     }
 
-    public UnityEvent GetCompletedEvent() {
-        return this.taskCompleted;
+    public UnityEvent GetUpdateCall() {
+        return this.taskUpdateCall;
     }
 
     /// <summary>
-    /// Is thrown when the task is completed
+    /// Is thrown when the task is updated
     /// </summary>
     /// <param name="completed"></param>
-    public delegate void OnTaskCompletedDelegate(bool completed);
-    public event OnTaskCompletedDelegate OnTaskCompleted;
+    public delegate void OnGetUpdateCallDelegate(bool completed);
+    public event OnGetUpdateCallDelegate OnTaskCompleted;
 }
