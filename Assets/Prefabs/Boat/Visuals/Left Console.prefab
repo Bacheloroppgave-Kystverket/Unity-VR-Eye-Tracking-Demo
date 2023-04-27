@@ -607,7 +607,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1335072920, guid: 4795147649fb50240a4897d0dc3dbb63, type: 3}
       propertyPath: referencePosition.locationName
-      value: Seat 4
+      value: Captian
       objectReference: {fileID: 0}
     - target: {fileID: 7588998243477228277, guid: 4795147649fb50240a4897d0dc3dbb63, type: 3}
       propertyPath: m_Camera
@@ -655,7 +655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7588998243600914149, guid: 4795147649fb50240a4897d0dc3dbb63, type: 3}
       propertyPath: m_Name
-      value: Radar
+      value: Captain
       objectReference: {fileID: 0}
     - target: {fileID: 7588998243600914151, guid: 4795147649fb50240a4897d0dc3dbb63, type: 3}
       propertyPath: m_RootOrder
@@ -719,6 +719,23 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7588998243600914151, guid: 4795147649fb50240a4897d0dc3dbb63, type: 3}
   m_PrefabInstance: {fileID: 4509719253022533506}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7510245973176542693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6245504426486465127, guid: 4795147649fb50240a4897d0dc3dbb63, type: 3}
+  m_PrefabInstance: {fileID: 4509719253022533506}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1669337367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7510245973176542693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e36ac7b1c3c6f4f9349375ab271695, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8710111555795671750
 PrefabInstance:
   m_ObjectHideFlags: 0
