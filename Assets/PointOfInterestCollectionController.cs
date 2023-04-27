@@ -1,15 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using Unity.Jobs;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class PointOfInterestCollectionController : MonoBehaviour
 {
     [SerializeField]
-    private List<PointOfInterest> pointOfInterests = new List<PointOfInterest>();
+    private List<PointRecording> pointRecordings = new List<PointRecording>();
+
 
     [SerializeField]
     private List<RecordedPoint> recordedPoints = new List<RecordedPoint>();
@@ -99,22 +97,37 @@ public class PointOfInterestCollectionController : MonoBehaviour
         CheckIfStartNumberIsValid(startValue);
         this.startPos = startValue;
         int index = startPos;
+        int stopValue = startValue + 10;
+        SortedList<int, PointOfInterest> sortedPointsOfInterest = new SortedList<int, PointOfInterest>();
+        List<PointOfInterest> pointOfInterests = SortPointsOfInterestJob.SortPoints(pointRecordings);
         lineController.ClearLineList();
         IEnumerator<PointOfInterestController> it = pointOfInterestControllers.GetEnumerator();
         while (index < pointOfInterests.Count && it.MoveNext()) { 
             PointOfInterestController controller = it.Current;
-            controller.SetPointOfInterest(pointOfInterests[index]);
-            index++;
+            PointOfInterest pointOfInterest = pointOfInterests[index];
+            List<int> matchingIds = pointOfInterest.CheckHowManyMatches(startValue, stopValue);
+            if (matchingIds.Count > 0) {
+                index += matchingIds.Count;
+                matchingIds.ForEach(id => sortedPointsOfInterest.Add(id, pointOfInterest));
+            }
             lineController.AddTransform(controller.transform);
+        }
+
+        IEnumerator<int> orderIdIt = sortedPointsOfInterest.Keys.GetEnumerator();
+        IEnumerator<PointOfInterestController> controllerIt = pointOfInterestControllers.GetEnumerator();
+        while (orderIdIt.MoveNext() && controllerIt.MoveNext()) {
+            controllerIt.Current.SetPointOfInterest(sortedPointsOfInterest[orderIdIt.Current], orderIdIt.Current);
         }
         lineController.DrawLine();
     }
 
     private void CheckIfStartNumberIsValid(int value) {
-        if (value < 0 && value > pointOfInterests.Count) {
-            throw new IllegalArgumentException("The start value must be larger than zero and lower than " + pointOfInterests.Count);
+        if (value < 0 && value > pointRecordings.Count) {
+            throw new IllegalArgumentException("The start value must be larger than zero and lower than " + pointRecordings.Count);
         }
     }
+
+    
 
     /// <summary>
     /// Shows the heatmap points.
@@ -163,11 +176,9 @@ public class PointOfInterestCollectionController : MonoBehaviour
     /// <summary>
     /// Instansiates the point of interest and sets the location.
     /// </summary>
-    /// <param name="pointOfInterest">the point of interest to instansiate</param>
-    private void InstansiatePoint(PointOfInterest pointOfInterest)
+    private void InstansiatePoint()
     {
         PointOfInterestController pointOfInterestController = Instantiate(pointPrefab).GetComponent<PointOfInterestController>();
-        pointOfInterestController.SetPointOfInterest(pointOfInterest);
         pointOfInterestControllers.Add(pointOfInterestController);
     }
 
@@ -175,9 +186,9 @@ public class PointOfInterestCollectionController : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="raycastHit"></param>
-    public void AddPointOfInterest(PointOfInterest pointOfInterest)
+    public void AddPointOfInterest(PointRecording pointRecording)
     {
-        pointOfInterests.Add(pointOfInterest);
+        pointRecordings.Add(pointRecording);
         
     }
 
@@ -185,19 +196,19 @@ public class PointOfInterestCollectionController : MonoBehaviour
     /// Adds an order id to the last point of interest.
     /// </summary>
     /// <param name="orderId">the new order id</param>
-    public bool AddOrderIdToLastPoint(int orderId) {
-        bool valid = this.pointOfInterests.Count > 0;
+    public bool IncrementLastPointRecording() {
+        bool valid = this.pointRecordings.Count > 0;
         if (valid) {
-            pointOfInterests.Last().AddOrderId(orderId);
+            pointRecordings.Last().IncrementAmountOfTimes();
         }
         return valid;
     }
 
     /// <summary>
-    /// Gets the last point of interest. Returns null if the last point is not made.
+    /// Gets the last point recording. Returns null if the last point is not made.
     /// </summary>
-    /// <returns>the point of interest or null</returns>
-    public PointOfInterest GetLastPointOfInterest() { 
-        return pointOfInterests.Count > 0 ? pointOfInterests.Last() : null;
+    /// <returns>the point recording or null</returns>
+    public PointRecording GetLastPointRecording() { 
+        return pointRecordings.Count > 0 ? pointRecordings.Last() : null;
     }
 }

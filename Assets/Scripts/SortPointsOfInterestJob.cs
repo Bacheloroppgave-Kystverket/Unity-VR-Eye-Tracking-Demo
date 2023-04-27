@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Jobs;
 using UnityEngine;
 
@@ -11,53 +12,45 @@ public class SortPointsOfInterestJob
 
     public static bool isDone;
 
-    public static List<PointState> pointStates = new List<PointState>();
 
 
-    public static void MakePointStates() {
-        pointStates.Clear();
-        pointOfInterests.ForEach(point => pointStates.Add(new PointState(point)));
-    }
-
-    public static List<PointOfInterest> SortPoints(List<PointOfInterest> newPoints) {
-        pointOfInterests = newPoints;
-        MakePointStates();
+    public static List<PointOfInterest> SortPoints(List<PointRecording> newPoints) {
         List<PointOfInterest> newAddedPoints = new List<PointOfInterest>();
-        for (int x = 0; x < pointStates.Count; x++)
+        for (int x = 0; x < newPoints.Count; x++)
         {
-            PointState pointState = pointStates[x];
-            PointOfInterest pointOfInterest = pointState.GetPointOfInterest();
-            if (!pointState.IsSorted())
+            PointRecording pointRecording = newPoints[x];
+            pointRecording.SetSorted();
+            if (!pointRecording.IsSorted())
             {
-                newAddedPoints.Add(pointOfInterest);
+                newAddedPoints.Add(new PointOfInterest(pointRecording));
                 for (int i = x; i < pointOfInterests.Count; i++)
                 {
-                    PointState pointStateToCompare = pointStates[i];
-                    PointOfInterest pointOfInterestToCompare = pointStateToCompare.GetPointOfInterest();
-                    if (!pointStateToCompare.IsSorted())
+                    PointRecording pointRecordingToCompare = newPoints[i];
+                    if (!pointRecordingToCompare.IsSorted())
                     {
 
-                        if (pointOfInterest.GetPointOfInterestOrder() != pointOfInterestToCompare.GetPointOfInterestOrder())
+                        if (pointRecording.GetOrderId() != pointRecordingToCompare.GetOrderId())
                         {
-                            Transform firstTransform = pointOfInterest.GetParentTransform();
-                            Transform lastTransform = pointOfInterestToCompare.GetParentTransform();
+                            Transform firstTransform = pointRecording.GetParentTransform();
+                            Transform lastTransform = pointRecordingToCompare.GetParentTransform();
                             if (firstTransform.GetInstanceID() == lastTransform.GetInstanceID())
                             {
-                                float distance = Vector3.Distance(pointOfInterest.GetLocalPosition(), pointOfInterestToCompare.GetLocalPosition());
+                                float distance = Vector3.Distance(pointRecording.GetLocalPosition(), pointRecordingToCompare.GetLocalPosition());
                                 if (distance > 0 && distance < 0.015f || distance == 0)
                                 {
-                                    pointStateToCompare.SetSorted();
+                                    pointRecordingToCompare.SetSorted();
                                     result += 1;
-                                    pointOfInterestToCompare.GetAllOrderIds().ForEach(id => pointOfInterest.AddOrderId(id));
+                                    newAddedPoints.Last().AddPointRecording(pointRecordingToCompare);
+                               
                                 }
                             }
                         }
                     }
                 }
-                pointState.SetSorted();
             }
         }
         result = newAddedPoints.Count;
+        Debug.Log("there are " + result);
         isDone = true;
         return newAddedPoints;
     }

@@ -44,27 +44,6 @@ public class VisualDotDeployer : MonoBehaviour
         pointOfInterests.Add(pointOfInterest);
     }
 
-    public IEnumerator ShowPointsOfInterestFromAndTo(int smallestValue, int largestValue) {
-        IEnumerator<PointOfInterest> it = pointOfInterests.GetEnumerator();
-        visualEffect.SetBool("ShowParticle", true);
-        visualEffect.SetBool("Heatmap", false);
-        Vector3 lastPoint = Vector3.negativeInfinity;
-        while (it.MoveNext()) {
-            yield return new WaitForFixedUpdate();
-            PointOfInterest pointOfInterest = it.Current;
-            if (pointOfInterest.GetPointOfInterestOrder() >= smallestValue && pointOfInterest.GetPointOfInterestOrder() <= largestValue) {
-                Vector3 positionOfDot = FindVectorOfDot(pointOfInterest);
-                if (lastPoint != Vector3.negativeInfinity)
-                {
-
-                }
-                ShowDot(pointOfInterest, positionOfDot);
-                lastPoint = positionOfDot;
-            }
-            
-        }
-    }
-
     /// <summary>
     /// Shows all the heatmap points.
     /// </summary>
@@ -73,12 +52,7 @@ public class VisualDotDeployer : MonoBehaviour
         StartCoroutine(ShowHeatmap(showAsSolid));
     }
 
-    /// <summary>
-    /// Shows all the points of interest.
-    /// </summary>
-    public void ShowAllPointsOfInterest() {
-        StartCoroutine(ShowPointsOfInterestFromAndTo(0, pointOfInterests.Count));
-    }
+    
 
     /// <summary>
     /// Shows the heatmap

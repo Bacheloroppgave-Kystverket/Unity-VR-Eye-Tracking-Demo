@@ -50,9 +50,9 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     /// 
     /// </summary>
     /// <param name="raycastHit"></param>
-    private void AddPointOfInterest(RaycastHit raycastHit) {
-        PointOfInterest pointOfInterest = new PointOfInterest(orderID, raycastHit);
-        pointOfInterestCollectionController.AddPointOfInterest(pointOfInterest);
+    private void AddPointRecording(RaycastHit raycastHit) {
+        PointRecording pointRecording = new PointRecording(orderID, raycastHit);
+        pointOfInterestCollectionController.AddPointOfInterest(pointRecording);
         orderID++;
     }
 
@@ -60,7 +60,7 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     /// Increments the point of interest that was added lately.
     /// </summary>
     private void IncrementPointOfInterest() {
-        if (pointOfInterestCollectionController.AddOrderIdToLastPoint(orderID)) {
+        if (pointOfInterestCollectionController.IncrementLastPointRecording()) {
             orderID++;
         }
     }
@@ -73,14 +73,14 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
             bool addPointOfInterest = currentPoint % (frequency / pointOfInterestFrequency) == 0 && raycastHits.Length > 0;
             if (addPointOfInterest && lookPosition != Vector3.negativeInfinity)
             {
-                PointOfInterest pointOfInterest = pointOfInterestCollectionController.GetLastPointOfInterest();
-                if (pointOfInterest != null && lookPosition.Equals(pointOfInterest.GetWorldPosition()))
+                PointRecording pointRecording = pointOfInterestCollectionController.GetLastPointRecording();
+                if (pointRecording != null && lookPosition.Equals(pointRecording.GetWorldPosition()))
                 {
                     IncrementPointOfInterest();
                 }
                 else
                 {
-                    AddPointOfInterest(raycastHit);
+                    AddPointRecording(raycastHit);
                 }
             }
             if (currentPoint % (frequency / heatmapFrequency) == 0 && raycastHits.Length > 0 && lookPosition != null)

@@ -5,56 +5,74 @@ using System.Linq;
 using UnityEngine;
 
 [Serializable]
-public class PointOfInterest : RecordedPoint
+public class PointOfInterest
 {
     [SerializeField, Tooltip("The point of interest.")]
-    private List<int> orderIds = new List<int>();
+    private List<PointRecording> pointRecordings;
 
     /// <summary>
     /// Represents a point of interest.
     /// </summary>
     /// <param name="pointOfInterestOrder">the order of the point of interest.</param>
     /// <param name="hit">the raycast hit</param>
-    public PointOfInterest(int pointOfInterestOrder, RaycastHit hit) : base(hit)
+    public PointOfInterest(PointRecording pointRecording)
     {
-        CheckIfNumberIsAboveZero(pointOfInterestOrder, "point of interest order");
-        this.orderIds.Add(pointOfInterestOrder);
+        this.pointRecordings.Add(pointRecording);
     }
 
     /// <summary>
-    /// Adds an order id.
+    /// Gets the point recording with the matching id.
     /// </summary>
-    /// <param name="orderId">the new order id</param>
-    public void AddOrderId(int orderId) {
-        if (orderId < 0) {
-            throw new IllegalArgumentException("The order id must be larger than zero.");
-        }
-        this.orderIds.Add(orderId);
+    /// <param name="orderId">the order id</param>
+    /// <returns>the point recording</returns>
+    public PointRecording GetPointRecordingWithId(int orderId) {
+        return pointRecordings.Find(point => point.GetOrderId() == orderId);
     }
 
     /// <summary>
-    /// Gets the point of interest order.
+    /// Gets all the order ids that are within that range in this point.
     /// </summary>
-    /// <returns></returns>
-    public int GetPointOfInterestOrder() => this.orderIds.First();
-
-    /// <summary>
-    /// Gets all the order ids.
-    /// </summary>
-    /// <returns>all of the order ids</returns>
-    public List<int> GetAllOrderIds() => this.orderIds;
-
-    /// <summary>
-    /// Checks if the number is above zero.
-    /// </summary>
-    /// <param name="number">the number to check</param>
-    /// <param name="error">what the number is to be shown in the error.</param>
-    /// <exception cref="IllegalArgumentException">gets thrown if the number is below zero.</exception>
-    private void CheckIfNumberIsAboveZero(long number, string error)
+    /// <param name="startValue">the start value. Is inclusive</param>
+    /// <param name="stopValue">the stop value. Is inclusive</param>
+    /// <returns>a list with the matching ids</returns>
+    public List<int> CheckHowManyMatches(int startValue, int stopValue)
     {
-        if (number < 0)
+        List<int> matchingOrderIds = new List<int>();
+        pointRecordings.ForEach(pointRecording =>
         {
-            throw new IllegalArgumentException("The " + error + " needs to be larger or equal to 0");
+            if (pointRecording.GetOrderId() >= startValue && pointRecording.GetOrderId() <= stopValue)
+            {
+                matchingOrderIds.Add(pointRecording.GetOrderId());
+            }
+        });
+        return matchingOrderIds;
+    }
+
+
+    /// <summary>
+    /// Adds an order pointRecording.
+    /// </summary>
+    /// <param name="pointRecording">the new order point recording</param>
+    public void AddPointRecording(PointRecording pointRecording) {
+        CheckIfObjectIsNull(pointRecording, "point recording");
+        this.pointRecordings.Add(pointRecording);
+    }
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
         }
     }
+
+    public PointRecording GetLatestRecording() => pointRecordings.Last();
+
+    
 }

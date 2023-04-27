@@ -9,19 +9,23 @@ public class PointOfInterestController : MonoBehaviour
 {
     [Header("List of values")]
     [SerializeField, Tooltip("The point of interest that this object represents.")]
-    private List<RecordedPoint> points = new List<RecordedPoint>();
+    private List<PointOfInterest> points = new List<PointOfInterest>();
+
+    [SerializeField, Tooltip("The order id of this point")]
+    private int orderId;
 
     /// <summary>
     /// Sets the position of the intrest point. Also sets is as a child of that ibhect and
     /// </summary>
     /// <param name="pointOfInterest"></param>
     /// <param name="trackableObjectController"></param>
-    public void SetPointOfInterest(PointOfInterest pointOfInterest) {
+    public void SetPointOfInterest(PointOfInterest pointOfInterest, int orderId) {
         CheckIfObjectIsNull(pointOfInterest, "point of interest");
         points.Add(pointOfInterest);
-        Transform parentTransform = pointOfInterest.GetParentTransform();
+        this.orderId = orderId;
+        Transform parentTransform = pointOfInterest.GetPointRecordingWithId(orderId).GetParentTransform();
         transform.SetParent(parentTransform);
-        transform.localPosition = pointOfInterest.GetLocalPosition();
+        transform.localPosition = pointOfInterest.GetPointRecordingWithId(orderId).GetLocalPosition();
         transform.localScale = parentTransform.InverseTransformVector(new Vector3(0.03f,0.03f,0.03f));
         transform.localRotation = Quaternion.Euler(0,0,0);
 
@@ -32,15 +36,6 @@ public class PointOfInterestController : MonoBehaviour
     /// </summary>
     public void ShowPointOfInterest() { 
         gameObject.SetActive(true);
-    }
-
-    /// <summary>
-    /// Adds a recorded point to this point of interest controller.
-    /// </summary>
-    /// <param name="recordedPoint">the recorded point</param>
-    public void AddRecordedPoint(RecordedPoint recordedPoint) {
-        CheckIfObjectIsNull(recordedPoint, "recorded point");
-        this.points.Add(recordedPoint);
     }
 
     /// <summary>q
