@@ -87,21 +87,15 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     /// </summary>
     /// <returns>the time to wait</returns>
     private IEnumerator StartEyeTracking() {
-        RaycastHit[] raycastHits;
         List<RaycastHit> newRaycasts = new List<RaycastHit>();
-        Vector3 direction;
-        Vector3 position;
         while (casting) {
             float timeToWait = 1f / frequency;
-            //Makes ray
+
+            RaycastHit[] raycasts = ShootRaycast();
             
-            direction = FindDirection();
-            position = FindPosition();
-            
-            raycastHits = shootMutliple ? ShootMultipleObjects(position, direction) : ShootSingleObject(position, direction);
             bool hitSolid = false;
-            if (raycastHits.Any()) {
-                IEnumerator<RaycastHit> it = raycastHits.ToList().GetEnumerator();
+            if (raycasts.Any()) {
+                IEnumerator<RaycastHit> it = raycasts.ToList().GetEnumerator();
                 while (it.MoveNext() && !hitSolid) {
                     RaycastHit hit = it.Current;
                     if (hit.collider != null) {
@@ -109,18 +103,8 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
                         newRaycasts.Add(hit);
                     }
                 }
-                Vector3 newPos = raycastHits.First().point;
                 UnwatchObjects(currentObjectsWatched);
-                if (oldArea.Equals(Vector3.negativeInfinity)) {
-                    oldArea = newPos;
-                }
-                else {
-                    float distance = Vector3.Distance(raycastHits.First().point, oldArea);
-                    if (distance > maxDistance)
-                    {
-                        oldArea = newPos;
-                    }
-                }
+                SetCurrentCircularPosition(raycasts.First());
             }
             else
             {
@@ -128,13 +112,38 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
                 UnwatchObjects();
             }
             currentObjectsWatched.Clear();
-            
+
 
             UpdateObservers(newRaycasts.ToArray());
             newRaycasts.Clear();
             yield return new WaitForSeconds(timeToWait);
         }
-        MonoBehaviour.print("Eyetracking has stopped.");
+        MonoBehaviour.print("Eyetracking has stopped");
+    }
+
+
+    private void SetCurrentCircularPosition(RaycastHit firstHit) {
+        if (oldArea.Equals(Vector3.negativeInfinity))
+        {
+            oldArea = firstHit.point;
+        }
+        else
+        {
+            float distance = Vector3.Distance(firstHit.point, oldArea);
+            if (distance > maxDistance)
+            {
+                oldArea = firstHit.point;
+                
+            }
+        }
+    }
+
+    /// <summary>
+    /// Shoots raycast and returns the hits.
+    /// </summary>
+    /// <returns>the raycast hits</returns>
+    private RaycastHit[] ShootRaycast() {
+        return shootMutliple ? ShootMultipleObjects(FindPosition(), FindDirection()) : ShootSingleObject(FindPosition(), FindDirection());
     }
 
     /// <summary>

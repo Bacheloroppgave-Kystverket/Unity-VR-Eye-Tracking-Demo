@@ -8,7 +8,7 @@ using UnityEngine;
 public class PointOfInterest
 {
     [SerializeField, Tooltip("The point of interest.")]
-    private List<PointRecording> pointRecordings;
+    private List<PointRecording> pointRecordings = new List<PointRecording>();
 
     /// <summary>
     /// Represents a point of interest.
@@ -17,6 +17,8 @@ public class PointOfInterest
     /// <param name="hit">the raycast hit</param>
     public PointOfInterest(PointRecording pointRecording)
     {
+        CheckIfObjectIsNull(pointRecording, "point recording");
+        this.pointRecordings = new List<PointRecording>();
         this.pointRecordings.Add(pointRecording);
     }
 

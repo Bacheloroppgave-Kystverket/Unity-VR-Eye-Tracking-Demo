@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,10 @@ public class PointOfInterestManager : MonoBehaviour
     private PointPlacerController pointPlacer;
 
     [SerializeField, Tooltip("The points of intertest collection controller")]
-    private PointOfInterestCollectionController pointOfInterestCollectionController;
+    private RecordedPointsController pointOfInterestCollectionController;
+
+    [SerializeField, Tooltip("The points of interest displayer")]
+    private DisplayPointsOfInterest displayPointsOfInterest;
 
     [SerializeField, Tooltip("The point start to show.")]
     private int pointStart = 0;
@@ -38,9 +42,9 @@ public class PointOfInterestManager : MonoBehaviour
     private void Start()
     {
         CheckField("point placer", pointPlacer);
-        pointOfInterestCollectionController = GameObject.FindGameObjectWithTag("Player").GetComponent<PointOfInterestCollectionController>();
+        pointOfInterestCollectionController = GameObject.FindGameObjectWithTag("Player").GetComponent<RecordedPointsController>();
         CheckField("point of interest collection controller", pointOfInterestCollectionController);
-        
+        CheckField("display points of interest", displayPointsOfInterest);
     }
 
     private void Awake()
@@ -62,7 +66,6 @@ public class PointOfInterestManager : MonoBehaviour
  
 
     public void TogglePointCouldMode() { 
-        pointOfInterestCollectionController.SetShowPointsAsSolid(showPointsAsSolid);
         showPointsAsSolid = !showPointsAsSolid;
     }
 
@@ -71,12 +74,14 @@ public class PointOfInterestManager : MonoBehaviour
     /// </summary>
     public void ToggleHeatmap() {
         showHeatmap = !showHeatmap;
+        pointOfInterestCollectionController.DeployHeatmapPoints();
+        List<VisualDotDeployer> visualDotDeployers = GameObject.FindObjectsOfType<VisualDotDeployer>().ToList();
         if (showHeatmap)
         {
-            pointOfInterestCollectionController.ShowHeatmapPoints();
+            visualDotDeployers.ForEach(deployer => deployer.ShowAllHeatmapPoints(showPointsAsSolid));
         }
         else {
-            pointOfInterestCollectionController.HideHeatmapPoints();
+            visualDotDeployers.ForEach(deployer => deployer.RemoveVisualDots());
         }
     }
 
@@ -88,11 +93,11 @@ public class PointOfInterestManager : MonoBehaviour
         showPoints = !showPoints;
         if (showPoints)
         {
-            pointOfInterestCollectionController.ShowPointsOfInterest();
-            pointOfInterestCollectionController.UpdateOrderOfPointsOfInterest(pointStart);
+            
+            displayPointsOfInterest.UpdateOrderOfPointsOfInterest(pointStart);
         }
         else {
-            pointOfInterestCollectionController.HidePointsOfInterest();
+            displayPointsOfInterest.HidePointsOfInterest();
         }  
     }
 
@@ -101,7 +106,7 @@ public class PointOfInterestManager : MonoBehaviour
     /// </summary>
     public void ToggleLine() { 
         showLine = !showLine;
-        pointOfInterestCollectionController.GetLineController().SetShowLine(showLine);
+        displayPointsOfInterest.GetLineController().SetShowLine(showLine);
     }
 
     /// <summary>
@@ -109,7 +114,7 @@ public class PointOfInterestManager : MonoBehaviour
     /// </summary>
     public void TogglePointText() {
         showPointText = !showPointText;
-        pointOfInterestCollectionController.SetShowPointText(showPointText);
+        displayPointsOfInterest.SetShowPointText(showPointText);
     }
 
     /// <summary>
@@ -117,7 +122,7 @@ public class PointOfInterestManager : MonoBehaviour
     /// </summary>
     public void ToggleLineText() {
         showLineText = !showLineText;
-        pointOfInterestCollectionController.GetLineController().SetShowLineText(showLineText);
+        displayPointsOfInterest.GetLineController().SetShowLineText(showLineText);
     }
 
     /// <summary>

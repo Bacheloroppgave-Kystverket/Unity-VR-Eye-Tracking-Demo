@@ -14,7 +14,6 @@ public class PointRecording : RecordedPoint
 
     private bool sorted;
 
-
     /// <summary>
     /// Represents a point of interest.
     /// </summary>
@@ -25,6 +24,14 @@ public class PointRecording : RecordedPoint
         CheckIfNumberIsAboveZero(pointOfInterestOrder, "point of interest order");
         this.orderId = pointOfInterestOrder;
         this.amountOfTimes = 1;
+    }
+
+    /// <summary>
+    /// Gets the time of this recording.
+    /// </summary>
+    /// <returns>the time</returns>
+    public int GetTime() {
+        return amountOfTimes;
     }
 
 

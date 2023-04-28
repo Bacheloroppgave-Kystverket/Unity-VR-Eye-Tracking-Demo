@@ -1,34 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Schema;
+using TMPro;
 using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.VFX;
 
 public class PointOfInterestController : MonoBehaviour
 {
-    [Header("List of values")]
     [SerializeField, Tooltip("The point of interest that this object represents.")]
-    private List<PointOfInterest> points = new List<PointOfInterest>();
+    private PointOfInterest pointOfInterest;
 
     [SerializeField, Tooltip("The order id of this point")]
     private int orderId;
 
+    [SerializeField, Tooltip("The text of the point of interest")]
+    private TextMeshPro textOfPoint;
+
     /// <summary>
     /// Sets the position of the intrest point. Also sets is as a child of that ibhect and
     /// </summary>
-    /// <param name="pointOfInterest"></param>
-    /// <param name="trackableObjectController"></param>
-    public void SetPointOfInterest(PointOfInterest pointOfInterest, int orderId) {
+    /// <param name="pointOfInterest">the point of interest</param>
+    /// <param name="orderId">the order id</param>
+    /// <param name="showText">true if the text of the point should show.</param>
+    public void SetPointOfInterest(PointOfInterest pointOfInterest, int orderId, bool showText) {
         CheckIfObjectIsNull(pointOfInterest, "point of interest");
-        points.Add(pointOfInterest);
+        this.pointOfInterest = pointOfInterest;
         this.orderId = orderId;
-        Transform parentTransform = pointOfInterest.GetPointRecordingWithId(orderId).GetParentTransform();
-        transform.SetParent(parentTransform);
-        transform.localPosition = pointOfInterest.GetPointRecordingWithId(orderId).GetLocalPosition();
-        transform.localScale = parentTransform.InverseTransformVector(new Vector3(0.03f,0.03f,0.03f));
-        transform.localRotation = Quaternion.Euler(0,0,0);
-
+        PointRecording pointRecording = pointOfInterest.GetPointRecordingWithId(orderId);
+        this.textOfPoint.text = pointRecording.GetOrderId()  + "\n" + pointRecording.GetTime().ToString() + "s";
+        this.textOfPoint.gameObject.SetActive(showText);
+        Transform parentTransform = pointRecording.GetParentTransform();
+        transform.position = parentTransform.transform.TransformPoint(pointOfInterest.GetPointRecordingWithId(orderId).GetLocalPosition());
+        transform.LookAt(GameObject.FindWithTag("Player").transform);
+        //transform.localScale = parentTransform.InverseTransformVector(new Vector3(0.03f,0.03f,0.03f));
     }
 
     /// <summary>

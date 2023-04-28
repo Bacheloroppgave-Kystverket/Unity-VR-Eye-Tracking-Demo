@@ -10,7 +10,7 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
 {
     [Header("Configure object")]
     [SerializeField, Tooltip("The point of interest collection controller")]
-    private PointOfInterestCollectionController pointOfInterestCollectionController;
+    private RecordedPointsController pointOfInterestCollectionController;
 
     [Header("Frequencies of diffrent parameters")]
     [SerializeField, Tooltip("The frequency of the tracker"), Min(1)]
@@ -34,7 +34,7 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
         RayCasterObject rayCasterObject = GetComponent<EyetrackingPlayer>().GetRaycaster();
         this.frequency = rayCasterObject.GetFrequency();
         rayCasterObject.AddObserver(this);
-        pointOfInterestCollectionController = GetComponent<PointOfInterestCollectionController>();
+        pointOfInterestCollectionController = GetComponent<RecordedPointsController>();
     }
 
     /// <summary>
@@ -60,9 +60,7 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     /// Increments the point of interest that was added lately.
     /// </summary>
     private void IncrementPointOfInterest() {
-        if (pointOfInterestCollectionController.IncrementLastPointRecording()) {
-            orderID++;
-        }
+        pointOfInterestCollectionController.IncrementLastPointRecording();
     }
 
     ///<inheritdoc/>
@@ -74,7 +72,8 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
             if (addPointOfInterest && lookPosition != Vector3.negativeInfinity)
             {
                 PointRecording pointRecording = pointOfInterestCollectionController.GetLastPointRecording();
-                if (pointRecording != null && lookPosition.Equals(pointRecording.GetWorldPosition()))
+                
+                if (pointRecording != null && Vector3.Distance(pointRecording.GetWorldPosition(), lookPosition) < 0.06f)
                 {
                     IncrementPointOfInterest();
                 }

@@ -54,7 +54,7 @@ public class SessionManager : MonoBehaviour
     }
 
     public void PauseEyeTrackingForNSeconds(float duration) {
-        if (!isPaused && duration > 0) { 
+        if (!isPaused && duration > 0) {
             isPaused = true;
             pauseDuration = duration;
             StartCoroutine(PauseEyeTracking());
@@ -87,9 +87,17 @@ public class SessionManager : MonoBehaviour
     /// </summary>
     public void StartEyeTracking() {
         eyetracking = !eyetracking;
-        referencePositionManager.StartEyeTracking();
-        sessionController.GetRayCasterObject().StartTracking();
-        feedbackManager.StartEyetracking();
+        StartCoroutine(StartTracking());
+    }
+
+    public IEnumerator StartTracking() {
+        yield return new WaitForSeconds(1);
+
+        if (eyetracking) {
+            referencePositionManager.StartEyeTracking();
+            sessionController.GetRayCasterObject().StartTracking();
+            feedbackManager.StartEyetracking();
+        }
     }
 
     /// <summary>

@@ -31,28 +31,38 @@ public class GameObjectLineController : MonoBehaviour
     /// <param name="toTransform">the to transform.</param>
     /// <param name="textToShow">the text to show between the lines</param>
     /// <param name="showText">true if the line text should show. False otherwise</param>
-    public void SetNewPositonsAndUpdateLine(Transform fromTransform, Transform toTransform, string textToShow, bool showText) {
+    /// <param name="player">the players transform</param>
+    public void SetNewPositonsAndUpdateLine(Transform fromTransform, Transform toTransform, string textToShow, bool showText, Transform player) {
         SetFromTransform(fromTransform);
         SetToTransform(toTransform);
         SetDisplayText(textToShow);
         UpdateLinePosition();
-        textOfLine.gameObject.SetActive(showText);
+        //textOfLine.gameObject.SetActive(showText);
+        //LookAtPlayer(player);
     }
 
     /// <summary>
     /// Sets the display text.
     /// </summary>
     /// <param name="textToDisplay">the text to display</param>
-    public void SetDisplayText(string textToDisplay) {
+    private void SetDisplayText(string textToDisplay) {
         CheckIfObjectIsNull(textToDisplay, "text to display");
         this.displayText = textToDisplay;
         textOfLine.text = displayText;
+    }
+
+    /// <summary>
+    /// Look at the player.
+    /// </summary>
+    /// <param name="transformToLookAt">the transform to look at</param>
+    private void LookAtPlayer(Transform transformToLookAt) {
+        this.textOfLine.transform.LookAt(transformToLookAt);
     }
     
     /// <summary>
     /// Updates the line position.
     /// </summary>
-    public void UpdateLinePosition() {
+    private void UpdateLinePosition() {
         ShowLine();
         Vector3 newPos = (fromTransform.position + toTransform.position)/2;
         transform.position = newPos;
@@ -73,7 +83,7 @@ public class GameObjectLineController : MonoBehaviour
     /// Sets a new from transform.
     /// </summary>
     /// <param name="transform">the from transform</param>
-    public void SetFromTransform(Transform transform) {
+    private void SetFromTransform(Transform transform) {
         CheckIfObjectIsNull(transform, "transform");
         this.fromTransform = transform;
     }

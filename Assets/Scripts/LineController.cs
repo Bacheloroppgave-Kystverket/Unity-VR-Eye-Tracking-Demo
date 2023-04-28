@@ -11,15 +11,15 @@ public class LineController : MonoBehaviour
     [SerializeField, Tooltip("The connection between the dots prefab.")]
     private GameObjectLineController linePrefab;
 
-    [SerializeField, Tooltip("Set to true if the line text is supposed to be displayed. False otherwise.")]
-    private bool displayLineText;
-
     [Header("Debug lists")]
     [SerializeField, Tooltip("Game objects to draw a line between.")]
     private List<Transform> transforms = new List<Transform>();
 
     [SerializeField, Tooltip("The gameobject line controllers")]
     private List<GameObjectLineController> gameObjectLineControllers = new List<GameObjectLineController>();
+
+    [SerializeField, Tooltip("The player")]
+    private EyetrackingPlayer eyetrackingPlayer;
 
     private bool showLine;
 
@@ -102,7 +102,7 @@ public class LineController : MonoBehaviour
         else {
             lineController = gameObjectLineControllers[index];
         }
-        lineController.SetNewPositonsAndUpdateLine(fromTransform, toTransform, displayLineText ? (index + 1).ToString() : "", showLineText);
+        lineController.SetNewPositonsAndUpdateLine(fromTransform, toTransform, showLineText ? (index + 1).ToString() : "", showLineText, eyetrackingPlayer.transform);
     }
 
     /// <summary>

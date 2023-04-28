@@ -1273,16 +1273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48fedd542f7dc9c498b218b4f6253558, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointOfInterests: []
+  pointRecordings: []
   recordedPoints: []
-  pointPrefab: {fileID: 7746015807731111323, guid: a0c4ae0ba01bb2848bba3913fff38e08, type: 3}
   visualEffectPrefab: {fileID: 605675412269675527, guid: 81085fe1e22f63c4c9a0794ff19e4810, type: 3}
-  pointOfInterestControllers: []
-  visualDotDeployers: []
   currentHeatPoint: 0
-  startPos: 0
-  amountOfPointControllers: 30
-  lineController: {fileID: 0}
 --- !u!114 &2131997588
 MonoBehaviour:
   m_ObjectHideFlags: 0
