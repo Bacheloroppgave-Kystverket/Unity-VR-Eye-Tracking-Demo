@@ -53,7 +53,7 @@ public abstract class TeleportTargetHandler : TeleportSupport
 	private readonly List<Vector3> _aimPoints = new List<Vector3>();
 
 	/// <summary>
-	/// This coroutine is active while the teleport system is in the aiming state.
+	/// This coroutine is showOverlay while the teleport system is in the aiming state.
 	/// </summary>
 	/// <returns></returns>
 	private IEnumerator TargetAimCoroutine()

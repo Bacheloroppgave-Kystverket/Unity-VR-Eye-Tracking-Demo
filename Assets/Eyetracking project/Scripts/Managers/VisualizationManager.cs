@@ -7,7 +7,7 @@ public class VisualizationManager : MonoBehaviour
     private bool activeHitspotRaw;
 
     /// <summary>
-    /// Toggles the active state for the hitspot.
+    /// Toggles the showOverlay state for the hitspot.
     /// </summary>
     public void ToggleHitspot() {
         GameObject hitspot = GetHitspot();

@@ -115,7 +115,7 @@ public class SessionManager : MonoBehaviour
     /// Gets the sessionController.
     /// </summary>
     /// <returns>the current sessionController</returns>
-    public SessionController GetSession() => sessionController;
+    public SessionController GetSessionController() => sessionController;
 
     /// <summary>
     /// Checks if a string field is valid.

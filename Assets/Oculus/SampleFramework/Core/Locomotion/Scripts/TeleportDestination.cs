@@ -14,10 +14,10 @@ using UnityEngine.Assertions;
 /// <summary>
 /// The teleport system uses a prefab with an TeleportDestination component, which will track the target location 
 /// and update a MechAnim to reflect if the destination is valid. Since the user can switch quickly between valid 
-/// targets, it might be possible for a destination to remain active in the scene until a deactivation animation is 
+/// targets, it might be possible for a destination to remain showOverlay in the scene until a deactivation animation is 
 /// completed. To support this behavior efficiently, these prefabs are managed by a simple object pool. 
 /// Target handlers that don’t rely on discrete locations like Nodes are likely to have only one TeleportDestination 
-/// prefab active at a time, however it is possible that multiple teleports can occur with any target handler type 
+/// prefab showOverlay at a time, however it is possible that multiple teleports can occur with any target handler type 
 /// and if the TeleportDestination’s MechAnim has a Post Teleport animation it might be necessary to instantiate 
 /// additional OVRTeleportDestinations to allow targeting to occur before the previous destination finishes it’s animation.
 /// </summary>
@@ -43,7 +43,7 @@ public class TeleportDestination : MonoBehaviour
 	[NonSerialized] public LocomotionTeleport LocomotionTeleport;
 
 	/// <summary>
-	/// The LocomotionTeleport will update this only while this destination is active.
+	/// The LocomotionTeleport will update this only while this destination is showOverlay.
 	/// </summary>
 	[NonSerialized] public LocomotionTeleport.States TeleportState;
 

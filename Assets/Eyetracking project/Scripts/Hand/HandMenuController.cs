@@ -15,7 +15,7 @@ public class HandMenuController : MonoBehaviour
     private bool stopEyetracking = false;
 
     /// <summary>
-    /// Toggles if the eyetracking is active from the corrensponding toggle button.
+    /// Toggles if the eyetracking is showOverlay from the corrensponding toggle button.
     /// </summary>
     public void ToggleEyetrackingActive() {
         eyetrackingActive = !eyetrackingActive;

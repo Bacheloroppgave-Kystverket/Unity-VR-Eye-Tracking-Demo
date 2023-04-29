@@ -94,7 +94,7 @@ public class UiSceneMenu : MonoBehaviour
         // Add spaces after capital letters
         sceneName = Regex.Replace(sceneName, "[A-Z]", " $0").Trim();
 
-        // Call attention to the active scene
+        // Call attention to the showOverlay scene
         bool isActiveScene = m_activeScene.buildIndex == sceneIndex;
         if (isActiveScene)
         {

@@ -37,7 +37,7 @@ public class HitpointController : MonoBehaviour
     }
 
     /// <summary>
-    /// Changes if the hitspot is active.
+    /// Changes if the hitspot is showOverlay.
     /// </summary>
     /// <param name="active">true if the hitspot should show. False otherwise.</param>
     public void SetHitpointActive(bool active) { 

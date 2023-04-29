@@ -20,11 +20,11 @@ public class PointOfInterestManager : MonoBehaviour
     [SerializeField, Tooltip("The point start to show.")]
     private int pointStart = 0;
 
+    [SerializeField, Tooltip("The ending of the gaze")]
+    private int pointEnd = 0;
+
     [SerializeField, Tooltip("Set to true if the line for gazeplots should be shown.")]
     private bool showLine = true;
-
-    [SerializeField, Tooltip("Set to true if the line text for gazeplots should be shown.")]
-    private bool showLineText = true;
 
     [SerializeField, Tooltip("Set to true if the point text should be shown.")]
     private bool showPointText = true;
@@ -54,9 +54,16 @@ public class PointOfInterestManager : MonoBehaviour
         showPointText = !showPointText;
         TogglePointText();
         toggles[0].enabled = showLine;
-        toggles[1].enabled = showLineText;
         toggles[2].enabled = showPointText;
-        toggles[2].enabled = showPointsAsSolid;
+    }
+
+    public void SetStartAndEnd(int pointStart, int pointEnd) {
+        if (pointStart > pointEnd) {
+            throw new IllegalArgumentException("The start position cannot be larger than the ending");
+        }
+        this.pointStart = pointStart;
+        this.pointEnd = pointEnd;
+        displayPointsOfInterest.UpdateOrderOfPointsOfInterest(pointStart, pointEnd, showLine, showPointText);
     }
 
  
@@ -89,7 +96,7 @@ public class PointOfInterestManager : MonoBehaviour
         showPoints = !showPoints;
         if (showPoints)
         {
-            displayPointsOfInterest.UpdateOrderOfPointsOfInterest(pointStart, showLine, showPointText);
+            displayPointsOfInterest.UpdateOrderOfPointsOfInterest(pointStart, pointEnd, showLine, showPointText);
         }
         else {
             displayPointsOfInterest.HidePointsOfInterest();

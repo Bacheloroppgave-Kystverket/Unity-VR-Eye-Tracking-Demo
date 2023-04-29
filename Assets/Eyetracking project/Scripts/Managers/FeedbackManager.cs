@@ -48,7 +48,7 @@ public class FeedbackManager : MonoBehaviour{
 
     public void StartEyetracking() {
         if (!hasMadeMap) {
-            sortedTrackableObjectsMap = new SortedTrackableObjectsMap(sessionManager.GetSession().GetSimulationSetupController().GetCloseTrackableObjects(), visualizeKeysAndValues);
+            sortedTrackableObjectsMap = new SortedTrackableObjectsMap(sessionManager.GetSessionController().GetSimulationSetupController().GetCloseTrackableObjects(), visualizeKeysAndValues);
             hasMadeMap = true;
         }
         if (!eyeTracking) {
@@ -95,7 +95,7 @@ public class FeedbackManager : MonoBehaviour{
     /// Calculates and displays the feedback to the user.
     /// </summary>
     private void CalculateAndDisplayProsentageFeedback() {
-        SessionController session = sessionManager.GetSession();
+        SessionController session = sessionManager.GetSessionController();
         IEnumerator<ReferencePositionController> it = referencePositionManager.GetEnumeratorForReferencePositions();
         ReferencePosition currentPosition = referencePositionManager.GetCurrentReferencePosition().GetReferencePosition();
         while (it.MoveNext()) {

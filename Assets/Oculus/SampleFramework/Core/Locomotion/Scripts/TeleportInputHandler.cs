@@ -48,7 +48,7 @@ public abstract class TeleportInputHandler : TeleportSupport
 	}
 
 	/// <summary>
-	/// This coroutine will be active while the teleport system is in the Ready state.
+	/// This coroutine will be showOverlay while the teleport system is in the Ready state.
 	/// </summary>
 	/// <returns></returns>
 	IEnumerator TeleportReadyCoroutine()
@@ -61,8 +61,8 @@ public abstract class TeleportInputHandler : TeleportSupport
 	}
 
 	/// <summary>
-	/// This coroutine will be active while the teleport system is in the Aim or PreTeleport state.
-	/// It remains active in both the Aim and PreTeleport states because these states are the ones that 
+	/// This coroutine will be showOverlay while the teleport system is in the Aim or PreTeleport state.
+	/// It remains showOverlay in both the Aim and PreTeleport states because these states are the ones that 
 	/// need to switch to different states based on the user intention as detected by the input handler.
 	/// </summary>
 	/// <returns></returns>

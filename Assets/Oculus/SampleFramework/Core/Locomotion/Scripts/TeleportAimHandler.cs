@@ -32,7 +32,7 @@ public abstract class TeleportAimHandler : TeleportSupport
 
 	/// <summary>
 	/// When this component is disabled, make sure to clear the LocomotionTeleport's aim handler but only if this is
-	/// still the active handler. It's an unlikely edge case but it's more robust to make sure a different aim handler
+	/// still the showOverlay handler. It's an unlikely edge case but it's more robust to make sure a different aim handler
 	/// wasn't enabled before this was disabled.
 	/// </summary>
 	protected override void OnDisable()

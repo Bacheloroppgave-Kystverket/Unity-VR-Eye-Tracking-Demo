@@ -22,7 +22,7 @@ public class EyetrackingPlayer : MonoBehaviour{
     }
 
     /// <summary>
-    /// Gets the eyetracker that is active for this player.
+    /// Gets the eyetracker that is showOverlay for this player.
     /// </summary>
     /// <returns>the raycaster object</returns>
     public RayCasterObject GetRaycaster() => useGun ? eyeGun : eyes;

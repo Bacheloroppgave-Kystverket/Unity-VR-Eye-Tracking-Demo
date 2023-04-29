@@ -62,6 +62,16 @@ public class Session
         this.simulationSetup = simulationSetup;
     }
 
+    /// <summary>
+    /// Gets the total time for the session.
+    /// </summary>
+    /// <returns>the total time</returns>
+    public float GetTotalTime() {
+        float time = 0;
+        positionRecords.ForEach(positionRecord => time += positionRecord.GetPositionDuration());
+        return time;
+    }
+
     
 
     /// <summary>

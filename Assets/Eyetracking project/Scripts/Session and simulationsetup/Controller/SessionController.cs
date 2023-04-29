@@ -90,6 +90,12 @@ public class SessionController : MonoBehaviour {
         StartCoroutine(sendData.SendCurrentData());
     }
 
+    /// <summary>
+    /// Gets the session
+    /// </summary>
+    /// <returns>the session</returns>
+    public Session GetSession() => session;
+
     
 
     

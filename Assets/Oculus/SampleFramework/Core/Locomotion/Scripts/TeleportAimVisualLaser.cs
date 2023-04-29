@@ -14,7 +14,7 @@ using System.Collections;
 public class TeleportAimVisualLaser : TeleportSupport
 {
 	/// <summary>
-	/// This prefab will be instantiated when the aim visual is awakened, and will be set active when the 
+	/// This prefab will be instantiated when the aim visual is awakened, and will be set showOverlay when the 
 	/// user is aiming, and deactivated when they are done aiming.
 	/// </summary>
 	[Tooltip("This prefab will be instantiated when the aim visual is awakened, and will be set active when the user is aiming, and deactivated when they are done aiming.")]

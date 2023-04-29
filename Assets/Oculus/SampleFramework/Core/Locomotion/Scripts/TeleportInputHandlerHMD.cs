@@ -79,7 +79,7 @@ public class TeleportInputHandlerHMD : TeleportInputHandler
 
 		// If the aim button is the same as the teleport button, then there is no way to abort the teleport.
 		// Since the process of triggering the teleport is complete, returning the Teleport intention is necessary otherwise
-		// the input handler would remain active.
+		// the input handler would remain showOverlay.
 		if (AimButton == TeleportButton)
 		{
 			return global::LocomotionTeleport.TeleportIntentions.Teleport;

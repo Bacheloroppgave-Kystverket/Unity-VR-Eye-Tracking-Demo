@@ -151,14 +151,14 @@ public class LocomotionTeleport : MonoBehaviour
 	
 	#region Support Events
 	/// <summary>
-	/// This event is raised when the teleport destination is in the process of being updated. It is used by the active TeleportDestination
+	/// This event is raised when the teleport destination is in the process of being updated. It is used by the showOverlay TeleportDestination
 	/// to update it's visual state, position and orientation indicator to match the results of the teleport aim and targeting system.
 	/// </summary>
 	public event Action<bool, Vector3?, Quaternion?, Quaternion?> UpdateTeleportDestination;
 
 	/// <summary>
-	/// When the active aim and orientation handler finishes preparing the data for the teleport destination, this method will be called
-	/// in order to raise the UpdateTeleportDestination event, which will in turn give any active teleport destination objects an opportunity
+	/// When the showOverlay aim and orientation handler finishes preparing the data for the teleport destination, this method will be called
+	/// in order to raise the UpdateTeleportDestination event, which will in turn give any showOverlay teleport destination objects an opportunity
 	/// to update their visual state accordingly.
 	/// </summary>
 	/// <param name="isValidDestination"></param>
@@ -220,7 +220,7 @@ public class LocomotionTeleport : MonoBehaviour
 
 	/// <summary>
 	/// Created at runtime, this gameobject is used to track where the rayCasterObject will teleport. 
-	/// The actual position depends on the type of Aim Handler and Target Handler that is active.
+	/// The actual position depends on the type of Aim Handler and Target Handler that is showOverlay.
 	/// Aim Handlers:
 	/// * Laser: rayCasterObject capsule swept along aim ray until it hits terrain or valid target.
 	/// * Parabolic: rayCasterObject capsule swept along a series of line segments approximating a parabolic curve until it hits terrain or valid target.
@@ -361,7 +361,7 @@ public class LocomotionTeleport : MonoBehaviour
 	/// </summary>
 	protected void CreateNewTeleportDestination()
 	{
-		TeleportDestinationPrefab.gameObject.SetActive(false); // ensure the prefab isn't active in order to delay event handler setup until after it has been configured with a reference to this object.
+		TeleportDestinationPrefab.gameObject.SetActive(false); // ensure the prefab isn't showOverlay in order to delay event handler setup until after it has been configured with a reference to this object.
 		TeleportDestination td = GameObject.Instantiate(TeleportDestinationPrefab);
 		td.LocomotionTeleport = this;
 		td.gameObject.layer = TeleportDestinationLayer;
@@ -508,7 +508,7 @@ public class LocomotionTeleport : MonoBehaviour
 	/// <summary>
 	/// The target handler will call this method when the aim data has been updated and is ready to be
 	/// processed by anything that needs to be aware of any changes. This generally includes a visual
-	/// indicator for the aiming and the active orientation handler.
+	/// indicator for the aiming and the showOverlay orientation handler.
 	/// </summary>
 	/// <param name="aimData"></param>
 	public void OnUpdateAimData(AimData aimData)
@@ -526,7 +526,7 @@ public class LocomotionTeleport : MonoBehaviour
 	public event Action ExitStateAim;
 
 	/// <summary>
-	/// This coroutine will be running while the aim state is active. The teleport destination will become active,
+	/// This coroutine will be running while the aim state is showOverlay. The teleport destination will become showOverlay,
 	/// and depending on the target and current intention of the user it might enter the CancelAim state or 
 	/// PreTeleport state when it is done.
 	/// </summary>
@@ -603,7 +603,7 @@ public class LocomotionTeleport : MonoBehaviour
 	public event Action EnterStatePreTeleport;
 
 	/// <summary>
-	/// This coroutine will be active while the system is in the PreTeleport state.
+	/// This coroutine will be showOverlay while the system is in the PreTeleport state.
 	/// At this point, the user has indicated they want to teleport however there is a possibility that the
 	/// target they have chosen might be or become invalid so the next state will be either Teleporting or 
 	/// CancelTeleporting.

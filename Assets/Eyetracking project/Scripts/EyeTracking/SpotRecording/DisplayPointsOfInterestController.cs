@@ -9,8 +9,11 @@ public class DisplayPointsOfInterestController : MonoBehaviour
     [SerializeField]
     private List<PointOfInterestController> pointOfInterestControllers = new List<PointOfInterestController>();
 
-    [SerializeField]
+    [SerializeField, Tooltip("The start time")]
     private int startPos = 0;
+
+    [SerializeField, Tooltip("The end time")]
+    private int endPos = 0;
 
     [SerializeField, Tooltip("The prefab that the points of interest should have")]
     private GameObject pointPrefab;
@@ -42,25 +45,34 @@ public class DisplayPointsOfInterestController : MonoBehaviour
     /// Updates the order of points of interest. 
     /// </summary>
     /// <param name="startTime"></param>
+    /// <param name="stopTime"></param>
     /// <param name="showLine"></param>
     /// <param name="showPointText"></param>
-    public void UpdateOrderOfPointsOfInterest(int startTime, bool showLine, bool showPointText)
+    public void UpdateOrderOfPointsOfInterest(int startTime, int stopTime, bool showLine, bool showPointText)
     {
         UpdateAmountOfPoints();
+        HidePointsOfInterest();
         lineController.SetShowLine(showLine);
         CheckIfStartNumberIsValid(startTime);
         this.startPos = startTime;
-        int stopValue = startTime + 10;
+        this.endPos = stopTime;
         List<PointOfInterestContainer> pointOfInterests = recordedPointsController.GetPointRecordings(); //SortPoints(recordedPointsController.GetPointRecordings());
         lineController.ClearLineList();
-    
-        IEnumerator<PointOfInterestContainer> pointOfInterestIt = pointOfInterests.GetEnumerator();
+
+        float totalTime = 0;
+        IEnumerator<PointOfInterestContainer> pointOfInterestContainerIt = pointOfInterests.GetEnumerator();
         IEnumerator<PointOfInterestController> controllerIt = pointOfInterestControllers.GetEnumerator();
-        while (pointOfInterestIt.MoveNext() && controllerIt.MoveNext()){
-            PointOfInterestController pointOfInterestController = controllerIt.Current;
-            pointOfInterestController.SetPointOfInterest(pointOfInterestIt.Current, pointOfInterestIt.Current.GetRecord().GetOrderId(), showPointText, transform);
-            pointOfInterestController.gameObject.SetActive(true);
-            lineController.AddTransform(pointOfInterestController.transform);
+       
+        while (pointOfInterestContainerIt.MoveNext() && controllerIt.MoveNext() && totalTime <= stopTime)
+        {
+            PointOfInterestContainer pointOfInterestContainer  = pointOfInterestContainerIt.Current;
+            totalTime += pointOfInterestContainer.GetRecord().GetTime();
+            if (totalTime >= startTime ) {
+                PointOfInterestController pointOfInterestController = controllerIt.Current;
+                pointOfInterestController.SetPointOfInterest(pointOfInterestContainer, pointOfInterestContainer.GetRecord().GetOrderId(), showPointText, transform);
+                pointOfInterestController.gameObject.SetActive(true);
+                lineController.AddTransform(pointOfInterestController.transform);
+            }
         }
         lineController.DrawLine();
     }

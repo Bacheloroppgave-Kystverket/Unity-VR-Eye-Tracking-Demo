@@ -42,7 +42,7 @@ public class TeleportTransitionWarp : TeleportTransition
 	}
 
 	/// <summary>
-	/// This coroutine will be active during the teleport transition and will move the camera 
+	/// This coroutine will be showOverlay during the teleport transition and will move the camera 
 	/// according to the PositionLerp curve.
 	/// </summary>
 	/// <returns></returns>

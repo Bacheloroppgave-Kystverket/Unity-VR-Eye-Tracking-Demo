@@ -89,12 +89,12 @@ namespace OculusSampleFramework
         public OVROverlay cameraRenderOverlay;
 
         /// <summary>
-        /// The OVROverlay component displaying which rendering mode is active
+        /// The OVROverlay component displaying which rendering mode is showOverlay
         /// </summary>
         public OVROverlay renderingLabelOverlay;
 
         /// <summary>
-        /// The quad textures to indicate the active rendering method
+        /// The quad textures to indicate the showOverlay rendering method
         /// </summary>
         public Texture applicationLabelTexture;
         public Texture compositorLabelTexture;

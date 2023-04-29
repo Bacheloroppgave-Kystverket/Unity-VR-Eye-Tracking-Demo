@@ -23,9 +23,9 @@ public class EyeCaster : RayCasterObject
     }
 
     /// <summary>
-    /// Activates the eyes if the user sets the headset as active.
+    /// Activates the eyes if the user sets the headset as showOverlay.
     /// </summary>
-    /// <param name="active">true if the OVREyegaze should be active. False otherwise</param>
+    /// <param name="active">true if the OVREyegaze should be showOverlay. False otherwise</param>
     public void SetOVREyeGaze(bool active) {
         eyeOne.enabled = active;
         eyeTwo.enabled = active;
