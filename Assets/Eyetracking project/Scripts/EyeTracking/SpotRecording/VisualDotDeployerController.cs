@@ -16,7 +16,7 @@ public class VisualDotDeployerController : MonoBehaviour
     private List<RecordedPoint> heatmapPoints = new List<RecordedPoint>();
 
     [SerializeField, Tooltip("The points of interests")]
-    private List<PointOfInterest> pointOfInterests = new List<PointOfInterest>();
+    private List<PointOfInterestContainer> pointOfInterests = new List<PointOfInterestContainer>();
 
     public void SetupVisualDot(GameObject prefab) {
         GameObject visualEffectObject = Instantiate(prefab, transform);
@@ -38,10 +38,10 @@ public class VisualDotDeployerController : MonoBehaviour
     /// <summary>
     /// Adds a point of interest.
     /// </summary>
-    /// <param name="pointOfInterest">the point of interest</param>
-    public void AddPointOfInterest(PointOfInterest pointOfInterest) {
-        CheckIfObjectIsNull(pointOfInterest, "point of interest");
-        pointOfInterests.Add(pointOfInterest);
+    /// <param name="pointOfInterestContainer">the point of interest</param>
+    public void AddPointOfInterest(PointOfInterestContainer pointOfInterestContainer) {
+        CheckIfObjectIsNull(pointOfInterestContainer, "point of interest");
+        pointOfInterests.Add(pointOfInterestContainer);
     }
 
     /// <summary>

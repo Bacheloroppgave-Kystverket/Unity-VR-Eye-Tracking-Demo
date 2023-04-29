@@ -15,7 +15,7 @@ public class PointOfInterestManager : MonoBehaviour
     private RecordedPointsController pointOfInterestCollectionController;
 
     [SerializeField, Tooltip("The points of interest displayer")]
-    private DisplayPointsOfInterest displayPointsOfInterest;
+    private DisplayPointsOfInterestController displayPointsOfInterest;
 
     [SerializeField, Tooltip("The point start to show.")]
     private int pointStart = 0;

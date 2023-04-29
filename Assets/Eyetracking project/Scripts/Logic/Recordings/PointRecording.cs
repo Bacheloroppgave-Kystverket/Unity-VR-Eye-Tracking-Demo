@@ -12,14 +12,14 @@ public class PointRecording : RecordedPoint
     [SerializeField, Tooltip("The amount of times for this point of interest")]
     private int amountOfTimes;
 
-    private bool sorted;
-
     /// <summary>
     /// Represents a point of interest.
     /// </summary>
     /// <param name="pointOfInterestOrder">the order of the point of interest.</param>
     /// <param name="hit">the raycast hit</param>
-    public PointRecording(int pointOfInterestOrder, RaycastHit hit) : base(hit)
+    /// <param name="point">the hitpoint</param>
+    /// <param name="parentTransform">the parents transform</param>
+    public PointRecording(int pointOfInterestOrder, Vector3 point, Transform parentTransform) : base(point, parentTransform)
     {
         CheckIfNumberIsAboveZero(pointOfInterestOrder, "point of interest order");
         this.orderId = pointOfInterestOrder;
@@ -33,18 +33,6 @@ public class PointRecording : RecordedPoint
     public int GetTime() {
         return amountOfTimes;
     }
-
-
-    /// <summary>
-    /// Gets if this point recording has been sorted.
-    /// </summary>
-    /// <returns>true if this point recording has been sorted.</returns>
-    public bool IsSorted() => sorted;
-
-    /// <summary>
-    /// Sets the point recording to be sorted.
-    /// </summary>
-    public void SetSorted() => this.sorted = true;
 
     /// <summary>
     /// Increments the amount of time this recording has been watched.

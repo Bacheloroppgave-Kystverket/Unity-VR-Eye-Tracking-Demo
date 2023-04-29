@@ -7,10 +7,10 @@ using UnityEngine;
 public class RecordedPointsController : MonoBehaviour
 {
     [SerializeField]
-    private List<PointRecording> pointRecordings = new List<PointRecording>();
+    private List<PointOfInterestContainer> pointRecordings = new List<PointOfInterestContainer>();
 
     [SerializeField]
-    private List<RecordedPoint> recordedPoints = new List<RecordedPoint>();
+    private List<PointCloudContainer> recordedPoints = new List<PointCloudContainer>();
 
     [SerializeField, Tooltip("The visual effect prefab")]
     private GameObject visualEffectPrefab;
@@ -18,35 +18,32 @@ public class RecordedPointsController : MonoBehaviour
     [SerializeField, Tooltip("The current heatpoint that has been synced.")]
     private int currentHeatPoint = 0;
     
-    /// <summary>
-    /// Adds an interest point to the list.
-    /// </summary>
-    /// <param name="raycastHit">the raycast hit</param>
-    public void AddHeatmapPoint(RecordedPoint recordedPoint)
+  
+    public void AddHeatmapPoint(RecordedPoint recordedPoint, Transform parentTransform)
     {
-        recordedPoints.Add(recordedPoint);
+        recordedPoints.Add(new PointCloudContainer(recordedPoint, parentTransform));
     }
 
     /// <summary>
     /// Gets the point recordings.
     /// </summary>
     /// <returns>the point recordings</returns>
-    public List<PointRecording> GetPointRecordings() => pointRecordings;
+    public List<PointOfInterestContainer> GetPointRecordings() => pointRecordings;
 
     /// <summary>
     /// Syncs the heatmaps values.
     /// </summary>
     public void DeployHeatmapPoints() {
         for (int i = currentHeatPoint; i < recordedPoints.Count; i++) {
-            RecordedPoint recordedPoint = recordedPoints[i];
-            Transform parentTransform = recordedPoint.GetParentTransform();
+            PointCloudContainer pointCloudContainer = recordedPoints[i];
+            Transform parentTransform = pointCloudContainer.GetParentTransform();
             VisualDotDeployerController visualDotDeployer = parentTransform.GetComponent<VisualDotDeployerController>();
             if (visualDotDeployer == null)
             {
                 visualDotDeployer = parentTransform.AddComponent<VisualDotDeployerController>();
                 visualDotDeployer.SetupVisualDot(visualEffectPrefab);
             }
-            visualDotDeployer.AddHeatmapPoint(recordedPoint);
+            visualDotDeployer.AddHeatmapPoint(pointCloudContainer.GetRecord());
             
         }
         currentHeatPoint = recordedPoints.Count;
@@ -56,9 +53,9 @@ public class RecordedPointsController : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="raycastHit"></param>
-    public void AddPointOfInterest(PointRecording pointRecording)
+    public void AddPointOfInterest(PointRecording pointRecording, Transform parentTransform)
     {
-        pointRecordings.Add(pointRecording);
+        pointRecordings.Add(new PointOfInterestContainer(pointRecording, parentTransform));
         
     }
 
@@ -69,7 +66,7 @@ public class RecordedPointsController : MonoBehaviour
     public bool IncrementLastPointRecording() {
         bool valid = this.pointRecordings.Count > 0;
         if (valid) {
-            pointRecordings.Last().IncrementAmountOfTimes();
+            pointRecordings.Last().GetRecord().IncrementAmountOfTimes();
         }
         return valid;
     }
@@ -79,6 +76,6 @@ public class RecordedPointsController : MonoBehaviour
     /// </summary>
     /// <returns>the point recording or null</returns>
     public PointRecording GetLastPointRecording() { 
-        return pointRecordings.Count > 0 ? pointRecordings.Last() : null;
+        return pointRecordings.Count > 0 ? pointRecordings.Last().GetRecord() : null;
     }
 }

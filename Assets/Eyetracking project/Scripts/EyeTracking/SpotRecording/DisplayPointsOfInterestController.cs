@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(RecordedPointsController))]
-public class DisplayPointsOfInterest : MonoBehaviour
+public class DisplayPointsOfInterestController : MonoBehaviour
 {
     [SerializeField]
     private List<PointOfInterestController> pointOfInterestControllers = new List<PointOfInterestController>();
@@ -38,60 +38,31 @@ public class DisplayPointsOfInterest : MonoBehaviour
         }
     }
 
-    
-    public void UpdateOrderOfPointsOfInterest(int startValue, bool showLine, bool showPointText)
+    /// <summary>
+    /// Updates the order of points of interest. 
+    /// </summary>
+    /// <param name="startTime"></param>
+    /// <param name="showLine"></param>
+    /// <param name="showPointText"></param>
+    public void UpdateOrderOfPointsOfInterest(int startTime, bool showLine, bool showPointText)
     {
         UpdateAmountOfPoints();
         lineController.SetShowLine(showLine);
-        CheckIfStartNumberIsValid(startValue);
-        this.startPos = startValue;
-        int index = 0;
-        int stopValue = startValue + 10;
-        SortedList<int, PointOfInterest> sortedPointsOfInterest = new SortedList<int, PointOfInterest>();
-        List<PointOfInterest> pointOfInterests = new List<PointOfInterest>(); //SortPoints(recordedPointsController.GetPointRecordings());
-        recordedPointsController.GetPointRecordings().ForEach(point => pointOfInterests.Add(new PointOfInterest(point)));
+        CheckIfStartNumberIsValid(startTime);
+        this.startPos = startTime;
+        int stopValue = startTime + 10;
+        List<PointOfInterestContainer> pointOfInterests = recordedPointsController.GetPointRecordings(); //SortPoints(recordedPointsController.GetPointRecordings());
         lineController.ClearLineList();
     
-        IEnumerator<PointOfInterest> pointOfInterestIt = pointOfInterests.GetEnumerator();
+        IEnumerator<PointOfInterestContainer> pointOfInterestIt = pointOfInterests.GetEnumerator();
         IEnumerator<PointOfInterestController> controllerIt = pointOfInterestControllers.GetEnumerator();
-        while (pointOfInterestIt.MoveNext() && controllerIt.MoveNext())
-        {
+        while (pointOfInterestIt.MoveNext() && controllerIt.MoveNext()){
             PointOfInterestController pointOfInterestController = controllerIt.Current;
-            pointOfInterestController.SetPointOfInterest(pointOfInterestIt.Current, pointOfInterestIt.Current.GetLatestRecording().GetOrderId(), showPointText);
+            pointOfInterestController.SetPointOfInterest(pointOfInterestIt.Current, pointOfInterestIt.Current.GetRecord().GetOrderId(), showPointText, transform);
             pointOfInterestController.gameObject.SetActive(true);
             lineController.AddTransform(pointOfInterestController.transform);
         }
         lineController.DrawLine();
-    }
-
-    public List<PointOfInterest> SortPoints(List<PointRecording> newPoints)
-    {
-        List<PointOfInterest> newAddedPoints = new List<PointOfInterest>();
-        for (int x = 0; x < newPoints.Count; x++)
-        {
-            PointRecording pointRecording = newPoints[x];
-            newAddedPoints.Add(new PointOfInterest(pointRecording));
-           
-            for (int i = x; i < newPoints.Count; i++)
-            {
-                PointRecording pointRecordingToCompare = newPoints[i];
-                if (!pointRecordingToCompare.IsSorted() && pointRecording.GetOrderId() != pointRecordingToCompare.GetOrderId())
-                {
-                    if (pointRecording.GetParentTransform().GetInstanceID() == pointRecordingToCompare.GetParentTransform().GetInstanceID())
-                    {
-                        float distance = Vector3.Distance(pointRecording.GetLocalPosition(), pointRecordingToCompare.GetLocalPosition());
-                        if (distance > 0 && distance < 0.015f || distance == 0)
-                        {
-                            
-                            newAddedPoints.Last().AddPointRecording(pointRecordingToCompare);
-                        }
-                    }
-                }
-            }
-        }
-        Debug.Log("Sorted " + newAddedPoints.Count);
-        Debug.Log("Aactual size " + newPoints.Count);
-        return newAddedPoints;
     }
 
     private void CheckIfStartNumberIsValid(int value)

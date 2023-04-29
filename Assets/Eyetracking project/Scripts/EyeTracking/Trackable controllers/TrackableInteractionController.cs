@@ -8,7 +8,8 @@ using UnityEngine.Events;
 /// <summary>
 /// Represents a component that has actions with the 
 /// </summary>
-public class TrackableInteraction : MonoBehaviour, Trackable {
+public class TrackableInteractionController : MonoBehaviour, Trackable {
+
     [SerializeField, Tooltip("Events that are triggered when the gaze enters the collider")]
     private UnityEvent onGazeEnter;
 

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7746015807731111320}
   - component: {fileID: 7746015807731111321}
   - component: {fileID: 7746015807731111334}
-  m_Layer: 6
+  m_Layer: 9
   m_Name: PointOfInterest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pointOfInterest:
-    pointRecordings: []
+    recordedPoint:
+      localPosition: {x: 0, y: 0, z: 0}
+      worldPosition: {x: 0, y: 0, z: 0}
+    parentTransform: {fileID: 0}
   orderId: 0
   textOfPoint: {fileID: 1370537314357716539}
 --- !u!1 &8573542611865640128
@@ -112,7 +115,7 @@ GameObject:
   - component: {fileID: 3059183352037689884}
   - component: {fileID: 4905941033700849726}
   - component: {fileID: 1370537314357716539}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

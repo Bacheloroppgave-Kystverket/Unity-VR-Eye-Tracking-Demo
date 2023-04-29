@@ -42,8 +42,9 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     /// </summary>
     /// <param name="raycastHit">the raycast hit</param>
     private void AddHeatmapPoint(RaycastHit raycastHit) {
-        RecordedPoint recordedPoint = new RecordedPoint(raycastHit);
-        pointOfInterestCollectionController.AddHeatmapPoint(recordedPoint);
+        Transform parentTransform = raycastHit.collider.transform;
+        RecordedPoint recordedPoint = new RecordedPoint(raycastHit.point, parentTransform);
+        pointOfInterestCollectionController.AddHeatmapPoint(recordedPoint, parentTransform);
     }
 
     /// <summary>
@@ -51,8 +52,9 @@ public class PointPlacerController : MonoBehaviour, RaycasterObserver
     /// </summary>
     /// <param name="raycastHit"></param>
     private void AddPointRecording(RaycastHit raycastHit) {
-        PointRecording pointRecording = new PointRecording(orderID, raycastHit);
-        pointOfInterestCollectionController.AddPointOfInterest(pointRecording);
+        Transform parentTransform = raycastHit.collider.transform;
+        PointRecording pointRecording = new PointRecording(orderID, raycastHit.point, parentTransform);
+        pointOfInterestCollectionController.AddPointOfInterest(pointRecording, parentTransform);
         orderID++;
     }
 

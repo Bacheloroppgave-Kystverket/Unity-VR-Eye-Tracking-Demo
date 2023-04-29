@@ -7,7 +7,6 @@ using UnityEngine;
 /// <summary>
 /// Represents a position that a user can be in space. 
 /// </summary>
-[RequireComponent(typeof(ReferencePositionIdentifier))]
 public class ReferencePositionController : MonoBehaviour
 {
 
@@ -93,6 +92,16 @@ public class ReferencePositionController : MonoBehaviour
         {
             Debug.Log("<color=red>Error:</color>" + error + " cannot be emtpy", gameObject);
         }
+    }
+
+    /// <summary>
+    /// Adds the reference position to the simulation setup manager.
+    /// </summary>
+    /// <param name="simulationSetupManager">the simulation setup manager</param>
+    public void AddPositionToSimulationSetup(SimulationSetupManager simulationSetupManager)
+    {
+        CheckIfObjectIsNull(simulationSetupManager, "Simulation setup");
+        simulationSetupManager.AddReferencePosition(this.GetComponent<ReferencePositionController>());
     }
 
     /// <summary>

@@ -1327,6 +1327,7 @@ MonoBehaviour:
   visualizeLine: 0
   hitspotPrefab: {fileID: 7057566438213042136, guid: 0bfae6cef36f78149802dbe6be84b78b, type: 3}
   raycaster: {fileID: 0}
+  projector: {fileID: 0}
   oldPos: {x: 0, y: 0, z: 0}
 --- !u!1 &6249843506607214105
 GameObject:

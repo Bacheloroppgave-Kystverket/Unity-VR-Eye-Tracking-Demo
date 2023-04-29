@@ -16,26 +16,24 @@ public class RecordedPoint
     [SerializeField, Tooltip("The world position of the impact")]
     private Vector3 worldPosition;
 
-    [SerializeField, Tooltip("The transform of the object this point hit.")]
-    private Transform parentTransform;
+    private TrackableObject trackableObject;
+
 
     /// <summary>
     /// 
     /// </summary>
     /// <param name="pointOfInterestOrder"></param>
     /// <param name="hit"></param>
-    public RecordedPoint(RaycastHit hit) {
-        CheckIfObjectIsNull(hit, "raycast hit");
-        this.worldPosition = hit.point;
-        this.parentTransform = hit.collider.gameObject.transform;
-        this.localPosition = parentTransform.InverseTransformPoint(worldPosition);
+    public RecordedPoint(Vector3 point, Transform parentTransform) {
+        CheckIfObjectIsNull(point, "raycast hit");
+        this.worldPosition = point;
+        this.localPosition = parentTransform.gameObject.transform.InverseTransformPoint(worldPosition);
+        TrackableObjectController trackController = parentTransform.GetComponent<TrackableObjectController>();
+        if(trackController != null )
+        {
+            this.trackableObject = trackController.GetTrackableObject();
+        }
     }
-
-    /// <summary>
-    /// Gets the parent transform
-    /// </summary>
-    /// <returns>the parent transform</returns>
-    public Transform GetParentTransform() => parentTransform;
 
    
 
