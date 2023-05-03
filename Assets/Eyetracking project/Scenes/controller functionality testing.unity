@@ -536,7 +536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6445882639794712667, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6445882639794712667, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1103,6 +1103,177 @@ Transform:
   m_Father: {fileID: 771330726}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &324703719
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.16
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.759
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.587
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5395981
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.45555997
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.46802634
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5312724
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -81.47
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 8.154
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 82.084
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_Name
+      value: Clearview Screen
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+--- !u!1001 &364651515
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.794
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.751
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.616
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5274005
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.4713908
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.48703215
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5122882
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -85.02
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -20.743
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 290.713
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_Name
+      value: Windshield Wiper (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+--- !u!1001 &365154708
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.124
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.947
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.117
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7098587
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.59041756
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.23508988
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.30371124
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -78.821
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -7.37
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 52.386
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
+      propertyPath: m_Name
+      value: Clearview Screen (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 97bdcb5e328414245abf93bf7e25142e, type: 3}
 --- !u!1 &372713607 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6abca6cde1d74d642a4593d09becbd89, type: 3}
@@ -1590,7 +1761,7 @@ Transform:
   - {fileID: 2066650306}
   - {fileID: 638511906}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &771330727
 MonoBehaviour:
@@ -1689,6 +1860,120 @@ MonoBehaviour:
       referencePositionList: []
     webOption: 0
     successful: 0
+--- !u!1001 &867850747
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.218
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.762
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.005
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.6551276
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.59415835
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.326168
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.3337638
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -85.02
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -20.744
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 325.053
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_Name
+      value: Windshield Wiper (4)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+--- !u!1001 &916878198
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.906
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.706
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.378
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.20059806
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.16472022
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6574777
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.70735484
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -85.02
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -20.744
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 230.713
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_Name
+      value: Windshield Wiper (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
 --- !u!1 &1052325619
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,7 +2020,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1052325623
 MonoBehaviour:
@@ -1775,6 +2060,63 @@ MonoBehaviour:
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
   m_CancelButton: Cancel
+--- !u!1001 &1171986573
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.098
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.708
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.611
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5274005
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.4713908
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.48703215
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5122882
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -85.02
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -20.743
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 290.713
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_Name
+      value: Windshield Wiper
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
 --- !u!1 &1190538767
 GameObject:
   m_ObjectHideFlags: 0
@@ -2351,6 +2693,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5114272840288724598, guid: 0bfae6cef36f78149802dbe6be84b78b, type: 3}
   m_PrefabInstance: {fileID: 1978915253}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1347115059
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.968
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.759
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.261
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.2082111
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.2119034
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.6438224
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.7051509
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -85.02
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -20.744
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 526.147
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_Name
+      value: Windshield Wiper (5)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
 --- !u!114 &1350411781 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1350411781, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
@@ -2948,6 +3347,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bfae6cef36f78149802dbe6be84b78b, type: 3}
+--- !u!1001 &1980007592
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.175
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.745
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.097
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.63133377
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5924421
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.3292751
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.37683955
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -85.02
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -20.744
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 440.713
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
+      propertyPath: m_Name
+      value: Windshield Wiper (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a7e8a48fadc9e214fa2e5471e33507dd, type: 3}
 --- !u!1001 &2000150796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2957,7 +3413,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e082f6661d3dabe44bd860ef752e828b, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e082f6661d3dabe44bd860ef752e828b, type: 3}
       propertyPath: m_LocalScale.x
@@ -3807,7 +4263,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6249843506086648071, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6249843506086648071, guid: 09d8da9466912e146897a79b270a2b0d, type: 3}
       propertyPath: m_LocalPosition.x
