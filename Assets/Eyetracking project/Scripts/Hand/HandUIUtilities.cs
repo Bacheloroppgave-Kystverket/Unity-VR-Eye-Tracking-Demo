@@ -72,7 +72,7 @@ public class HandUIUtilities : MonoBehaviour
         EnableMenu();
         StartCoroutine(LerpToPosition(leftHandIconPosition.transform.position,openPosition, toggleTime));
         StartCoroutine(LerpToScale(Vector3.zero, initialScale, toggleTime));
-        StartCoroutine(LerpToRotation(leftHandIconPosition.transform.rotation.eulerAngles, initialRotation, toggleTime));
+        StartCoroutine(LerpToRotation(leftHandIconPosition.transform.rotation.eulerAngles, /**initialRotation*/Vector3.zero, toggleTime));
         yield return null;
     }
     
@@ -88,13 +88,15 @@ public class HandUIUtilities : MonoBehaviour
     IEnumerator LerpToRotation(Vector3 fromRotation, Vector3 toRotation, float seconds) {
         float timeElapsed = 0;
         while (menu.transform.rotation.eulerAngles != toRotation && timeElapsed < 1) {
-            toRotation = leftHandIconPosition.transform.rotation.eulerAngles;
+           // toRotation = leftHandIconPosition.transform.rotation.eulerAngles;
             menu.transform.SetPositionAndRotation(menu.transform.position, Quaternion.Euler(Vector3.Lerp(fromRotation, toRotation, timeElapsed / seconds)));
             timeElapsed += Time.deltaTime;
             yield return null;
         }
     }
 
+
+    
     IEnumerator LerpToScale(Vector3 fromScale, Vector3 toScale, float seconds) {
         float timeElapsed = 0;
         while (menu.transform.localScale != toScale && timeElapsed < 1) {
