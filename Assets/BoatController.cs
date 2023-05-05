@@ -36,7 +36,7 @@ public class BoatController : MonoBehaviour
         while (startMoving) {
             if (Vector3.Distance(transform.position, targetPostion) < 2f)
             {
-                pos = pos + 1 % targets.Count;
+                pos = (pos + 1) % targets.Count ;
                 Vector3 newVector = targets[pos].position;
                
                 targetPostion = targets[pos].position;

@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: LightCone
-  m_Shader: {fileID: -6465566751694194690, guid: fdf849885bc698c45a8d6bb25c5168c0, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 53b6d593bb922364ea9ede5b6d842f74, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -124,6 +124,8 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Default_color: {r: 0.17550915, g: 1, b: 0.070754685, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Faded_light_color: {r: 0.99056596, g: 0.9413444, b: 0.6681648, a: 0}
     - _Intersect_color: {r: 0.83137256, g: 0.75877666, b: 0.17647052, a: 1}
+    - _Light_color: {r: 0.9811321, g: 0.9007751, b: 0.46742612, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
