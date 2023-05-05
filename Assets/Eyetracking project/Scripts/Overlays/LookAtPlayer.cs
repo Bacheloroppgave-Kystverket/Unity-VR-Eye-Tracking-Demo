@@ -25,26 +25,30 @@ public class LookAtPlayer : MonoBehaviour
     private void FixedUpdate()
     {
         Vector3 initialRotation = gameObject.transform.rotation.eulerAngles;
-          gameObject.transform.LookAt(target);
+        //gameObject.transform.LookAt(target);
+        Vector3 lookRotation = Quaternion.LookRotation(target.position - transform.position).eulerAngles;
 
         //Ensures that assigned axes are ignored. 
         if (!rotateX) {
-            gameObject.transform.rotation = Quaternion.Euler(initialRotation.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            //  gameObject.transform.rotation = Quaternion.Euler(initialRotation.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            lookRotation = new Vector3(initialRotation.x, lookRotation.y, lookRotation.z);
+
         }
-            
 
-        if(!rotateY) {
-            gameObject.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, initialRotation.y, transform.rotation.eulerAngles.z);
-
+        if (!rotateY) {
+            //gameObject.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, initialRotation.y, transform.rotation.eulerAngles.z);
+            lookRotation = new Vector3(lookRotation.x, initialRotation.y, lookRotation.z);
         }
 
         if (!rotateZ) {
-            gameObject.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, initialRotation.z);
-
+            //gameObject.transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, initialRotation.z);
+            lookRotation = new Vector3 (lookRotation.x, lookRotation.y, initialRotation.z);
         }
 
         if(inverted) {
-            gameObject.transform.rotation *= Quaternion.Euler(transform.rotation.eulerAngles * -1);
+            //gameObject.transform.rotation *= Quaternion.Euler(transform.rotation.eulerAngles * -1);
+            lookRotation *= -1;
         }
+        transform.eulerAngles = lookRotation;
     }
 }
