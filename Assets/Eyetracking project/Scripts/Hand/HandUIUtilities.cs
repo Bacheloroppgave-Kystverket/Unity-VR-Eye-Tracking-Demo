@@ -61,6 +61,7 @@ public class HandUIUtilities : MonoBehaviour
     }
 
     private IEnumerator DisableAndCloseMenu() {
+        openPosition = menu.transform.position;
         StartCoroutine(LerpToPosition(openPosition, leftHandIconPosition.transform.position, toggleTime));
         StartCoroutine(LerpToScale(initialScale, Vector3.zero, toggleTime));
         StartCoroutine(LerpToRotation(initialRotation, leftHandIconPosition.transform.rotation.eulerAngles, toggleTime));
@@ -94,8 +95,6 @@ public class HandUIUtilities : MonoBehaviour
             yield return null;
         }
     }
-
-
     
     IEnumerator LerpToScale(Vector3 fromScale, Vector3 toScale, float seconds) {
         float timeElapsed = 0;
