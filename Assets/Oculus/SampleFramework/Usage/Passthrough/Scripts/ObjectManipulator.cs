@@ -184,7 +184,7 @@ public class ObjectManipulator : MonoBehaviour
                 Vector3 targetPos = labelPosition - toObj.normalized * 0.05f;
                 objectInfo.position = Vector3.Lerp(targetPos, objectInfo.position, grabTime);
                 objectInfo.rotation = Quaternion.LookRotation(toObj);
-                //objectInstructionsLabel.gameObject.SetActive(false);
+                //objectInstructionsLabel.grabableObject.SetActive(false);
                 objectInfo.localScale = Vector3.one * toObj.magnitude * 2.0f;
                 if (hoverObject.GetComponent<GrabObject>())
                 {
@@ -196,7 +196,7 @@ public class ObjectManipulator : MonoBehaviour
                 Vector3 targetPos = controllerPos + (Camera.main.transform.position - controllerPos).normalized * 0.1f;
                 objectInfo.position = Vector3.Lerp(objectInfo.position, targetPos, grabTime); ;
                 objectInfo.rotation = Quaternion.LookRotation(objectInfo.position - Camera.main.transform.position);
-                //objectInstructionsLabel.gameObject.SetActive(true);
+                //objectInstructionsLabel.grabableObject.SetActive(true);
                 objectInfo.localScale = Vector3.one;
                 if (grabObject.GetComponent<GrabObject>()) showLaser = grabObject.GetComponent<GrabObject>().showLaserWhileGrabbed;
             }

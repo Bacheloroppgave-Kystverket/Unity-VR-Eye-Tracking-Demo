@@ -235,7 +235,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &29229521
 MonoBehaviour:
@@ -297,7 +297,6 @@ GameObject:
   - component: {fileID: 92007295}
   - component: {fileID: 92007294}
   - component: {fileID: 92007293}
-  - component: {fileID: 92007297}
   m_Layer: 0
   m_Name: Cube 1 (2)
   m_TagString: Untagged
@@ -381,30 +380,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &92007297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 92007290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd788b11d4dd6314e86ed49e1f8a7da2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  checkbox: {fileID: 0}
-  taskUpdateCall:
-    m_PersistentCalls:
-      m_Calls: []
-  timedTask:
-    taskTitle: Back cube
-    resets: 1
-    threshold: 15
-    time: 0
-  stopTimer: 0
 --- !u!114 &116643087 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6161925371211168364, guid: 370f68a4e6848d44eb2f3fabae86d6f5, type: 3}
@@ -929,7 +906,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7539383427013154748, guid: 14abe31dbeb29ed4699e213e50ad7e90, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7539383427013154748, guid: 14abe31dbeb29ed4699e213e50ad7e90, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1221,7 +1198,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &909021809
 MonoBehaviour:
@@ -1247,7 +1224,6 @@ GameObject:
   - component: {fileID: 930574491}
   - component: {fileID: 930574490}
   - component: {fileID: 930574489}
-  - component: {fileID: 930574493}
   m_Layer: 0
   m_Name: Cube 1
   m_TagString: Untagged
@@ -1331,27 +1307,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &930574493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 930574488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 675b090221f69a2449ca5a0a5ddacfd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  checkbox: {fileID: 0}
-  taskUpdateCall:
-    m_PersistentCalls:
-      m_Calls: []
-  simpleTask:
-    taskTitle: Front cube
-    IsDone: 0
 --- !u!1 &934569955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,7 +1452,6 @@ GameObject:
   - component: {fileID: 1243644548}
   - component: {fileID: 1243644547}
   - component: {fileID: 1243644546}
-  - component: {fileID: 1243644550}
   m_Layer: 0
   m_Name: Cube 1 (1)
   m_TagString: Untagged
@@ -1579,30 +1535,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1243644550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1243644543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd788b11d4dd6314e86ed49e1f8a7da2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  checkbox: {fileID: 0}
-  taskUpdateCall:
-    m_PersistentCalls:
-      m_Calls: []
-  timedTask:
-    taskTitle: Middle cube
-    resets: 0
-    threshold: 15
-    time: 0
-  stopTimer: 0
 --- !u!1001 &1295958791
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1902,7 +1836,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3142984160602893754, guid: 1054f75389211bf498ad2dee11348fa9, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3142984160602893754, guid: 1054f75389211bf498ad2dee11348fa9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2125,16 +2059,15 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 762644631476577807, guid: 60cedec10b8955442adb3bf499297856, type: 3}
   m_PrefabInstance: {fileID: 1724457970}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1530249619
+--- !u!114 &1530249613 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 762644631476577805, guid: 60cedec10b8955442adb3bf499297856, type: 3}
+  m_PrefabInstance: {fileID: 1724457970}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530249609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a43c0bdc06e5b9449c3135b6bbfa0dc, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1538391566
@@ -2252,7 +2185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 762644631476577804, guid: 60cedec10b8955442adb3bf499297856, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 762644631476577804, guid: 60cedec10b8955442adb3bf499297856, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2483,7 +2416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7539383427013154748, guid: 14abe31dbeb29ed4699e213e50ad7e90, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7539383427013154748, guid: 14abe31dbeb29ed4699e213e50ad7e90, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2666,7 +2599,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1530249619}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TouchObjectTaskController, Assembly-CSharp
         m_MethodName: TestEvent
         m_Mode: 1
@@ -2942,6 +2875,198 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: currentTask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: forceTaskOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: touchableGameobjectTasks.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[0].gameObjectName
+      value: Front cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[1].gameObjectName
+      value: Middle cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[2].gameObjectName
+      value: Back cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].gameObjectName
+      value: Sphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[0].objectThatNeedsTasks
+      value: 
+      objectReference: {fileID: 930574488}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[1].lookAtTask.taskTitle
+      value: Find the middle cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[1].objectThatNeedsTasks
+      value: 
+      objectReference: {fileID: 1243644543}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[2].objectThatNeedsTasks
+      value: 
+      objectReference: {fileID: 92007290}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].objectThatNeedsTasks
+      value: 
+      objectReference: {fileID: 1530249609}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: touchableGameobjectTasks.Array.data[0].gameObjectName
+      value: Green sphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: touchableGameobjectTasks.Array.data[0].grabableObject
+      value: 
+      objectReference: {fileID: 1530249613}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[2].gazePeriodTask.resets
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].gazePeriodTask.resets
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].holdObjectTask.resets
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[1].lookAtTasks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[2].lookAtTasks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].lookAtTasks.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[0].gazePeriodTask.taskTitle
+      value: Look at the front cube for 10s
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[0].gazePeriodTask.threshold
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[1].gazePeriodTask.taskTitle
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[2].gazePeriodTask.taskTitle
+      value: Look at the back cube for 10 continues seconds.
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[2].gazePeriodTask.threshold
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].gazePeriodTask.taskTitle
+      value: Look at the sphere for 5 seconds
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].gazePeriodTask.threshold
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].holdObjectTask.taskTitle
+      value: Hold the object for 8 seconds
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].holdObjectTask.threshold
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[0].gazePeriodTasks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[2].gazePeriodTasks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].gazePeriodTasks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[1].lookAtTasks.Array.data[0].taskTitle
+      value: Look at middle cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[2].lookAtTasks.Array.data[0].taskTitle
+      value: Look at back cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].lookAtTasks.Array.data[0].taskTitle
+      value: Look at back cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[2].gazePeriodTasks.Array.data[0].resets
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].gazePeriodTasks.Array.data[0].resets
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: touchableGameobjectTasks.Array.data[0].holdObjectTimedTasks.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[0].gazePeriodTasks.Array.data[0].taskTitle
+      value: Look at front cube for 15 seconds
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[0].gazePeriodTasks.Array.data[0].threshold
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[2].gazePeriodTasks.Array.data[0].taskTitle
+      value: Look at back cube for 15 contiunes seconds.
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[2].gazePeriodTasks.Array.data[0].threshold
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].gazePeriodTasks.Array.data[0].taskTitle
+      value: Look at the sphere for 5 seconds
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: taskConfigurations.Array.data[3].gazePeriodTasks.Array.data[0].threshold
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: touchableGameobjectTasks.Array.data[0].holdObjectTimedTasks.Array.data[0].resets
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: touchableGameobjectTasks.Array.data[0].holdObjectTimedTasks.Array.data[0].taskTitle
+      value: Hold green sphere for 10 seconds
+      objectReference: {fileID: 0}
+    - target: {fileID: 504818716, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: touchableGameobjectTasks.Array.data[0].holdObjectTimedTasks.Array.data[0].threshold
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1212088011, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: simulationSetup
       value: 
@@ -3046,10 +3171,18 @@ PrefabInstance:
       propertyPath: defaultPosition
       value: 
       objectReference: {fileID: 763544564}
+    - target: {fileID: 290353676766407641, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: m_ChildScaleHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 290353676766407641, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: m_ChildForceExpandHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 290353676766407642, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: checkboxPrefab
       value: 
-      objectReference: {fileID: 2172931624234252781, guid: c91ef371839f5ba488fad2829721c1e1, type: 3}
+      objectReference: {fileID: 2216289671509122917, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
     - target: {fileID: 335559828953882755, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: m_SizeDelta.y
       value: 52
@@ -3266,6 +3399,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3605801831965869384, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3865515844059769603, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3455,8 +3592,36 @@ PrefabInstance:
       value: -19.407406
       objectReference: {fileID: 0}
     - target: {fileID: 6170095715952403916, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170095715952403916, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170095715952403916, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170095715952403916, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170095715952403916, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170095715952403916, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170095715952403916, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -59.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6170095715952403916, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 42.998344
       objectReference: {fileID: 0}
     - target: {fileID: 6445882638833038914, guid: 6ee537dbcb2d795498a1e9855dc9bb21, type: 3}
       propertyPath: rayCasterObject
@@ -4007,7 +4172,7 @@ Transform:
   - {fileID: 6733984504573905557}
   - {fileID: 6733984504809118087}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6733984505040973535
 GameObject:
@@ -4421,6 +4586,135 @@ Transform:
   m_Father: {fileID: 6733984505040973532}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &6924227787383555448
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 352838418012278732, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 352838418012278732, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 352838418012278732, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 352838418012278732, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.965
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -3.9093337
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.019
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1189696250166051177, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1274934830695306434, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1274934830695306434, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1274934830695306434, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1274934830695306434, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5953431588887728290, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
+      propertyPath: m_Name
+      value: Toggle
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6366a13cec69cd741b0394007a8fb60f, type: 3}
 --- !u!1 &7645767940593191588
 GameObject:
   m_ObjectHideFlags: 0

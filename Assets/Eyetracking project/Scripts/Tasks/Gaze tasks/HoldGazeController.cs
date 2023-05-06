@@ -8,7 +8,14 @@ public class HoldGazeController : TimedTaskController, Trackable
     ///<inheritdoc/>
     public void OnGazeEnter()
     {
-        StartCoroutine(StartTimer());
+        if (TaskManager.GetTaskManager().GetCurrentTask() == GetTask().GetTaskOrder() && GetTask().IsForceTaskOrder())
+        {
+            StartCoroutine(StartTimer());
+        }
+        else if (!GetTask().IsForceTaskOrder())
+        {
+            StartCoroutine(StartTimer());
+        }
     }
 
     ///<inheritdoc/>

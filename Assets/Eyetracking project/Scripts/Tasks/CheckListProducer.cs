@@ -41,7 +41,7 @@ public class CheckListProducer : MonoBehaviour {
     }
 
     /// <summary>
-    /// Updates the list so that it complies with the TaskManager's list. Completed tasks are checked off, new uncompleted tasks are added to the list. 
+    /// Updates the list so that it complies with the TaskManager's list. Completed liveTasks are checked off, new uncompleted liveTasks are added to the list. 
     /// </summary>
     public void UpdateList()
     {
@@ -64,7 +64,7 @@ public class CheckListProducer : MonoBehaviour {
     }
 
     /// <summary>
-    /// Updates the textfield displaying the amount of uncompleted tasks.
+    /// Updates the textfield displaying the amount of uncompleted liveTasks.
     /// </summary>
     private void UpdateRemainingTaskAmount() {
         amountRemainingDisplay.text = "Tasks left: " + taskManager.GetRemainingTaskAmount();

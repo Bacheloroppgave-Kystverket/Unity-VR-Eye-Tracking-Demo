@@ -18,7 +18,16 @@ public class HoldObjectTaskController : TimedTaskController{
     /// Gets run when the object is grabbed.
     /// </summary>
     public void Grabbed(){
-        StartCoroutine(StartTimer());
+        if (!GetTask().IsComplete()) {
+            if (TaskManager.GetTaskManager().GetCurrentTask() == GetTask().GetTaskOrder() && GetTask().IsForceTaskOrder())
+            {
+                StartCoroutine(StartTimer());
+            }
+            else if (!GetTask().IsForceTaskOrder())
+            {
+                StartCoroutine(StartTimer());
+            }
+        }
     }
 
     /// <summary>

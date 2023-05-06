@@ -16,15 +16,45 @@ public class TouchObjectTaskController : TaskController
         xRGrabInteractable.selectEntered.AddListener((pog) => Grabbed());
     }
 
+    /// <summary>
+    /// Sets the task of this controller.
+    /// </summary>
+    /// <param name="newTask">the new task</param>
+    public void SetTask(SimpleTask newTask) {
+        CheckIfObjectIsNull(newTask, "new task");
+        this.task = newTask;
+    }
+
     public void Grabbed() {
         if (!task.IsComplete()) {
-            task.SetDone();
-            CompleteTask();
+            if (task.IsForceTaskOrder() && TaskManager.GetTaskManager().GetCurrentTask() == task.GetTaskOrder())
+            {
+                task.SetDone();
+                CompleteTask();
+            }
+            else if (!GetTask().IsForceTaskOrder()) {
+                task.SetDone();
+                CompleteTask();
+            }
         }
     }
 
     protected override Task GetTask()
     {
         return task;
+    }
+
+    /// <summary>
+    /// Checks if the object is null or not. Throws an exception if the object is null.
+    /// </summary>
+    /// <param name="objecToCheck">the object to check</param>
+    /// <param name="error">the error to be in the string.</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the object to check is null.</exception>
+    private void CheckIfObjectIsNull(object objecToCheck, string error)
+    {
+        if (objecToCheck == null)
+        {
+            throw new IllegalArgumentException("The " + error + " cannot be null.");
+        }
     }
 }

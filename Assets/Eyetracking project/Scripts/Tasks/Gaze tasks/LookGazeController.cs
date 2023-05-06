@@ -10,8 +10,20 @@ public class LookGazeController : TaskController, Trackable
     ///<inheritdoc/>
     public void OnGazeEnter()
     {
-        simpleTask.SetDone();
-        CompleteTask();
+        if (!simpleTask.IsComplete())
+        {
+            if (simpleTask.IsForceTaskOrder() && TaskManager.GetTaskManager().GetCurrentTask() == simpleTask.GetTaskOrder())
+            {
+                simpleTask.SetDone();
+                CompleteTask();
+            }
+            else if (!GetTask().IsForceTaskOrder())
+            {
+                simpleTask.SetDone();
+                CompleteTask();
+            }
+        }
+        
     }
 
     ///<inheritdoc/>

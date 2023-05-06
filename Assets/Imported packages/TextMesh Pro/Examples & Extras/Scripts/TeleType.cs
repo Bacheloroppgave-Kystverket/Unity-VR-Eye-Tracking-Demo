@@ -32,11 +32,11 @@ namespace TMPro.Examples
             //if (GetComponentInParent(typeof(Canvas)) as Canvas == null)
             //{
             //    GameObject canvas = new GameObject("Canvas", typeof(Canvas));
-            //    gameObject.transform.SetParent(canvas.transform);
+            //    grabableObject.transform.SetParent(canvas.transform);
             //    canvas.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
 
             //    // Set RectTransform Size
-            //    gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
+            //    grabableObject.GetComponent<RectTransform>().sizeDelta = new Vector2(500, 300);
             //    m_textMeshPro.fontSize = 48;
             //}
 
