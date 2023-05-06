@@ -1,17 +1,17 @@
-using System.Collections;
+
+
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
-
 /// <summary>
 /// Produces and maintains UI checklists for TaskManagers
 /// </summary>
 public class CheckListProducer : MonoBehaviour {
+
     [SerializeField]
     [Tooltip("The prefab that will function as a checkbox")]
-    private GameObject checkboxPrefab;
+    private Toggle checkboxPrefab;
 
     [SerializeField]
     [Tooltip("The text field that will display the amount of tasks remaining")]
@@ -20,10 +20,23 @@ public class CheckListProducer : MonoBehaviour {
     [SerializeField]
     [Tooltip("The TaskManager the CheckListProducer will base its checklist on")]
     private TaskManager taskManager;
-    private List<Task> tasks;
+
+    private List<TaskController> tasks;
 
     // Start is called before the first frame update
     void Start() {
+        this.taskManager = TaskManager.GetTaskManager();
+        InitializeChecklist();
+    }
+
+    /// <summary>
+    /// Initializes the checklist producer.
+    /// </summary>
+    public void InitializeChecklist() {
+        tasks = taskManager.GetTaskList();
+        foreach (TaskController task in tasks) {
+            task.GetUpdateCall().AddListener(UpdateList);
+        }
         UpdateList();
     }
 
@@ -33,18 +46,19 @@ public class CheckListProducer : MonoBehaviour {
     public void UpdateList()
     {
         tasks = taskManager.GetTaskList();
-        foreach (Task task in tasks) {
-            Destroy(task.GetCheckbox());
-            task.SetCheckbox(null);
-            GameObject taskBox = Instantiate(checkboxPrefab, gameObject.transform);
-            task.SetCheckbox(taskBox);
-            taskBox.transform.parent = gameObject.transform;    Text textField = taskBox.GetComponentInChildren<Text>();
+        foreach (TaskController task in tasks) {
+            Toggle toggle = task.GetCheckbox();
+            if (toggle == null) {
+                toggle = Instantiate(checkboxPrefab, gameObject.transform);
+                task.SetCheckbox(toggle);
+            }
+            Text textField = toggle.GetComponentInChildren<Text>();
             textField.text = task.GetTitle();
             if (task.IsCompleted()) {
                 ColourizeText(textField);
-                task.GetCheckbox().GetComponent<UnityEngine.UI.Toggle>().isOn = true;
+                toggle.isOn = true;
+                toggle.transform.SetAsLastSibling();
             }
-            task.GetUpdateCall().AddListener(UpdateList);
         }
         UpdateRemainingTaskAmount();
     }
@@ -52,11 +66,11 @@ public class CheckListProducer : MonoBehaviour {
     /// <summary>
     /// Updates the textfield displaying the amount of uncompleted tasks.
     /// </summary>
-    void UpdateRemainingTaskAmount() {
+    private void UpdateRemainingTaskAmount() {
         amountRemainingDisplay.text = "Tasks left: " + taskManager.GetRemainingTaskAmount();
     }
 
-    void ColourizeText(Text textElement) {
+    private void ColourizeText(Text textElement) {
         textElement.color = new Color(0.341f, 0.612f, 0.29f);
     }
 }

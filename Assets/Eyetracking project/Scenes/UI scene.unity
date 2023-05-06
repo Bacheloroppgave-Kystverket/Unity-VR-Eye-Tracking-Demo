@@ -1470,6 +1470,7 @@ MonoBehaviour:
   - {fileID: 1932532284}
   - {fileID: 66939241}
   - {fileID: 38441463}
+  checkListProducer: {fileID: 0}
 --- !u!54 &1429393946
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2240,6 +2241,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1851184204}
+    - target: {fileID: 4953709465467262517, guid: 4b9d9940489fb0f48ab7386567b8dbfb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953709465467262517, guid: 4b9d9940489fb0f48ab7386567b8dbfb, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4953709465467262517, guid: 4b9d9940489fb0f48ab7386567b8dbfb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4953709465749430960, guid: 4b9d9940489fb0f48ab7386567b8dbfb, type: 3}
       propertyPath: m_Name
       value: VRTasksSettingsUI
@@ -2292,6 +2305,18 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 64817768}
+    - target: {fileID: 5427553781673745319, guid: 4b9d9940489fb0f48ab7386567b8dbfb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427553781673745319, guid: 4b9d9940489fb0f48ab7386567b8dbfb, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427553781673745319, guid: 4b9d9940489fb0f48ab7386567b8dbfb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6994217103652478297, guid: 4b9d9940489fb0f48ab7386567b8dbfb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2306,6 +2331,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6994217103652478297, guid: 4b9d9940489fb0f48ab7386567b8dbfb, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8439048115128140040, guid: 4b9d9940489fb0f48ab7386567b8dbfb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8439048115128140040, guid: 4b9d9940489fb0f48ab7386567b8dbfb, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

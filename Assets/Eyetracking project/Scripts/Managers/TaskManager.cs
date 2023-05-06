@@ -8,15 +8,40 @@ using UnityEngine.UI;
 /// Fetches and orders lists of objects with the task component. 
 /// </summary>
 public class TaskManager : MonoBehaviour {
-    [SerializeField] [Tooltip("A list of objects with the Task component.")]
-    private List<Task> tasks;
+    
+    [SerializeField, Tooltip("A list of objects with the Task component.")]
+    private List<TaskController> tasks;
 
-    private void Start() {
-        UpdateTaskList();
+    private static TaskManager taskManager;
+
+    private void Awake()
+    {
+        if (taskManager != null)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            taskManager = this;
+        }
     }
 
-    public List<Task> GetTaskList() {
-        UpdateTaskList();
+    /// <summary>
+    /// Gets the task manager.
+    /// </summary>
+    /// <returns>the task manager</returns>
+    public static TaskManager GetTaskManager() {
+        return taskManager;
+    }
+
+    /// <summary>
+    /// Gets the task list.
+    /// </summary>
+    /// <returns>gets the task list</returns>
+    public List<TaskController> GetTaskList() {
+        if (tasks.Count == 0) {
+            UpdateTaskList();
+        }
         return tasks;
     }
 
@@ -27,7 +52,7 @@ public class TaskManager : MonoBehaviour {
     public int GetRemainingTaskAmount()
     {
         int remainingTaskAmount = 0;
-        foreach (Task  task in tasks) {
+        foreach (TaskController  task in tasks) {
             if(!task.IsCompleted()) {
                 remainingTaskAmount++;
             }
@@ -39,7 +64,7 @@ public class TaskManager : MonoBehaviour {
     /// Removes all completed tasks from the list of tasks
     /// </summary>
     public void PruneCompletedTasks() {
-        foreach (Task task in tasks) {
+        foreach (TaskController task in tasks) {
             int i = 0;
             if(task.IsCompleted()) {
                 tasks.Remove(task);
@@ -52,14 +77,14 @@ public class TaskManager : MonoBehaviour {
     /// Sorts the list with completed tasks on the bottom
     /// </summary>
     public void SendCompletedTasksToEndOfList() {
-        List<Task> sortedTasks = new List<Task>();
-        foreach (Task task in tasks) {
+        List<TaskController> sortedTasks = new List<TaskController>();
+        foreach (TaskController task in tasks) {
             if (!task.IsCompleted()) {
                 sortedTasks.Add(task);
             }
         }
 
-        foreach (Task task in tasks) {
+        foreach (TaskController task in tasks) {
             if(task.IsCompleted()) {
                 sortedTasks.Add(task);
             }
@@ -67,14 +92,19 @@ public class TaskManager : MonoBehaviour {
         tasks = sortedTasks;
     }
 
+    private void UpdateTaskStatus() {
+        MonoBehaviour.print("Manager update");
+        SendCompletedTasksToEndOfList();
+    }
+
     /// <summary>
     /// Updates the list with all objects containing the task component in the current scene. 
     /// </summary>
-    public void UpdateTaskList() {
-        tasks = GameObject.FindObjectsOfType<Task>().ToList();
-        SendCompletedTasksToEndOfList();
-        foreach(Task task in tasks) {
-            task.GetUpdateCall().AddListener(UpdateTaskList);
+    private void UpdateTaskList() {
+        tasks = GameObject.FindObjectsOfType<TaskController>().ToList();
+        
+        foreach(TaskController task in tasks) {
+            task.GetUpdateCall().AddListener(UpdateTaskStatus);
         }
     }
 }
