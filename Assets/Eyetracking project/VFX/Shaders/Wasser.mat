@@ -11,8 +11,8 @@ Material:
   m_Shader: {fileID: -6465566751694194690, guid: bda97e8a44ad6584eaf29dbfbddcc3d5, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -103,9 +103,9 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _Wave_distortion: 4
-    - _Wave_height: 1.1
-    - _Wave_speed: 1.5
+    - _Wave_distortion: 10
+    - _Wave_height: 2
+    - _Wave_speed: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

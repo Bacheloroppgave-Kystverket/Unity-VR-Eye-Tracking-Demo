@@ -106,6 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8284877624278532661}
+  - component: {fileID: 3149373012553629828}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -122,7 +123,7 @@ Transform:
   m_GameObject: {fileID: 5506589761301974562}
   m_LocalRotation: {x: -0.707106, y: -0.00104907, z: -0.00104907, w: 0.707106}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.0009999999, y: 0.0009999999, z: 0.001888399}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3188103700526760246}
@@ -131,6 +132,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: -0.17}
+--- !u!114 &3149373012553629828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5506589761301974562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0d5d4cad4a926c4584a59cc87f60217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  degrees: 0.5
 --- !u!1 &6562700641851617209
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,10 +189,10 @@ Light:
   serializedVersion: 10
   m_Type: 0
   m_Shape: 0
-  m_Color: {r: 1, g: 0.92769504, b: 0.6367924, a: 1}
-  m_Intensity: 10000
-  m_Range: 500
-  m_SpotAngle: 30
+  m_Color: {r: 0.98039216, g: 0.9019608, b: 0.46666667, a: 1}
+  m_Intensity: 30000
+  m_Range: 600
+  m_SpotAngle: 50
   m_InnerSpotAngle: 15
   m_CookieSize: 10
   m_Shadows:
@@ -218,8 +232,8 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
+  m_BounceIntensity: 2000
+  m_ColorTemperature: 6435
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -259,19 +273,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 431058b8dd59676468126453e5c297b0, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2400
+      value: 4600
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 431058b8dd59676468126453e5c297b0, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2400
+      value: 4600
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 431058b8dd59676468126453e5c297b0, type: 3}
       propertyPath: m_LocalScale.z
-      value: 24000
+      value: 44000
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 431058b8dd59676468126453e5c297b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -240
+      value: -440
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 431058b8dd59676468126453e5c297b0, type: 3}
       propertyPath: m_LocalPosition.y

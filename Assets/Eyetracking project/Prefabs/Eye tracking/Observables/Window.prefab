@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 333175313995468343}
   - component: {fileID: 7143299663464558040}
   - component: {fileID: 9010605028199752349}
-  - component: {fileID: 8368547904973222764}
   - component: {fileID: 4516097132256857139}
   m_Layer: 0
   m_Name: Cube
@@ -31,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2539908028937295911}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7, y: 4, z: 0.05}
+  m_LocalScale: {x: 7, y: 4, z: 0.03}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4029262886347236246}
@@ -112,19 +111,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a066e192e73bb0547ac3d4ddce7a37ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  changeColor: 0
   trackableObject:
-    trackableObjectID: 0
     nameOfObject: Window
     trackableType: 0
+    trackableObjectID: 0
   trackableRecord:
     trackableDataId: 0
     trackableObject:
-      trackableObjectID: 0
       nameOfObject: 
       trackableType: 6
+      trackableObjectID: 0
     gazeList: []
     viewDistance: 0
-  changeColor: 0
   currentGaze:
     referencePosition:
       locationId: 0
@@ -142,18 +141,6 @@ MonoBehaviour:
     fixations: 0
     fixationDuration: 0
   beingWatched: 0
---- !u!114 &8368547904973222764
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2539908028937295911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cdcf72d234409547a3c9eae06e5e9ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4516097132256857139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +156,7 @@ MonoBehaviour:
   statController: {fileID: 0}
   prefab: {fileID: 2257789756866718480, guid: 987f7d1ad39daef44b70a26aaf695ff7, type: 3}
   rightSide: 0
+  objectRenderer: {fileID: 0}
 --- !u!1 &4029262886347236247
 GameObject:
   m_ObjectHideFlags: 0
