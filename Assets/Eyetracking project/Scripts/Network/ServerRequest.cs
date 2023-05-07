@@ -72,12 +72,16 @@ public class ServerRequest<T>{
     /// <summary>
     /// Uploads the data to the address.
     /// </summary>
+    /// <param name="token">the token</param>
+    /// <param name="isAuthentication">the authentication</param>
     /// <returns>Enumerator that waits for the result</returns>
-    public IEnumerator SendCurrentData() {
+    public IEnumerator SendCurrentData(String token) {
 
         string finalPath = GetPath();
+        bool validRequest = false;
         UnityWebRequest request;
         DownloadHandler downloadHandler = new DownloadHandlerBuffer();
+
         if (webOption == WebOptions.POST) {
             string toEncode = value == null ? "" : JsonUtility.ToJson(value);
             UploadHandler uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(toEncode));
@@ -85,25 +89,31 @@ public class ServerRequest<T>{
         } else {
             request = new UnityWebRequest(finalPath, "GET", downloadHandler, null);
         }
-        string token = AuthenticationRequest.GetToken();
         if (token != "")
         {
+            validRequest = true;
             request.SetRequestHeader("Authorization", "Bearer " + token);
-        }
-        else {
-            throw new IllegalArgumentException("The token cannot be empty");
-        }
-        
-        
-        yield return request.SendWebRequest();
 
-        if (WebOptions.GET == webOption) {
-            UnderstandGetRequest(request);
-        } else {
-            UnderstandPostRequest(request);
         }
-        request.Dispose();
-        yield return new WaitForSeconds(1);
+        else
+        {
+            throw new IllegalArgumentException("The token cannot be empty " + token);
+        }
+
+        if (validRequest) {
+            yield return request.SendWebRequest();
+
+            if (WebOptions.GET == webOption)
+            {
+                UnderstandGetRequest(request);
+            }
+            else
+            {
+                UnderstandPostRequest(request);
+            }
+            request.Dispose();
+            yield return new WaitForSeconds(1);
+        }
     }
 
     /// <summary>
@@ -130,10 +140,11 @@ public class ServerRequest<T>{
     /// <summary>
     /// Sends the get request.
     /// </summary>
+    /// <param name="token">the token</param>
     /// <returns>the enumerator</returns>
-    public IEnumerator SendGetRequest() {
+    public IEnumerator SendGetRequest(string token) {
         SetGet();
-        return SendCurrentData();
+        return SendCurrentData(token);
     }
 
     /// <summary>

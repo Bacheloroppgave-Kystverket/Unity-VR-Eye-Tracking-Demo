@@ -7,7 +7,6 @@ using UnityEngine;
 /// <summary>
 /// Represents a simulation setup controller.
 /// </summary>
-[RequireComponent(typeof(SessionController))]
 public class SimulationSetupController : MonoBehaviour
 {
     [SerializeField, Tooltip("The simulation setup")]
@@ -70,7 +69,7 @@ public class SimulationSetupController : MonoBehaviour
     {
         simulationSetup.SetNameOfSetup(gameObject.name);
         simulationSetupSend.SetData(simulationSetup);
-        StartCoroutine( SendAndUpdateSimulaitonSetup());
+        StartCoroutine(SendAndUpdateSimulaitonSetup());
     }
 
     /// <summary>
@@ -79,16 +78,17 @@ public class SimulationSetupController : MonoBehaviour
     /// <returns>the enumerator</returns>
     private IEnumerator SendAndUpdateSimulaitonSetup()
     {
+        string token = GetComponent<AuthenticationController>().GetToken();
         simulationSetupSend.SetPathVariable(simulationSetup.GetNameOfSetup());
-        yield return simulationSetupSend.SendGetRequest();
+        yield return simulationSetupSend.SendGetRequest(token);
+        
         if (!simulationSetupSend.GetSuccessful()) {
             simulationSetupSend.SetPost();
-            yield return simulationSetupSend.SendCurrentData();
+            yield return simulationSetupSend.SendCurrentData(token);
             yield return new WaitForSeconds(1);
             
-            yield return simulationSetupSend.SendGetRequest();
+            yield return simulationSetupSend.SendGetRequest(token);
         }
-        GetComponent<SessionController>().SendSession();
     }
 
 

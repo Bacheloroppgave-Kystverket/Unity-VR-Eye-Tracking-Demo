@@ -19,9 +19,12 @@ public class AuthenticationRequest
     [SerializeField, Tooltip("The /sessions or other values.")]
     private string endPath;
 
+    [SerializeField, Tooltip("The http status")]
+    private long httpStatus;
+
     [Header("Debug fields")]
     [SerializeField]
-    private static JwtToken token;
+    private JwtToken token;
 
     /// <summary>
     /// Constructs the path of the request.
@@ -31,6 +34,12 @@ public class AuthenticationRequest
     {
         return path + ":" + port + "/" + endPath;
     }
+
+    /// <summary>
+    /// Gets the HTTP status.
+    /// </summary>
+    /// <returns>the http status</returns>
+    public long GetHttpStatus() => httpStatus;
 
     /// <summary>
     /// Sends a login request and sets the token if the input is valid.
@@ -46,7 +55,7 @@ public class AuthenticationRequest
         yield return unityWebRequest.SendWebRequest();
         if (unityWebRequest.result != UnityWebRequest.Result.Success)
         {
-            Debug.Log(unityWebRequest.error);
+            this.httpStatus = unityWebRequest.responseCode == 0 ? 999 : unityWebRequest.responseCode;
         }
         else {
             Debug.Log(unityWebRequest.downloadHandler.text);
@@ -59,5 +68,5 @@ public class AuthenticationRequest
     /// Gets the token.
     /// </summary>
     /// <returns>the token</returns>
-    public static string GetToken() => token.GetToken();
+    public JwtToken GetToken() => token;
 }

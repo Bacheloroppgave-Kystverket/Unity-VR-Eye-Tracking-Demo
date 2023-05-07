@@ -12,6 +12,9 @@ public class OverlayManager : MonoBehaviour
     [SerializeField, Tooltip("The menus amount text")]
     private TextMeshProUGUI menuAmountText;
 
+    [SerializeField, Tooltip("The dialog controller")]
+    private DialogController dialogController;
+
     private int feedbackAmount;
 
     private void Start()
@@ -56,5 +59,14 @@ public class OverlayManager : MonoBehaviour
     /// <param name="referencePosition">the reference position</param>
    public void DisplayLeastViewedObject(AdaptiveFeedback adaptiveFeedback, ReferencePosition referencePosition) {
         feedbackText.text = adaptiveFeedback.GetLeastViewedObjectAsString(referencePosition.GetCategoryConfigurationsForPosition());
+    }
+
+    /// <summary>
+    /// Shows the dialog to the user.
+    /// </summary>
+    /// <param name="dialog">the dialog</param>
+    public void ShowDialog(Dialog dialog) {
+        dialogController.SetDialog(dialog);
+        dialogController.ShowDialog();
     }
 }

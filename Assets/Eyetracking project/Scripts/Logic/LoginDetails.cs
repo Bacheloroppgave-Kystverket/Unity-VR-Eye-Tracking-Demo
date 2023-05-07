@@ -11,4 +11,16 @@ public class LoginDetails
 
     [SerializeField, Tooltip("The password")]
     private string password;
+
+    /// <summary>
+    /// Gets the username.
+    /// </summary>
+    /// <returns>the username</returns>
+    public string GetUsername() => username;
+
+    /// <summary>
+    /// Gets the password.
+    /// </summary>
+    /// <returns>the password</returns>
+    public string GetPassword() => password;
 }

@@ -32,7 +32,7 @@ public class PointOfInterestManager : MonoBehaviour
     [SerializeField, Tooltip("Set to true if the point cloud or heatmap should have solid color.")]
     private bool showPointsAsSolid = false;
 
-    [SerializeField, Tooltip("All the toggles of showPointLine, showPointLineText, showPointText and showPointsAsSolid in that order.")]
+    [SerializeField, Tooltip("All the toggles of showPointLine and showPointText")]
     private List<Toggle> toggles = new List<Toggle>();
 
     private bool showHeatmap;

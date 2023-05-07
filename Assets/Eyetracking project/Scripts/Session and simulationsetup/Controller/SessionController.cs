@@ -11,7 +11,7 @@ using UnityEngine;
 /// Represents a sessionController that is done by a user. 
 /// Should be placed on an object that represents the main location that has all the reference positions.
 /// </summary>
-[RequireComponent(typeof(SimulationSetupController))]
+[RequireComponent(typeof(SimulationSetupController), typeof(AuthenticationController))]
 public class SessionController : MonoBehaviour {
 
     [SerializeField, Tooltip("The session")]
@@ -27,18 +27,6 @@ public class SessionController : MonoBehaviour {
     [SerializeField, Tooltip("The networking that sends the session")]
     private ServerRequest<Session> sendData;
 
-    [SerializeField]
-    private LoginDetails loginDetails;
-
-    [SerializeField]
-    private string token;
-
-    [SerializeField]
-    private AuthenticationRequest authenticationRequest;
-
-    [SerializeField]
-    private UserServerRequest userServerRequest;
-
     /// <summary>
     /// Gets the raycaster object.
     /// </summary>
@@ -49,19 +37,7 @@ public class SessionController : MonoBehaviour {
         session.ClearLists();
         sendData.SetData(session);
         session.SetSimulationSetup(GetComponent<SimulationSetupController>().GetSimulationSetup());
-        StartCoroutine(LoginToUser());
-        //closeTrackableObjects = GetComponentsInChildren<TrackableObjectController>().ToList();
-        //referencePositions = GetComponentsInChildren<ReferencePosition>().ToList();
-        
         CheckField("Player", player);
-    }
-
-    private IEnumerator LoginToUser() { 
-        yield return authenticationRequest.SendLoginRequest(loginDetails);
-        token = AuthenticationRequest.GetToken();
-        yield return userServerRequest.SendCurrentData();
-        session.SetUser(userServerRequest.GetUser());
-        
     }
 
     private void OnApplicationQuit()
@@ -87,7 +63,7 @@ public class SessionController : MonoBehaviour {
     /// </summary>
     public void SendSession() {
         sendData.SetData(session);
-        StartCoroutine(sendData.SendCurrentData());
+        StartCoroutine(sendData.SendCurrentData(GetComponent<AuthenticationController>().GetToken()));
     }
 
     /// <summary>
