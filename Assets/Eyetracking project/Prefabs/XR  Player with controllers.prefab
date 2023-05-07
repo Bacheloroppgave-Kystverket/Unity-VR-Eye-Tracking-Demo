@@ -256,6 +256,37 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &763544563
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 763544564}
+  m_Layer: 0
+  m_Name: SpawnArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &763544564
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763544563}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.679, z: 0.613}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6249843506086648071}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1094634135
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,7 +453,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6249843506086648071}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1614047411
 Camera:
@@ -1402,7 +1433,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3063
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -2139,6 +2170,7 @@ GameObject:
   - component: {fileID: 2131997588}
   - component: {fileID: 2131997590}
   - component: {fileID: 2131997589}
+  - component: {fileID: 2131997595}
   m_Layer: 0
   m_Name: XR  Player with controllers
   m_TagString: Player
@@ -2162,6 +2194,7 @@ Transform:
   - {fileID: 1350411779}
   - {fileID: 1851184203}
   - {fileID: 2777195016398196522}
+  - {fileID: 763544564}
   - {fileID: 1614047408}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -2242,7 +2275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointOfInterestCollectionController: {fileID: 2131997585}
   frequency: 1
-  heatmapFrequency: 30
+  heatmapFrequency: 10
   pointOfInterestFrequency: 1
   orderID: 0
   currentPoint: 1
@@ -2265,6 +2298,24 @@ MonoBehaviour:
   raycaster: {fileID: 0}
   projector: {fileID: 0}
   oldPos: {x: 0, y: 0, z: 0}
+--- !u!114 &2131997595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6249843506086648064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1599f0a7e7ee634a8333dce89d3505c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointOfInterestControllers: []
+  startPos: 0
+  endPos: 0
+  pointPrefab: {fileID: 7746015807731111323, guid: a0c4ae0ba01bb2848bba3913fff38e08, type: 3}
+  lineController: {fileID: 0}
+  amountOfPointControllers: 10
 --- !u!1 &6249843506607214105
 GameObject:
   m_ObjectHideFlags: 0
@@ -2899,7 +2950,7 @@ MonoBehaviour:
       m_Name: Directional Anchor Rotation
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: 9dbaf805-a950-428d-81c8-1c9a70294671
+      m_Id: a06f8eea-87f5-49e3-a583-148c5f6a05a4
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
@@ -2925,6 +2976,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6249843506086648071}
     m_Modifications:
+    - target: {fileID: 1056824053789248396, guid: cc7cce4fb2c4fd347a19741669b17085, type: 3}
+      propertyPath: maxDistance
+      value: 0.06
+      objectReference: {fileID: 0}
     - target: {fileID: 1540246810702022408, guid: cc7cce4fb2c4fd347a19741669b17085, type: 3}
       propertyPath: m_UseGravity
       value: 0
@@ -3069,11 +3124,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6533466178839777231, guid: 5e062d06e6cd4554fb4ba53469f243d5, type: 3}
       propertyPath: ConfidenceThreshold
-      value: 0.6
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 6533466179784975648, guid: 5e062d06e6cd4554fb4ba53469f243d5, type: 3}
       propertyPath: ConfidenceThreshold
-      value: 0.6
+      value: 0.7
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2245569991416073592, guid: 5e062d06e6cd4554fb4ba53469f243d5, type: 3}

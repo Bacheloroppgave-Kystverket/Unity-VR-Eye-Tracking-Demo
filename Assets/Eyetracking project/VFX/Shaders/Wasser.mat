@@ -105,7 +105,7 @@ Material:
     - _Surface: 0
     - _Wave_distortion: 10
     - _Wave_height: 2
-    - _Wave_speed: 1
+    - _Wave_speed: 2
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

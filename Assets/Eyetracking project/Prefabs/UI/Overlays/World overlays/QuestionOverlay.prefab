@@ -365,7 +365,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   simpleTask:
-    taskTitle: Do all the questions on the task panel
+    taskTitle: Do all the questions on the radar panel
     taskOrder: 2
     forceTaskOrder: 0
     IsDone: 0
@@ -374,6 +374,30 @@ MonoBehaviour:
   questionTitle: {fileID: 563611092920491334}
   errorText: {fileID: 4740555617957162838}
   submitButton: {fileID: 7257440407992148923}
+  questionTasks:
+  - taskTitle: How many cubes are there?
+    taskOrder: 2
+    forceTaskOrder: 1
+    options:
+    - questionOption: 1
+      correct: 0
+      chosen: 0
+    - questionOption: 2
+      correct: 0
+      chosen: 0
+    - questionOption: 3
+      correct: 1
+      chosen: 0
+  - taskTitle: How many people are on this bachelor thesis=
+    taskOrder: 0
+    forceTaskOrder: 0
+    options:
+    - questionOption: 3
+      correct: 0
+      chosen: 0
+    - questionOption: 4
+      correct: 1
+      chosen: 0
 --- !u!1 &1120723586912863301
 GameObject:
   m_ObjectHideFlags: 0

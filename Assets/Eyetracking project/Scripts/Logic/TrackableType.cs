@@ -31,6 +31,22 @@ public enum TrackableType
     /// </summary>
     PICKUPABLES,
 
+    /// <summary>
+    /// Represents the menu option
+    /// </summary>
+    MENU, 
+
+    /// <summary>
+    /// Represents the officer overlay
+    /// </summary>
+    OFFICEROVERLAY, 
+
+    /// <summary>
+    /// Represe
+    /// </summary>
+    CAPTIANOVERLAY,
+
+
 
     /// <summary>
     /// Represents other observable objects
