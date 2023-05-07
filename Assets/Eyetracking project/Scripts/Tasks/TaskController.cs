@@ -27,7 +27,7 @@ public abstract class TaskController : MonoBehaviour {
     /// 
     /// </summary>
     /// <returns></returns>
-    protected abstract Task GetTask();
+    public abstract Task GetTask();
 
     /// <summary>
     /// Completed the task, and sends a message to CheckListProducers to update their info. 

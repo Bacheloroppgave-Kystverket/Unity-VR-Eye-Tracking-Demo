@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,7 @@ public class TaskManager : MonoBehaviour {
     [SerializeField, Tooltip("The current task")]
     private int currentTask = 1;
     
-    private void Awake()
-    {
+    private void Awake(){
         if (taskManager != null)
         {
             Destroy(this);
@@ -41,30 +41,25 @@ public class TaskManager : MonoBehaviour {
     /// Deploys and builds all the liveTasks.
     /// </summary>
     public void DeployTasks() {
+        List<TaskController> taskControllers = GameObject.FindObjectsOfType<TaskController>().ToList();
+        taskControllers.ForEach(controller => controller.GetTask().SetTaskOrderAndForcedOrder(controller.GetTask().GetTaskOrder(), forceTaskOrder));
         Dictionary<int, ObjectTaskBuilder> taskBuilderMap = new Dictionary<int, ObjectTaskBuilder>();
         int order = 1;
-        foreach (TaskConfiguration gazeConfig in taskConfigurations) {
+        foreach (TaskConfiguration gazeConfig in taskConfigurations)
+        {
             GameObject taskObject = gazeConfig.GetGameObject();
             ObjectTaskBuilder objectTaskBuilder = new ObjectTaskBuilder(taskObject, forceTaskOrder);
-            if (objectTaskBuilder.AddLookGazeTask(gazeConfig.GetLookAtTask(), order))
-            {
-                order++;
-            }
-            if (objectTaskBuilder.AddHoldGazeTask(gazeConfig.GetGazePeriodTask(), order)) { 
-                order++;  
-            }
+            order = IncrementOrder(objectTaskBuilder.AddLookGazeTask(gazeConfig.GetLookAtTask(), order), taskControllers, order);
+            order = IncrementOrder(objectTaskBuilder.AddHoldGazeTask(gazeConfig.GetGazePeriodTask(), order), taskControllers, order);
             XRGrabInteractable grabInteractable = taskObject.GetComponent<XRGrabInteractable>();
-            if (grabInteractable != null) {
-                if (objectTaskBuilder.AddTouchTask(gazeConfig.GetTouchObjectTask(), order)) {
-                    order++;
-                }
-                if (objectTaskBuilder.AddHoldObjectForXTimeTask(gazeConfig.GetHoldObjectTask(), order)) {
-                    order++;
-                }
+            if (grabInteractable != null)
+            {
+                order = IncrementOrder(objectTaskBuilder.AddTouchTask(gazeConfig.GetTouchObjectTask(), order), taskControllers, order);
+                order = IncrementOrder(objectTaskBuilder.AddHoldObjectForXTimeTask(gazeConfig.GetHoldObjectTask(), order), taskControllers, order);
             }
             taskBuilderMap.Add(taskObject.GetInstanceID(), objectTaskBuilder);
         }
-
+        liveTasks.AddRange(taskControllers);
         foreach (ObjectTaskBuilder builder in taskBuilderMap.Values) {
             GameObject gameobject = builder.Build();
             liveTasks.AddRange(gameobject.GetComponents<TaskController>());
@@ -72,6 +67,22 @@ public class TaskManager : MonoBehaviour {
         UpdateTaskList();
     }
 
+    /// <summary>
+    /// Increments the order id and checks that any predefined tasks does not match that id.
+    /// </summary>
+    /// <param name="validTask">if the task is valid</param>
+    /// <param name="tasks">the predefined tasks</param>
+    /// <param name="order">the order id</param>
+    /// <returns>the new order id</returns>
+    private int IncrementOrder(bool validTask, List<TaskController> tasks, int order) {
+        int newOrder = order;
+        if (validTask) {
+            do{
+                newOrder++;
+            } while ((tasks.Any(task => task.GetTask().GetTaskOrder() == newOrder)));
+        }
+        return newOrder;
+    }
     /// <summary>
     /// Gets the task manager.
     /// </summary>

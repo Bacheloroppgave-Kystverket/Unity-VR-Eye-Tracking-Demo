@@ -39,7 +39,7 @@ public class TouchObjectTaskController : TaskController
         }
     }
 
-    protected override Task GetTask()
+    public override Task GetTask()
     {
         return task;
     }

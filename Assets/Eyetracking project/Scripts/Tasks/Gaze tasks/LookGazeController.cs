@@ -43,7 +43,7 @@ public class LookGazeController : TaskController, Trackable
     }
 
     ///<inheritdoc/>
-    protected override Task GetTask()
+    public override Task GetTask()
     {
         return simpleTask;
     }

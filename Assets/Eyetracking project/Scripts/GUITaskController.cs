@@ -20,39 +20,120 @@ public class GUITaskController : TaskController
     [SerializeField, Tooltip("The question title")]
     private TextMeshProUGUI questionTitle;
 
+    [SerializeField, Tooltip("The error text")]
+    private TextMeshProUGUI errorText;
+
+    [SerializeField, Tooltip("T")]
+    private Button submitButton;
+
     [SerializeField, Tooltip("The question tasks")]
     private List<QuestionTask> questionTasks;
 
     [SerializeField, Tooltip("The current toggles")]
-    private Dictionary<QuestionTask, Toggle> questionTogglesMap = new Dictionary<QuestionTask, Toggle>();
+    private Dictionary<QuestionOption, Toggle> questionTogglesMap = new Dictionary<QuestionOption, Toggle>();
 
-    private int pos = 0;
+    private int pos = -1;
 
-    protected override Task GetTask()
+    ///<inheritdoc/>
+    public override Task GetTask()
     {
         return simpleTask;
     }
 
-    public void DisplayCurrentTask() {
-        if (pos < questionTasks.Count)
+    private void Start()
+    {
+        DisplayCurrentTask();
+        submitButton.onClick.AddListener(SubmitAwnser);
+    }
+
+    /// <summary>
+    /// Called by the button in order to check if all the awnsers are correct.
+    /// </summary>
+    public void SubmitAwnser() {
+        foreach(QuestionOption questionOption in questionTogglesMap.Keys){
+            Toggle toggle = questionTogglesMap[questionOption];
+            questionOption.SetChosen(toggle.enabled);
+        }
+        if (pos < questionTasks.Count && !questionTasks[pos].IsComplete())
+        {
+            StartCoroutine(DisplayCorrectAnswer());
+        }
+        else {
+            StartCoroutine(ShowErrorTextAndClearOptions());
+        }
+    }
+
+    /// <summary>
+    /// Displays that the anwser was correct and goes to the next task.
+    /// </summary>
+    /// <returns>the enumerator</returns>
+    public IEnumerator DisplayCorrectAnswer() {
+        DestoryTogglesAndClearTasks();
+        submitButton.interactable = false;
+        questionTitle.text = "Correct answer!";
+        yield return new WaitForSeconds(2);
+        submitButton.interactable = true;
+        DisplayCurrentTask();
+    }
+
+    /// <summary>
+    /// Starts a corerutine to display an error and disable the submit button.
+    /// </summary>
+    /// <returns>Enumerator</returns>
+    public IEnumerator ShowErrorTextAndClearOptions() {
+        submitButton.interactable = false;
+        foreach (QuestionOption questionOption in questionTogglesMap.Keys) {
+            questionTogglesMap[questionOption].enabled = false;
+        }
+        errorText.gameObject.SetActive(true);
+        yield return new WaitForSeconds(3);
+        errorText.gameObject.SetActive(false);
+        submitButton.interactable = true;
+    }
+
+    /// <summary>
+    /// Displays the current task.
+    /// </summary>
+    private void DisplayCurrentTask() {
+        pos += 1;
+        if (pos < questionTasks.Count && questionTasks.Count > 0)
         {
             QuestionTask task = questionTasks[pos];
             this.questionTitle.text = task.GetTaskTitle();
-
-            pos += 1;
+            GenerateTogglesForOptions(task);
+            submitButton.gameObject.SetActive(true);
         }
-        else { 
-        
+        else {
+            questionTitle.text = "All tasks are done";
+            submitButton.gameObject.SetActive(false);
+            simpleTask.SetDone();
+            CompleteTask();
         }
 
     }
 
-    public void GenerateTogglesForOptions(Task task) {
-        
+    /// <summary>
+    /// Generates toggles for each of the options.
+    /// </summary>
+    /// <param name="task">the task</param>
+    private void GenerateTogglesForOptions(QuestionTask task) {
+        task.GetOptions().ForEach(option =>
+        {
+            Toggle toggle = Instantiate(togglePrefab, taskHolder.transform);
+            toggle.GetComponentInChildren<Text>().text = option.GetQuestionOptionAsText();
+            questionTogglesMap.Add(option, toggle);
+        });
 
     }
 
-    public void DestoryTogglesAndClearTasks() { 
-    
+    /// <summary>
+    /// Destroys the toggles and clears the question and toggles map.
+    /// </summary>
+    private void DestoryTogglesAndClearTasks() {
+        foreach(QuestionOption questionOption in questionTogglesMap.Keys) {
+            Toggle toggle = questionTogglesMap[questionOption];
+            Destroy(toggle.gameObject);
+        }
+        questionTogglesMap.Clear();
     }
 }

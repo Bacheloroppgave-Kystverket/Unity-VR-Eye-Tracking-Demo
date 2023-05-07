@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Represents a option that might be selected under the question task.
 /// </summary>
+[Serializable]
 public class QuestionOption{
 
     [SerializeField, Tooltip("The question option")]

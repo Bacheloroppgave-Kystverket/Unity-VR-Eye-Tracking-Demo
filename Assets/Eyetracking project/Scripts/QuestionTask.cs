@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
 public class QuestionTask : Task
 {
     [SerializeField, Tooltip("The question options")]
@@ -13,6 +15,12 @@ public class QuestionTask : Task
     {
         return options.All(option => option.IsAwnseredCorrectly());
     }
+
+    /// <summary>
+    /// Gets the question options.
+    /// </summary>
+    /// <returns>the options as a list</returns>
+    public List<QuestionOption> GetOptions() => options;
 
     ///<inheritdoc/>
     public override void ResetTask()

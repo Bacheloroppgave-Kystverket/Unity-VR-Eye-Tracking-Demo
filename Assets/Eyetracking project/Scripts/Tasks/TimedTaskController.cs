@@ -21,7 +21,7 @@ public class TimedTaskController : TaskController
     }
 
     ///<inheritdoc/>
-    protected override Task GetTask()
+    public override Task GetTask()
     {
         return timedTask;
     }
