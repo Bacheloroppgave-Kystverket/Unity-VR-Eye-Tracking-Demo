@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 1120723586774824896}
   - component: {fileID: 1120723586774824897}
   m_Layer: 0
-  m_Name: PointOfInterestPanel
+  m_Name: PointOfInterestPanel v1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5166425106135913189}
   - component: {fileID: 5166425106135913188}
   m_Layer: 9
-  m_Name: Number
+  m_Name: NumberPicker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

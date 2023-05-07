@@ -54,7 +54,7 @@ public class PointOfInterestManager : MonoBehaviour
         showPointText = !showPointText;
         TogglePointText();
         toggles[0].enabled = showLine;
-        toggles[2].enabled = showPointText;
+        toggles[1].enabled = showPointText;
     }
 
     public void SetStartAndEnd(int pointStart, int pointEnd) {
