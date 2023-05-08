@@ -40,10 +40,11 @@ public class AdaptiveFeedback : Feedback
             }
         }
 
+
         float time = positionTime - totalTime;
 
         if (categoryOther != null){
-            categoryOther.AddTime(time);
+            categoryOther.AddTime(Math.Abs(time));
         }
         else {
             categoryOther = new CategoryFeedback(TrackableType.OTHER, time > 0 ? time : 0);

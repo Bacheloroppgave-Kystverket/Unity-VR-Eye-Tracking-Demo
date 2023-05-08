@@ -26,6 +26,11 @@ public class User
     }
 
     /// <summary>
+    /// Gets the username
+    /// </summary>
+    public string GetUserName() => userName;
+
+    /// <summary>
     /// Sets the id of the user.
     /// </summary>
     /// <param name="userId">the user id</param>

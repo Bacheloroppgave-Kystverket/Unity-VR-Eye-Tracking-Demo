@@ -33,7 +33,6 @@ public class DisplayPointsOfInterestController : MonoBehaviour
 
     private void UpdateAmountOfPoints()
     {
-        
         for (int i = pointOfInterestControllers.Count; i < amountOfPointControllers; i++)
         {
             PointOfInterestController pointOfInterestController = Instantiate(pointPrefab).GetComponent<PointOfInterestController>();
@@ -62,10 +61,9 @@ public class DisplayPointsOfInterestController : MonoBehaviour
         float totalTime = 0;
         IEnumerator<PointOfInterestContainer> pointOfInterestContainerIt = pointOfInterests.GetEnumerator();
         IEnumerator<PointOfInterestController> controllerIt = pointOfInterestControllers.GetEnumerator();
-       
         while (pointOfInterestContainerIt.MoveNext() && controllerIt.MoveNext() && totalTime <= stopTime)
         {
-            PointOfInterestContainer pointOfInterestContainer  = pointOfInterestContainerIt.Current;
+            PointOfInterestContainer pointOfInterestContainer = pointOfInterestContainerIt.Current;
             totalTime += pointOfInterestContainer.GetRecord().GetTime();
             if (totalTime >= startTime ) {
                 PointOfInterestController pointOfInterestController = controllerIt.Current;
@@ -73,6 +71,7 @@ public class DisplayPointsOfInterestController : MonoBehaviour
                 pointOfInterestController.gameObject.SetActive(true);
                 lineController.AddTransform(pointOfInterestController.transform);
             }
+            
         }
         lineController.DrawLine();
     }

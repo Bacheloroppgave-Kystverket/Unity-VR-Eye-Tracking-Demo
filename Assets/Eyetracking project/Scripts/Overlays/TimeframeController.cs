@@ -25,6 +25,7 @@ public class TimeframeController : MonoBehaviour
         showOverlay = !showOverlay;
         if (showOverlay) {
             ShowTimeframeController();
+            float maxValue = pointOfInterestManager.GetAmountOfPointsOfInterest();
         }
         else {
             HideTimeframeController();
@@ -37,6 +38,7 @@ public class TimeframeController : MonoBehaviour
         maxIncrementController.SetMaxValue(value);
         minIncrementController.SetMaxValue(value);
         transform.position = defaultPosition.position;
+        MonoBehaviour.print(defaultPosition.childCount + defaultPosition.gameObject.name);
         transform.rotation = Quaternion.Euler(135, 0, 0);
     }
 

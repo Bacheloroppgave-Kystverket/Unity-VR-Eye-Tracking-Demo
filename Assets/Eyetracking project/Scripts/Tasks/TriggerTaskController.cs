@@ -10,8 +10,8 @@ public class TriggerTaskController : TaskController
     /// <summary>
     /// Does the task so that the conditions are done.
     /// </summary>
-    private void DoTask() {
-        if (simpleTask.IsComplete()) {
+    public void DoTask() {
+        if (!simpleTask.IsComplete()) {
             if (simpleTask.IsForceTaskOrder() && TaskManager.GetTaskManager().GetCurrentTask() == simpleTask.GetTaskOrder() || !simpleTask.IsForceTaskOrder())
             {
                 simpleTask.SetDone();

@@ -92,11 +92,11 @@ Material:
     - _GlossMapScale: 0.491
     - _Glossiness: 0.222
     - _GlossyReflections: 1
-    - _Height_of_cutoff: -3.83
+    - _Height_of_cutoff: 10.94
     - _Metallic: 0
     - _Mode: 0
     - _Noise_scale: 60
-    - _Noise_strength: 0.1
+    - _Noise_strength: 3
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _QueueControl: 0
@@ -107,7 +107,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _Thickness: 0.01
+    - _Thickness: 1
     - _UVSec: 0
     - _WorkflowMode: 1
     - _ZWrite: 1

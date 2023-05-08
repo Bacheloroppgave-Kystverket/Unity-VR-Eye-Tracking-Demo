@@ -43,15 +43,11 @@ public class IncrementController : MonoBehaviour
         if (newValue < 1 && validValue)
         {
             newValue = 1;
-            minusButtons.ForEach(button => button.enabled = false);
-            plusButtons.ForEach(button => button.enabled = true);
             SetCurrentValue(newValue);
         }
         else if (newValue > maxValue && validValue)
         {
             newValue = Mathf.FloorToInt(maxValue);
-            plusButtons.ForEach(button => button.enabled = false);
-            minusButtons.ForEach(button => button.enabled = true);
             SetCurrentValue(newValue);
         }
         else if(validValue) {
@@ -74,7 +70,7 @@ public class IncrementController : MonoBehaviour
     /// <param name="newValue">the new value</param>
     /// <returns>True if the value is valid according to the other. False otherwise</returns>
     private bool CheckValueAccordingToOther(int newValue) { 
-        return isMaxValue ? newValue > otherIncrementController.GetCurrentValue() : newValue < otherIncrementController.GetCurrentValue();
+        return isMaxValue ? newValue > otherIncrementController.GetCurrentValue() && newValue < maxValue : newValue < otherIncrementController.GetCurrentValue() && newValue < maxValue;
     }
 
     /// <summary>

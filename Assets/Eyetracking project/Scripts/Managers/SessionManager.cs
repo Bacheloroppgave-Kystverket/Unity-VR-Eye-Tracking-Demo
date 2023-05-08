@@ -37,7 +37,7 @@ public class SessionManager : MonoBehaviour
 
     public void SendData() {
         StopEyeTracking();
-        sessionController.GetComponent<SimulationSetupController>().SendSimulationSetup();
+        sessionController.SendSession();
     }
 
     /// <summary>

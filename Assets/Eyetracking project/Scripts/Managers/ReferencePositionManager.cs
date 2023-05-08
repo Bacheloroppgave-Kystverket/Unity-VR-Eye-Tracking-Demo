@@ -24,11 +24,11 @@ public class ReferencePositionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
         CheckField("Trackable Object Manager", trackableObjectsManager);
-        
-        if (currentReferencePositon == null) {
-            SetPosition(sessionManager.GetSessionController().GetSimulationSetupController().GetReferencePositions().First());
+        if (currentReferencePositon == null)
+        {
+            this.currentReferencePositon = sessionManager.GetSessionController().GetSimulationSetupController().GetReferencePositions().First();
         }
-        trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetReferencePosition());
+        SetPosition(currentReferencePositon);
     }
 
     /// <summary>

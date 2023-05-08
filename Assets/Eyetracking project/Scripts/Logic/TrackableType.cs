@@ -39,12 +39,12 @@ public enum TrackableType
     /// <summary>
     /// Represents the officer overlay
     /// </summary>
-    OFFICEROVERLAY, 
+    OFFICEROVERLAY,
 
     /// <summary>
     /// Represe
     /// </summary>
-    CAPTIANOVERLAY,
+    CAPTAINOVERLAY,
 
 
 

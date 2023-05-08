@@ -34,12 +34,12 @@ public class BoatController : MonoBehaviour
 
     public IEnumerator StartMotion() {
         while (startMoving) {
-            if (Vector3.Distance(transform.position, targetPostion) < 2f)
+            if (Vector3.Distance(transform.position, targetPostion) < 4f)
             {
                 pos = (pos + 1) % targets.Count ;
                 Vector3 newVector = targets[pos].position;
                
-                targetPostion = targets[pos].position;
+                targetPostion = newVector;
             }
             if (agent.velocity == Vector3.zero) {
                 agent.SetDestination(targetPostion);

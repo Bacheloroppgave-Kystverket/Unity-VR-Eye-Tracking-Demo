@@ -36,7 +36,7 @@ public class Session
     /// <param name="trackableObjectsController">the trackable objects</param>
     public void AddTrackableObject(TrackableObjectController trackableObjectsController, ViewDistance viewDistance) {
         //Todo: Here the data from the DB should be loaded.
-        if (trackableObjectsController != null && viewDistance == ViewDistance.CLOSE && trackableRecords.Find(record => record.GetTrackableObject() == trackableObjectsController.GetTrackableObject()) == null){
+        if (trackableObjectsController != null && trackableRecords.Find(record => record.GetTrackableObject() == trackableObjectsController.GetTrackableObject()) == null){
             trackableRecords.Add(trackableObjectsController.GetTrackableRecord());
         }
     }
@@ -108,6 +108,7 @@ public class Session
     /// <param name="user">the new user</param>
     public void SetUser(User user) {
         CheckIfObjectIsNull(user, "user");
+        MonoBehaviour.print(user.GetUserName());
         this.user = user;
     }
 

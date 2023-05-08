@@ -32,6 +32,9 @@ public class GUITaskController : TaskController
     [SerializeField, Tooltip("The current toggles")]
     private Dictionary<QuestionOption, Toggle> questionTogglesMap = new Dictionary<QuestionOption, Toggle>();
 
+    [SerializeField, Tooltip("Set to true if the overlay should hide")]
+    private bool hideOverlay;
+
     private int pos = -1;
 
     ///<inheritdoc/>
@@ -43,6 +46,12 @@ public class GUITaskController : TaskController
     private void Start()
     {
         DisplayCurrentTask();
+        StartCoroutine(Hide());
+    }
+
+    private IEnumerator Hide() {
+        yield return new WaitForSeconds(0.2f);
+        gameObject.SetActive(false);
         submitButton.onClick.AddListener(SubmitAwnser);
     }
 
@@ -52,9 +61,12 @@ public class GUITaskController : TaskController
     public void SubmitAwnser() {
         foreach(QuestionOption questionOption in questionTogglesMap.Keys){
             Toggle toggle = questionTogglesMap[questionOption];
-            questionOption.SetChosen(toggle.enabled);
+            questionOption.SetChosen(toggle.isOn);
+            MonoBehaviour.print("The question option is " + questionOption.IsAwnseredCorrectly() + " " + toggle.isOn);
         }
-        if (pos < questionTasks.Count && !questionTasks[pos].IsComplete())
+        MonoBehaviour.print(questionTasks[pos].IsComplete());
+
+        if (pos < questionTasks.Count && questionTasks[pos].IsComplete())
         {
             StartCoroutine(DisplayCorrectAnswer());
         }
@@ -83,7 +95,7 @@ public class GUITaskController : TaskController
     public IEnumerator ShowErrorTextAndClearOptions() {
         submitButton.interactable = false;
         foreach (QuestionOption questionOption in questionTogglesMap.Keys) {
-            questionTogglesMap[questionOption].enabled = false;
+            questionTogglesMap[questionOption].isOn = false;
         }
         errorText.gameObject.SetActive(true);
         yield return new WaitForSeconds(3);

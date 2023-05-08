@@ -10,17 +10,17 @@ public class SimulationSetupManager : MonoBehaviour
     [SerializeField, Tooltip("Set to true if the scene should update on load")]
     private bool updateSceneOnLoad;
 
+    [SerializeField, Tooltip("The reference position manager.")]
+    private ReferencePositionManager referencePositionManager;
+
 
     public void Start()
     {
-        StartCoroutine(FindPositonsAndTrackableObjects());
-    }
-
-    private IEnumerator FindPositonsAndTrackableObjects() {
-        yield return new WaitForSeconds(0.5f);
         UpdateCurrentPositionsForSession();
         UpdateCurrentTrackableObjectsForSession();
     }
+
+    
 
     public void UpdateCurrentTrackableObjectsForSession() {
         simulationSetup.BroadcastMessage("AddTrackableToSimulationSetup", this, SendMessageOptions.DontRequireReceiver);

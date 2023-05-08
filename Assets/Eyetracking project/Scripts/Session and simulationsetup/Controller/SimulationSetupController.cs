@@ -21,7 +21,7 @@ public class SimulationSetupController : MonoBehaviour
     [SerializeField, Tooltip("The simulation setup sender")]
     private SimulationSetupServerRequest simulationSetupSend;
 
-    private void Start()
+    private void Awake()
     {
         closeTrackableObjects.Clear();
         referencePositions.Clear();
@@ -86,6 +86,7 @@ public class SimulationSetupController : MonoBehaviour
             simulationSetupSend.SetPost();
             yield return simulationSetupSend.SendCurrentData(token);
             yield return new WaitForSeconds(1);
+            Debug.Log("Simulation setup added.");
             
             yield return simulationSetupSend.SendGetRequest(token);
         }

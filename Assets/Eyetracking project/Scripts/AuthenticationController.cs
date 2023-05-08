@@ -53,6 +53,7 @@ public class AuthenticationController : MonoBehaviour
         {
             yield return userServerRequest.SendCurrentData(token.GetToken());
             GetComponent<SessionController>().GetSession().SetUser(userServerRequest.GetUser());
+            yield return new WaitForSeconds(3);
             GetComponent<SimulationSetupController>().SendSimulationSetup();
         }
         else {

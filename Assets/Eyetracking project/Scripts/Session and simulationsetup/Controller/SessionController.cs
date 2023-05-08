@@ -34,7 +34,6 @@ public class SessionController : MonoBehaviour {
     public RayCasterObject GetRayCasterObject() => player.GetRaycaster();
 
     private void Start() {
-        session.ClearLists();
         sendData.SetData(session);
         session.SetSimulationSetup(GetComponent<SimulationSetupController>().GetSimulationSetup());
         CheckField("Player", player);
@@ -43,6 +42,7 @@ public class SessionController : MonoBehaviour {
     private void OnApplicationQuit()
     {
         session.ClearLists();
+
     }
 
     /// <summary>

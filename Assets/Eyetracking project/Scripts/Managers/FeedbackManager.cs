@@ -29,6 +29,9 @@ public class FeedbackManager : MonoBehaviour{
     [SerializeField, Tooltip("The interval that the adaptive training system should be active for."), Min(10)]
     private int seconds = 10;
 
+    [SerializeField, Tooltip("The amount of remaining seconds")]
+    private float remainingSeconds = 0;
+
     [SerializeField, Tooltip("Set to true if the adaptive training system should be running.")]
     private bool activeAdaptiveTrainingSystem = true;
 
@@ -67,10 +70,14 @@ public class FeedbackManager : MonoBehaviour{
     /// </summary>
     /// <returns>the wait time</returns>
     private IEnumerator StartAdaptiveTrainingSystem() {
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSeconds(0.25f);
         while (activeAdaptiveTrainingSystem && eyeTracking) {
-            CalculateAndDisplayProsentageFeedback();
-            yield return new WaitForSeconds(seconds);
+            this.remainingSeconds += 0.25f;
+            if (remainingSeconds >= seconds) {
+                CalculateAndDisplayProsentageFeedback();
+                remainingSeconds = 0;
+            }
+            yield return new WaitForSeconds(0.25f);
         }
     }
 
@@ -101,7 +108,7 @@ public class FeedbackManager : MonoBehaviour{
         while (it.MoveNext()) {
             ReferencePositionController position = it.Current;
             AdaptiveFeedback adaptiveFeedback = CalculateAdaptiveFeedbackForPosition(position);
-            session.GetPositionRecord(currentPosition).AddFeedback(adaptiveFeedback);
+            session.GetPositionRecord(position.GetReferencePosition()).AddFeedback(adaptiveFeedback);
             if (currentPosition == position.GetReferencePosition()) {
                 overlayManager.DisplayFeedback(adaptiveFeedback);
                 //overlayManager.DisplayLeastViewedObject(adaptiveFeedback, position.GetReferencePosition());

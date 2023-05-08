@@ -89,6 +89,12 @@ public class PointOfInterestManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Gets the amount of points of interest.
+    /// </summary>
+    /// <returns>the amount</returns>
+    public int GetAmountOfPointsOfInterest() => pointOfInterestCollectionController.GetPointRecordings().Count;
+
+    /// <summary>
     /// Toggles the points or gazeplot
     /// </summary>
     public void TogglePoints()
