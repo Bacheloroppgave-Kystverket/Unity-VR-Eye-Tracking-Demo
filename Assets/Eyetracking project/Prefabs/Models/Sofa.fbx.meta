@@ -13,7 +13,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: plywood
-    second: {fileID: 2100000, guid: f49cd8e049e2994448ff59f6de5c98d8, type: 2}
+    second: {fileID: 2100000, guid: 08eb3701fd7ae894eb17f48939497850, type: 2}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
