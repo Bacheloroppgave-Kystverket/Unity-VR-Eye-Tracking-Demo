@@ -89,6 +89,13 @@ public class PointOfInterestManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Updats the look direciton for the points of interest
+    /// </summary>
+    public void UpdateLookDirection() { 
+        StartCoroutine(displayPointsOfInterest.UpdateLookDirection());
+    }
+
+    /// <summary>
     /// Gets the amount of points of interest.
     /// </summary>
     /// <returns>the amount</returns>

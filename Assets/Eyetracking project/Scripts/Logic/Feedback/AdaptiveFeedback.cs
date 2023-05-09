@@ -32,7 +32,6 @@ public class AdaptiveFeedback : Feedback
         float totalTime = 0;
 
         CategoryFeedback categoryOther = null;
-
         foreach (CategoryFeedback feedback in feedbackList) {
             totalTime += feedback.GetTime();
             if (feedback.GetTrackableType() == TrackableType.OTHER) {
@@ -40,13 +39,14 @@ public class AdaptiveFeedback : Feedback
             }
         }
 
-
         float time = positionTime - totalTime;
 
-        if (categoryOther != null){
-            categoryOther.AddTime(Math.Abs(time));
+        if (categoryOther != null && time > 0)
+        {
+            categoryOther.AddTime(time);
         }
-        else {
+        else
+        {
             categoryOther = new CategoryFeedback(TrackableType.OTHER, time > 0 ? time : 0);
             this.feedbackList.Add(categoryOther);
         }

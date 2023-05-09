@@ -18,8 +18,8 @@ public class PointOfInterestController : MonoBehaviour
     /// <param name="pointOfInterestContainer">the point of interest</param>
     /// <param name="orderId">the order id</param>
     /// <param name="showText">true if the text of the point should show.</param>
-    /// <param name="player">the transform of the player</param>
-    public void SetPointOfInterest(PointOfInterestContainer pointOfInterestContainer, int orderId, bool showText, Transform player) {
+    /// <param name="player">the player</param>
+    public void SetPointOfInterest(PointOfInterestContainer pointOfInterestContainer, int orderId, bool showText, EyetrackingPlayer player) {
         CheckIfObjectIsNull(pointOfInterestContainer, "point of interest");
         this.pointOfInterest = pointOfInterestContainer;
         this.orderId = orderId;
@@ -28,7 +28,7 @@ public class PointOfInterestController : MonoBehaviour
         this.textOfPoint.gameObject.SetActive(showText);
         Transform parentTransform = pointOfInterestContainer.GetParentTransform();
         transform.position = parentTransform.transform.TransformPoint(pointOfInterestContainer.GetRecord().GetLocalPosition());
-        transform.LookAt(player);
+        transform.LookAt(player.GetRaycaster().transform);
         //transform.localScale = parentTransform.InverseTransformVector(new Vector3(0.03f,0.03f,0.03f));
     }
 

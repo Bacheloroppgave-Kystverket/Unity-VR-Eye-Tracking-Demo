@@ -15,8 +15,12 @@ public class ReferencePositionManager : MonoBehaviour
     [SerializeField, Tooltip("The session manager")]
     private SessionManager sessionManager;
 
+    [SerializeField, Tooltip("The points of interest manager")]
+    private PointOfInterestManager pointOfInterestManager;
+
     [SerializeField, Tooltip("The current reference position")]
     private ReferencePositionController currentReferencePositon;
+
 
     [SerializeField, Tooltip("The amount of seconds to wait when changing position")]
     private float secondsToWait = 2f;
@@ -100,7 +104,7 @@ public class ReferencePositionManager : MonoBehaviour
         if (currentCollider != null) { 
             currentCollider.enabled = false;
         }
-        
+        pointOfInterestManager.UpdateLookDirection();
         trackableObjectsManager.UpdatePositionOnAllTrackableObjects(GetCurrentReferencePosition().GetReferencePosition());
         
     }

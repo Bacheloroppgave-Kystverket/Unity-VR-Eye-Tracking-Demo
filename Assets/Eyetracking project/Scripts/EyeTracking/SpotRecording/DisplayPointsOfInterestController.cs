@@ -61,19 +61,31 @@ public class DisplayPointsOfInterestController : MonoBehaviour
         float totalTime = 0;
         IEnumerator<PointOfInterestContainer> pointOfInterestContainerIt = pointOfInterests.GetEnumerator();
         IEnumerator<PointOfInterestController> controllerIt = pointOfInterestControllers.GetEnumerator();
-        while (pointOfInterestContainerIt.MoveNext() && controllerIt.MoveNext() && totalTime <= stopTime)
+        while (pointOfInterestContainerIt.MoveNext() && totalTime <= stopTime)
         {
             PointOfInterestContainer pointOfInterestContainer = pointOfInterestContainerIt.Current;
             totalTime += pointOfInterestContainer.GetRecord().GetTime();
-            if (totalTime >= startTime ) {
+            if (totalTime >= startTime && controllerIt.MoveNext()) {
                 PointOfInterestController pointOfInterestController = controllerIt.Current;
-                pointOfInterestController.SetPointOfInterest(pointOfInterestContainer, pointOfInterestContainer.GetRecord().GetOrderId(), showPointText, transform);
+                pointOfInterestController.SetPointOfInterest(pointOfInterestContainer, pointOfInterestContainer.GetRecord().GetOrderId(), showPointText, GetComponent<EyetrackingPlayer>());
                 pointOfInterestController.gameObject.SetActive(true);
                 lineController.AddTransform(pointOfInterestController.transform);
             }
             
         }
         lineController.DrawLine();
+    }
+
+    /// <summary>
+    /// Updates the look direction
+    /// </summary>
+    public IEnumerator UpdateLookDirection() {
+        yield return new WaitForSeconds(0.5f);
+        foreach (PointOfInterestController pointOfInterestController in pointOfInterestControllers) {
+            if (pointOfInterestController.enabled) {
+                pointOfInterestController.transform.LookAt(GetComponent<EyetrackingPlayer>().GetRaycaster().transform);
+            }
+        }
     }
 
     private void CheckIfStartNumberIsValid(int value)
