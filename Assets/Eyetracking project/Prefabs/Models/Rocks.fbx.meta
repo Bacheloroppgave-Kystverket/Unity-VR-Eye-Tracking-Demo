@@ -3,7 +3,27 @@ guid: bd3c2a415272d9e4d9a4c9a8b101f792
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rock
+    second: {fileID: 2100000, guid: 04f981dcc588cf94ebeee509c99ca505, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: rock_05_diff_2k
+    second: {fileID: 2800000, guid: 61ab2909a64eef446be15ab506672a71, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: rock_05_nor_dx_2k
+    second: {fileID: 2800000, guid: 2b42cbdf8f4fffc4aa1936f48cb58062, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: rock_05_rough_2k
+    second: {fileID: 2800000, guid: 7e681452f4a54e048ae7867ebf47e95d, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
