@@ -1,6 +1,9 @@
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Represents a point of interest that can show when and for how long someone looked at this point.
+/// </summary>
 public class PointOfInterestController : MonoBehaviour
 {
     [SerializeField, Tooltip("The point of interest that this object represents.")]

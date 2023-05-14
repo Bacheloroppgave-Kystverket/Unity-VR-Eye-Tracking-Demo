@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a task where you only have to glance at it in order to do it.
+/// </summary>
 public class LookGazeController : TaskController, Trackable
 {
     [SerializeField, Tooltip("The simple task")]

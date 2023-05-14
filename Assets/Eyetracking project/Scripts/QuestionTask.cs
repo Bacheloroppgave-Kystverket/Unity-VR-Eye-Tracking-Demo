@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Represents a task that is a question.
+/// </summary>
 [Serializable]
 public class QuestionTask : Task
 {

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Controller of a dialog
+/// </summary>
 public class DialogController : MonoBehaviour
 {
     [SerializeField, Tooltip("The main content")]

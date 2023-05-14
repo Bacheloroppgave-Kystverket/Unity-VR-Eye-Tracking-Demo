@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a record of a trackable object.
+/// </summary>
 [Serializable]
 public class TrackableRecord
 {

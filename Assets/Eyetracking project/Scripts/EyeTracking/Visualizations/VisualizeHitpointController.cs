@@ -4,6 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// The controller that visualizes the diffrent point recordings.
+/// </summary>
 [RequireComponent(typeof(EyetrackingPlayer))]
 public class VisualizeHitpointController : MonoBehaviour, RaycasterObserver
 {

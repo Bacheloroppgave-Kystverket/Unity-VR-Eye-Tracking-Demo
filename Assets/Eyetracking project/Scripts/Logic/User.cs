@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 
+/// <summary>
+/// Represents a user that does the session.
+/// </summary>
 [Serializable]
 public class User
 {

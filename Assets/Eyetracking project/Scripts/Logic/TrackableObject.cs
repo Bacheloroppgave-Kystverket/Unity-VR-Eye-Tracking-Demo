@@ -1,8 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+/// <summary>
+/// Represents a trackable object.
+/// </summary>
+[Serializable]
 public class TrackableObject
 {
     [Header("Configure object")]

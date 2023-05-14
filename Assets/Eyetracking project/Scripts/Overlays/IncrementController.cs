@@ -5,6 +5,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Represents the total increment and all their buttons.
+/// </summary>
 public class IncrementController : MonoBehaviour
 {
     [SerializeField, Tooltip("The plus buttons")]

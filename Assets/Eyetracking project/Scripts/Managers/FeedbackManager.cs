@@ -48,7 +48,9 @@ public class FeedbackManager : MonoBehaviour{
 
     }
 
-
+    /// <summary>
+    /// Sets the eyetracking to true.
+    /// </summary>
     public void StartEyetracking() {
         if (!hasMadeMap) {
             sortedTrackableObjectsMap = new SortedTrackableObjectsMap(sessionManager.GetSessionController().GetSimulationSetupController().GetCloseTrackableObjects(), visualizeKeysAndValues);
@@ -60,6 +62,9 @@ public class FeedbackManager : MonoBehaviour{
         }
     }
 
+    /// <summary>
+    /// Stops the eyetracking.
+    /// </summary>
     public void StopEyeTracking() {
         eyeTracking = false;
     }

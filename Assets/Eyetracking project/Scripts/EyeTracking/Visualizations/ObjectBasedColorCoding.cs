@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents the object based color coding object. Was never finished.
+/// </summary>
 [RequireComponent(typeof(TrackableObjectController))]
 public class ObjectBasedColorCoding : MonoBehaviour
 {

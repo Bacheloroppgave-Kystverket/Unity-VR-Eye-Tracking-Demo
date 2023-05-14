@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[System.Serializable]
+/// <summary>
+/// Represents a session that a user has done.
+/// </summary>
+[Serializable]
 public class Session
 {
     [Header("Session configuration")]

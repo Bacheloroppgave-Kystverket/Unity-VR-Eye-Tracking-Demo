@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a hold gaze task and controls this task.
+/// </summary>
 public class HoldGazeController : TimedTaskController, Trackable
 {
 

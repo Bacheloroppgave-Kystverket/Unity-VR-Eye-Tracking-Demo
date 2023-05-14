@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.Networking;
 using static UnityEngine.Rendering.DebugUI;
 
+/// <summary>
+/// Represents a request that is sent to get the token for the user.
+/// </summary>
 [Serializable]
 public class AuthenticationRequest
 {
@@ -33,6 +36,16 @@ public class AuthenticationRequest
     private string GetPath()
     {
         return path + ":" + port + "/" + endPath;
+    }
+
+    /// <summary>
+    /// Sets the path and port of this request.
+    /// </summary>
+    /// <param name="path">the path</param>
+    /// <param name="port">the port</param>
+    public void SetPathAndPort(string path, int port) { 
+        this.path = path;
+        this.port = port;
     }
 
     /// <summary>

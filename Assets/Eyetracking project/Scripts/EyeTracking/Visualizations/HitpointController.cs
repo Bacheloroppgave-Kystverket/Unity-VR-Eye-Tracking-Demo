@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents the hitpoint and its controller. The visual dot that shows where the user is looking.
+/// </summary>
 public class HitpointController : MonoBehaviour
 {
     [SerializeField, Tooltip("The hitpoints gameobject")]

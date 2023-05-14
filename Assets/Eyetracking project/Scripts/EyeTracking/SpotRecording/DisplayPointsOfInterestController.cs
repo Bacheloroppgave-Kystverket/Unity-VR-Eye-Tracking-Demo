@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Displays the points of interests for this player.
+/// </summary>
 [RequireComponent(typeof(RecordedPointsController))]
 public class DisplayPointsOfInterestController : MonoBehaviour
 {
@@ -31,6 +34,9 @@ public class DisplayPointsOfInterestController : MonoBehaviour
         recordedPointsController = GetComponent<RecordedPointsController>();
     }
 
+    /// <summary>
+    /// Updates the amount of points that can be shown.
+    /// </summary>
     private void UpdateAmountOfPoints()
     {
         for (int i = pointOfInterestControllers.Count; i < amountOfPointControllers; i++)
@@ -88,6 +94,11 @@ public class DisplayPointsOfInterestController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if the start number is valid.
+    /// </summary>
+    /// <param name="value">the start number</param>
+    /// <exception cref="IllegalArgumentException">gets thrown if the start number is invalid</exception>
     private void CheckIfStartNumberIsValid(int value)
     {
         if (value < 0 && value > recordedPointsController.GetPointRecordings().Count)

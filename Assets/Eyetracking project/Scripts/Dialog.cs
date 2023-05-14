@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a dialog that can be show to the user.
+/// </summary>
 [Serializable]
 public class Dialog
 {

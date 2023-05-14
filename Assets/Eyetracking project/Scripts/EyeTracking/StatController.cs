@@ -4,6 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+/// <summary>
+/// The controller of the stats for the trackable objects.
+/// </summary>
 public class StatController : MonoBehaviour
 {
     [Header("Configure object")]

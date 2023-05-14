@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a recording of the positon and the time spent there.
+/// </summary>
 [Serializable]
 public class PositionRecord{
 
@@ -15,6 +18,10 @@ public class PositionRecord{
     [SerializeField, Tooltip("The adaptive feedback of this position")]
     private List<AdaptiveFeedback> adaptiveFeedbacks = new List<AdaptiveFeedback>();
 
+    /// <summary>
+    /// Makes an instance of reference postition.
+    /// </summary>
+    /// <param name="referencePosition">the reference position</param>
     public PositionRecord(ReferencePosition referencePosition) {
         CheckIfObjectIsNull(referencePosition, "reference position");
         this.positionDuration = 0;
@@ -27,6 +34,7 @@ public class PositionRecord{
     /// </summary>
     /// <returns>the reference position</returns>
     public ReferencePosition GetReferencePosition() => referencePosition;
+
     /// <summary>
     /// Adds feedback to the position record.
     /// </summary>

@@ -5,6 +5,9 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Places the recoding points based on the diffrent frequencies and their timing to the main pulling rate.
+/// </summary>
 [RequireComponent(typeof(EyetrackingPlayer))]
 public class PointPlacerController : MonoBehaviour, RaycasterObserver
 {

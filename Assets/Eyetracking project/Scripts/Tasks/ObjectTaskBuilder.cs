@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Task builder that makes it simpler to build one object with many tasks.
+/// </summary>
 public class ObjectTaskBuilder
 {
     private GameObject gameObject;

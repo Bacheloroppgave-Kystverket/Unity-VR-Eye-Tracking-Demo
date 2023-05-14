@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Represents the diffrent trackable types of this session.
+/// </summary>
 public enum TrackableType
 {
 

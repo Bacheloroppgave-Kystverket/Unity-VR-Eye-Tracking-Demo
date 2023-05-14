@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// Represents a simulation setup server request. Checks if the simulation setup is posted. If not posts it.
+/// </summary>
 [Serializable]
 public class SimulationSetupServerRequest : ServerRequest<SimulationSetup>{
 

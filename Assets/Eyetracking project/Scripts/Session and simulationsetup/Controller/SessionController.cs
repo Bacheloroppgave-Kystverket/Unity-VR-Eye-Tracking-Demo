@@ -46,6 +46,16 @@ public class SessionController : MonoBehaviour {
     }
 
     /// <summary>
+    /// Sets the path and port of this request.
+    /// </summary>
+    /// <param name="path">the path</param>
+    /// <param name="port">the port</param>
+    public void SetPathAndPort(string path, int port)
+    {
+        this.sendData.SetPathAndPort(path, port);
+    }
+
+    /// <summary>
     /// Adds the trackable object to the session.
     /// </summary>
     /// <param name="trackableObjectController">the trackable object controller</param>

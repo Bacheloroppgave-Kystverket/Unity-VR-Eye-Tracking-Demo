@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A task that is done when the action is tiggered.
+/// </summary>
 public class TriggerTaskController : TaskController
 {
     [SerializeField, Tooltip("The task")]

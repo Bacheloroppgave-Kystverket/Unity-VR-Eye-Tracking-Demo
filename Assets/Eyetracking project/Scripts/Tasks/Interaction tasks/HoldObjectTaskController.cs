@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Represents a hold object task.
+/// </summary>
 [RequireComponent(typeof(XRGrabInteractable))]
 public class HoldObjectTaskController : TimedTaskController{
 

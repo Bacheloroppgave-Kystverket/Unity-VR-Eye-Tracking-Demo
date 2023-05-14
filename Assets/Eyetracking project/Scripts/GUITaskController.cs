@@ -4,6 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Represents a taks that is in the GUI. 
+/// </summary>
 public class GUITaskController : TaskController
 {
 
@@ -49,6 +52,10 @@ public class GUITaskController : TaskController
         StartCoroutine(Hide());
     }
 
+    /// <summary>
+    /// Hides the GUI task controller.
+    /// </summary>
+    /// <returns>the enumerator</returns>
     private IEnumerator Hide() {
         yield return new WaitForSeconds(0.2f);
         gameObject.SetActive(false);

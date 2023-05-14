@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A simple task is a task that only is completed when its triggered.
+/// </summary>
 [Serializable]
 public class SimpleTask : Task
 {

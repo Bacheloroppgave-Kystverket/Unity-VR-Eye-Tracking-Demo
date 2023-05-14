@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents the distance that the object is from the user.
+/// </summary>
 public enum ViewDistance
 {
     /// <summary>

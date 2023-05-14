@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Holds the recorded point.
+/// </summary>
 [Serializable]
 public class PointCloudContainer : PointRecordContainer<RecordedPoint>
 {
@@ -11,6 +14,7 @@ public class PointCloudContainer : PointRecordContainer<RecordedPoint>
     {
     }
 
+    ///<inheritdoc/>
     public override RecordedPoint GetRecord()
     {
         return (RecordedPoint) GetRecordedPoint();

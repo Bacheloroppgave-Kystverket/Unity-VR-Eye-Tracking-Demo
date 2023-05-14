@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Holds diffrent visaulization methods for the gaze vecotor and its hitpoints.
+/// </summary>
 public class VisualizationManager : MonoBehaviour
 {
     private bool activeHitspotRaw;

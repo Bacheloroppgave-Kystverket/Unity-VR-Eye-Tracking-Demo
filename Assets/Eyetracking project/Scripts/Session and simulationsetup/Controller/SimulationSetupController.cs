@@ -29,6 +29,16 @@ public class SimulationSetupController : MonoBehaviour
     }
 
     /// <summary>
+    /// Sets the path and port of this request.
+    /// </summary>
+    /// <param name="path">the path</param>
+    /// <param name="port">the port</param>
+    public void SetPathAndPort(string path, int port)
+    {
+        simulationSetupSend.SetPathAndPort(path, port);
+    }
+
+    /// <summary>
     /// Gets the simulation setup.
     /// </summary>
     /// <returns>the simulation setup.</returns>

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The JWT token from the server.
+/// </summary>
 [Serializable]
 public class JwtToken
 {

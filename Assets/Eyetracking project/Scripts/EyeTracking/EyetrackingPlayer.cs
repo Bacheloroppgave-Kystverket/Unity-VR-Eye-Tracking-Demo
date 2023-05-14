@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents the eyetracking player.
+/// </summary>
 public class EyetrackingPlayer : MonoBehaviour{
 
     [SerializeField, Tooltip("The eyes of the player")]

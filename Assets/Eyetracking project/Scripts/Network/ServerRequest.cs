@@ -42,6 +42,17 @@ public class ServerRequest<T>{
     private bool successful;
 
     /// <summary>
+    /// Sets the path and port of this request.
+    /// </summary>
+    /// <param name="path">the path</param>
+    /// <param name="port">the port</param>
+    public void SetPathAndPort(string path, int port)
+    {
+        this.path = path;
+        this.port = port;
+    }
+
+    /// <summary>
     /// Gets if the server reuqest is done successful.
     /// </summary>
     /// <returns></returns>

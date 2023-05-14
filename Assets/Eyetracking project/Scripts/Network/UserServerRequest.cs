@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
+/// <summary>
+/// Represents a request to get a user from the server.
+/// </summary>
 [Serializable]
 public class UserServerRequest : ServerRequest<User>
 {

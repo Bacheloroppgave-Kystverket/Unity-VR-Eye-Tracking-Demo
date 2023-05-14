@@ -56,10 +56,18 @@ public abstract class TaskController : MonoBehaviour {
         return this.checkbox;
     }
 
+    /// <summary>
+    /// Gets if the task is completed.
+    /// </summary>
+    /// <returns>true if the task is completed. False otherwise.</returns>
     public bool IsCompleted() {
         return GetTask().IsComplete();
     }
 
+    /// <summary>
+    /// Gets the update call of this task.
+    /// </summary>
+    /// <returns>the unity event</returns>
     public UnityEvent GetUpdateCall() {
         return this.taskUpdateCall;
     }

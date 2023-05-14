@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Represents the point of interest as a container.
+/// </summary>
+/// <typeparam name="T">the type of recorded point</typeparam>
 [Serializable]
 public abstract class PointRecordContainer<T>
 {

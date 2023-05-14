@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Contains a point of interest.
+/// </summary>
 [Serializable]
 public class PointOfInterestContainer : PointRecordContainer<PointRecording>
 {

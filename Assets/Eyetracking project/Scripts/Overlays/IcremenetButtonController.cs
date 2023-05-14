@@ -4,6 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controller for the increment button.
+/// </summary>
 public class IcremenetButtonController : MonoBehaviour
 {
     [SerializeField, Tooltip("The value that the button represents")]

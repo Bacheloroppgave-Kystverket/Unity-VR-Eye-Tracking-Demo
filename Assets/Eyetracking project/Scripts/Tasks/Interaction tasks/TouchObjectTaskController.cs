@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Represents a task that only needs a touch to be completed.
+/// </summary>
 [RequireComponent(typeof(XRGrabInteractable))]
 public class TouchObjectTaskController : TaskController
 {
@@ -25,6 +28,9 @@ public class TouchObjectTaskController : TaskController
         this.task = newTask;
     }
 
+    /// <summary>
+    /// Finishes this task if its not completed.
+    /// </summary>
     public void Grabbed() {
         if (!task.IsComplete()) {
             if (task.IsForceTaskOrder() && TaskManager.GetTaskManager().GetCurrentTask() == task.GetTaskOrder())
@@ -39,6 +45,7 @@ public class TouchObjectTaskController : TaskController
         }
     }
 
+    ///<inheritdoc/>
     public override Task GetTask()
     {
         return task;

@@ -154,6 +154,9 @@ public class TaskManager : MonoBehaviour {
         liveTasks = sortedTasks;
     }
 
+    /// <summary>
+    /// Updates the task status.
+    /// </summary>
     private void UpdateTaskStatus() {
         currentTask += 1;
         SendCompletedTasksToEndOfList();

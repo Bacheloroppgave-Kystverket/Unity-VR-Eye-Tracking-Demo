@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents the general structure of a task.
+/// </summary>
 public abstract class Task
 {
     [SerializeField, Tooltip("The title of the task")]

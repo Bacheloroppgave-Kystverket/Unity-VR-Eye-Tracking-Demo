@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// The game object that represents a line.
+/// </summary>
 public class GameObjectLineController : MonoBehaviour
 {
     [Header("Configuration")]

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Represents the manager for all the reference positions. Makes sure that the correct position is used to track diffrent times for the objects.
+/// </summary>
 public class ReferencePositionManager : MonoBehaviour
 {
 

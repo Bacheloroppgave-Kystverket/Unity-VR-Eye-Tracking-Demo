@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents the positon and its default "should be" configuration for all the categories.
+/// </summary>
 [Serializable]
 public class PositionConfiguration
 {

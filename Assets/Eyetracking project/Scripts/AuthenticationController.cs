@@ -12,12 +12,17 @@ public class AuthenticationController : MonoBehaviour
     private OverlayManager overlayManager;
 
     [Header("Error messages and login details")]
-
     [SerializeField, Tooltip("The login details of the user")]
     private LoginDetails loginDetails;
 
     [SerializeField, Tooltip("The authentication dialogs")]
     private List<AuthenticationDialog> authDialogs;
+
+    [SerializeField, Tooltip("The web path")]
+    private string path;
+
+    [SerializeField, Tooltip("The port")]
+    private int port;
 
     [Space(5),Header("The requests")]
     [SerializeField, Tooltip("The authentication request")]
@@ -33,6 +38,10 @@ public class AuthenticationController : MonoBehaviour
     ///<inheritdoc>/>
     private void Start()
     {
+        authenticationRequest.SetPathAndPort(path, port);
+        userServerRequest.SetPathAndPort(path, port);
+        GetComponent<SessionController>().SetPathAndPort(path, port);
+        GetComponent<SimulationSetupController>().SetPathAndPort(path, port);
         if (loginDetails.GetUsername() != "" && loginDetails.GetPassword() != "")
         {
             StartCoroutine(LoginToUser());
@@ -41,6 +50,7 @@ public class AuthenticationController : MonoBehaviour
             Debug.Log("The username and password needs to be filled out");
         }
     }
+
 
     /// <summary>
     /// Logs into the user and syncs the simulation setup.

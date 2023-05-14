@@ -4,12 +4,15 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// Holds all of the recorded points.
+/// </summary>
 public class RecordedPointsController : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Tooltip("The point of interest recordings")]
     private List<PointOfInterestContainer> pointRecordings = new List<PointOfInterestContainer>();
 
-    [SerializeField]
+    [SerializeField, Tooltip("The point cloud recorded points")]
     private List<PointCloudContainer> recordedPoints = new List<PointCloudContainer>();
 
     [SerializeField, Tooltip("The visual effect prefab")]
@@ -18,7 +21,11 @@ public class RecordedPointsController : MonoBehaviour
     [SerializeField, Tooltip("The current heatpoint that has been synced.")]
     private int currentHeatPoint = 0;
     
-  
+    /// <summary>
+    /// Addsa  heatmap point.
+    /// </summary>
+    /// <param name="recordedPoint">the new recording</param>
+    /// <param name="parentTransform">the transform that the recording hit</param>
     public void AddHeatmapPoint(RecordedPoint recordedPoint, Transform parentTransform)
     {
         recordedPoints.Add(new PointCloudContainer(recordedPoint, parentTransform));
@@ -50,9 +57,10 @@ public class RecordedPointsController : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// Adds a point of interest to the collection.
     /// </summary>
-    /// <param name="raycastHit"></param>
+    /// <param name="parentTransform">the transform that was hit</param>
+    /// <param name="pointRecording">the point of interest</param>
     public void AddPointOfInterest(PointRecording pointRecording, Transform parentTransform)
     {
         pointRecordings.Add(new PointOfInterestContainer(pointRecording, parentTransform));

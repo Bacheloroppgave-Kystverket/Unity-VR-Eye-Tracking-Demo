@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+/// <summary>
+/// Represents a task configuration that can be used to make tasks.
+/// </summary>
 [Serializable]
 public class TaskConfiguration
 {

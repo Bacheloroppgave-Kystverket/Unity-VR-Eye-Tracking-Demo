@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 /// <summary>
 /// Represents feedback that a user is given per object.
 /// </summary>
-[System.Serializable]
+[Serializable]
 public class CategoryConfiguration{
 
     [SerializeField, Tooltip("The trackable object that should have feedback")]

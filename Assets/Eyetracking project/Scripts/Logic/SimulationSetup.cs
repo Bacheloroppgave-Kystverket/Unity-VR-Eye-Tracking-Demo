@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a default setup for a simulation.
+/// </summary>
 [Serializable]
 public class SimulationSetup {
 

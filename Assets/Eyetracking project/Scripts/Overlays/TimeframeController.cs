@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A controller that controls the time frame of the points of interest.
+/// </summary>
 public class TimeframeController : MonoBehaviour
 {
     [SerializeField, Tooltip("The minimum increment controller")]
@@ -21,6 +24,9 @@ public class TimeframeController : MonoBehaviour
 
     private bool showOverlay = false;
 
+    /// <summary>
+    /// Toggles the visibility of this tablet.
+    /// </summary>
     public void ToggleVisibility() { 
         showOverlay = !showOverlay;
         if (showOverlay) {
@@ -32,6 +38,9 @@ public class TimeframeController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Shows the time frame controller.
+    /// </summary>
     private void ShowTimeframeController() { 
         gameObject.SetActive(true);
         float value = sessionManager.GetSessionController().GetSession().GetTotalTime();
@@ -42,10 +51,16 @@ public class TimeframeController : MonoBehaviour
         transform.rotation = Quaternion.Euler(135, 0, 0);
     }
 
+    /// <summary>
+    /// Hides the time frame controller.
+    /// </summary>
     private void HideTimeframeController() {
         gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Updates the start and stop values.
+    /// </summary>
     public void UpdateStartAndStopValues() {
         this.pointOfInterestManager.SetStartAndEnd(minIncrementController.GetCurrentValue(), maxIncrementController.GetCurrentValue());
     }

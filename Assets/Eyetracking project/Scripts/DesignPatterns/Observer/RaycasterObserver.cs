@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a observer that can look at a raycaster.
+/// </summary>
 public interface RaycasterObserver
 {
 

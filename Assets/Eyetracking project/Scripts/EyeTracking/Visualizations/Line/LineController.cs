@@ -5,6 +5,9 @@ using Unity.VisualScripting;
 using UnityEditor.Polybrush;
 using UnityEngine;
 
+/// <summary>
+/// Represents the controller that places the diffrent lines.
+/// </summary>
 public class LineController : MonoBehaviour
 {
     [Header("Configuration")]
@@ -20,6 +23,9 @@ public class LineController : MonoBehaviour
 
     private bool showLine;
 
+    /// <summary>
+    /// Clears the transforms and hides the lines.
+    /// </summary>
     public void ClearLineList() {
         transforms.Clear();
         HideLine();

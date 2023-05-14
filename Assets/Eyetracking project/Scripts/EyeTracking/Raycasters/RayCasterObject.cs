@@ -38,7 +38,7 @@ public abstract class RayCasterObject : MonoBehaviour, Observable<RaycasterObser
     [SerializeField, Tooltip("The last objects that was looked at.")]
     private List<GameObject> lastObjects;
 
-    [SerializeField]
+    [SerializeField, Tooltip("What the eyetracker has hit")]
     private List<GameObject> debugHits = new List<GameObject>();
 
     [SerializeField, Tooltip("The raycast observers")]

@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A timed task is finished when a certian time has passed. Can both be continual and total time.
+/// </summary>
 [Serializable]
 public class TimedTask : Task
 {

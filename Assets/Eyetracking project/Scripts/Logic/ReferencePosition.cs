@@ -4,6 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents the position that a user can stand at.
+/// </summary>
 [Serializable]
 public class ReferencePosition
 {

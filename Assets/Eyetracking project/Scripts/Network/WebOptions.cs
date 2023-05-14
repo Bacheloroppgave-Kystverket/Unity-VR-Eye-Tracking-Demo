@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The diffrent web options as enum. 
+/// </summary>
 public enum WebOptions
 {
     /// <summary>

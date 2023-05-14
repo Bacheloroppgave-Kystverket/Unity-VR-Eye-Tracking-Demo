@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a point of interest as recording.
+/// </summary>
 [Serializable]
 public class PointRecording : RecordedPoint
 {

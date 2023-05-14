@@ -72,6 +72,9 @@ public class SessionManager : MonoBehaviour
         isPaused = false;
     }
 
+    /// <summary>
+    /// Toggles the eyetracking.
+    /// </summary>
     public void ToggleEyeTracking() {
         if (eyetracking)
         {

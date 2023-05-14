@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents one feedback based on this category.
+/// </summary>
 [Serializable]
 public class CategoryFeedback
 {

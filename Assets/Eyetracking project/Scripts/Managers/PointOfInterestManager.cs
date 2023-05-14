@@ -4,6 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Represents a manager that can show diffrent visualizations like point cloud and points of interest.
+/// </summary>
 public class PointOfInterestManager : MonoBehaviour
 {
 
@@ -57,6 +60,12 @@ public class PointOfInterestManager : MonoBehaviour
         toggles[1].enabled = showPointText;
     }
 
+    /// <summary>
+    /// Sets the start and end position for the points of interest.
+    /// </summary>
+    /// <param name="pointStart">the start</param>
+    /// <param name="pointEnd">the stop</param>
+    /// <exception cref="IllegalArgumentException">will be thrown if the point start is larger than the point end.</exception>
     public void SetStartAndEnd(int pointStart, int pointEnd) {
         if (pointStart > pointEnd) {
             throw new IllegalArgumentException("The start position cannot be larger than the ending");
@@ -66,8 +75,9 @@ public class PointOfInterestManager : MonoBehaviour
         displayPointsOfInterest.UpdateOrderOfPointsOfInterest(pointStart, pointEnd, showLine, showPointText);
     }
 
- 
-
+    /// <summary>
+    /// Toggles the point cloud mode.
+    /// </summary>
     public void TogglePointCouldMode() { 
         showPointsAsSolid = !showPointsAsSolid;
     }

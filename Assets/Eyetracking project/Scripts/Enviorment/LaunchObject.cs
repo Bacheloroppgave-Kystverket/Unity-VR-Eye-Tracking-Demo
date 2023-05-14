@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Launches an object to one side and switches the launch direction after a while.
+/// </summary>
 public class LaunchObject : MonoBehaviour
 {
 
@@ -27,6 +30,10 @@ public class LaunchObject : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Switches the direction of the launch.
+    /// </summary>
+    /// <returns>the enumerator</returns>
     private IEnumerator SwitchDirection() {
         yield return new WaitForSeconds(3);
         while (true) {

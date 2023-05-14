@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.VFX;
 
 
+/// <summary>
+/// Displays the heatmaps or heatpoints of this object.
+/// </summary>
 public class VisualDotDeployerController : MonoBehaviour
 {
-    [SerializeField]
+    [SerializeField, Tooltip("The visual effect")]
     private VisualEffect visualEffect;
 
     [SerializeField, Tooltip("Set to true if the dots are supposed to stop. False otherwise.")]
@@ -22,8 +25,8 @@ public class VisualDotDeployerController : MonoBehaviour
         GameObject visualEffectObject = Instantiate(prefab, transform);
         visualEffectObject.transform.SetParent(transform);
         visualEffectObject.transform.localPosition = Vector3.zero;
-        visualEffectObject.transform.localScale = transform.InverseTransformVector(new Vector3(1f, 1f, 1f));
         this.visualEffect = visualEffectObject.GetComponent<VisualEffect>();
+        visualEffectObject.transform.localScale = transform.InverseTransformVector(new Vector3(1f, 1f, 1f));
     }
 
     /// <summary>

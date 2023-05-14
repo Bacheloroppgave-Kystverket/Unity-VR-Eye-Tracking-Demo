@@ -4,6 +4,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// Controls the boats and their motion.
+/// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 public class BoatController : MonoBehaviour
 {
@@ -22,6 +25,7 @@ public class BoatController : MonoBehaviour
     [SerializeField, Tooltip("True if the boat is supposed to move.")]
     private bool startMoving;
 
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -31,7 +35,10 @@ public class BoatController : MonoBehaviour
         StartCoroutine(StartMotion());
     }
 
-
+    /// <summary>
+    /// Starts the motion of the boat.
+    /// </summary>
+    /// <returns>The enumerator</returns>
     public IEnumerator StartMotion() {
         while (startMoving) {
             if (Vector3.Distance(transform.position, targetPostion) < 4f)
