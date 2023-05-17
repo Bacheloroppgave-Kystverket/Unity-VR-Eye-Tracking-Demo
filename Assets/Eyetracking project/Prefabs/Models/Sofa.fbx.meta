@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Velvet
-    second: {fileID: 2100000, guid: c3a96b210923ddb418b91b0f31a38890, type: 2}
+    second: {fileID: 2100000, guid: 97277e0880592e34e86df423f3c71fc3, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
