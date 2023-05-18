@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class HandMenuController : MonoBehaviour
 {
-
     [SerializeField, Tooltip("The session manager")]
     private SessionManager sessionManager;
 
