@@ -33,7 +33,10 @@ public class SeatTeleporter : MonoBehaviour {
 
     private int aimedAtAmount = 0;
 
-    // Start is called before the first frame update
+
+    /// <summary>
+    /// Attempts to find a player object, and connects to the reference position system.
+    /// </summary>
     void Start()
     {
         HideCollider();
@@ -45,15 +48,12 @@ public class SeatTeleporter : MonoBehaviour {
     /// Starts making the hitbox around a seatteleporter visible, and stops other similar coroutines from continuing.
     /// </summary>
     public void ShowCollider() {
-        //Missing functionality to make the seat available. Commented out for now. 
-        // if (seatIsAvailable) {
         if(aimedAtAmount > 0)
         {
             GetComponent<MeshRenderer>().enabled = true;
             displayText.SetActive(true);
             StartCoroutine(GraduallyChangeColliderAlpha(maxAlpha, changeDuration));
         }
-        //}
     }
 
     /// <summary>
@@ -112,7 +112,6 @@ public class SeatTeleporter : MonoBehaviour {
     public void SetSeatAvailability(bool availability) {
         seatIsAvailable = availability;
     }
-
 
     /// <summary>
     /// Sets the player position to the coordinates of the gameobject with this component attached. 

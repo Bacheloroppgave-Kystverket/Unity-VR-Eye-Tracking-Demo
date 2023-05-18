@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// UNFINISHED 
+/// Contains different visualizations for selection of objects.
+/// </summary>
 public class SelectionVisualizer : MonoBehaviour {
     [SerializeField]
     [Tooltip("The maximum amount of opacity the collider will have on selection")]

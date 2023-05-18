@@ -23,7 +23,9 @@ public class CheckListProducer : MonoBehaviour {
 
     private List<TaskController> tasks;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Initializes connection with the taskmanager, and initializes the list
+    /// </summary>
     void Start() {
         this.taskManager = TaskManager.GetTaskManager();
         InitializeChecklist();
@@ -69,7 +71,11 @@ public class CheckListProducer : MonoBehaviour {
     private void UpdateRemainingTaskAmount() {
         amountRemainingDisplay.text = "Tasks left: " + taskManager.GetRemainingTaskAmount();
     }
-
+    
+    /// <summary>
+    /// Turns the selected textelement into a shade of green. TODO: Make it possible to change into any colour
+    /// </summary>
+    /// <param name="textElement"></param>
     private void ColourizeText(Text textElement) {
         textElement.color = new Color(0.341f, 0.612f, 0.29f);
     }
