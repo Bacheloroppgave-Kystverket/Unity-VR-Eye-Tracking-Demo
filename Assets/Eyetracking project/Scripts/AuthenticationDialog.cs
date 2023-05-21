@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Represents a dialog that is shown if the authentication didnt finish.
+/// </summary>
 [Serializable]
 public class AuthenticationDialog : Dialog
 {
